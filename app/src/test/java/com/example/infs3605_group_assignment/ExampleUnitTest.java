@@ -1,4 +1,4 @@
-package com.example.first_nations_climate_app;
+package com.example.infs3605_group_assignment;
 
 import org.junit.Test;
 

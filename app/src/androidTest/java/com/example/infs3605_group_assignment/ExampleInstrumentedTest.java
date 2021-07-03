@@ -1,4 +1,4 @@
-package com.example.first_nations_climate_app;
+package com.example.infs3605_group_assignment;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.first_nations_climate_app", appContext.getPackageName());
+        assertEquals("com.example.infs3605_group_assignment", appContext.getPackageName());
     }
 }
