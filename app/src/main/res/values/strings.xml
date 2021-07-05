@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">INFS3605_Group_Assignment</string>
+
+    <string-array name="postTypes">
+        <item>Global Warming</item>
+        <item>Ocean Acidification</item>
+        <item>Other</item>
+    </string-array>
 </resources>
