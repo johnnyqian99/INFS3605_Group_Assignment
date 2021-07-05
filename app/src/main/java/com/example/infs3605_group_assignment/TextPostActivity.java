@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,23 +17,18 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class TextPostActivity extends AppCompatActivity {
-
-    // This will be used for LOG messages
-    private static final String TAG = "TextPostActivity";
-
-    // When we save values in Firebase database we also need a KEY for them because all fields in
-    // a document are key-value pairs
-    private static final String KEY_TITLE = "title";
-    private static final String KEY_LOCATION = "location";
-    private static final String KEY_NOTES = "notes";
-    private static final String KEY_DATE = "date";
 
     // Variables for XML fields
     private EditText mTitle;
@@ -42,8 +38,10 @@ public class TextPostActivity extends AppCompatActivity {
     private ProgressBar mProgressBar;
     private Button mUpload;
 
-    // Reference to Firestore Database
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    // Database reference
+    private DatabaseReference mDatabaseRef;
+
+    private StorageTask mUploadTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,42 +55,36 @@ public class TextPostActivity extends AppCompatActivity {
         mProgressBar = findViewById(R.id.progress_bar);
         mUpload = findViewById(R.id.button_upload);
 
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Text Uploads");
+
         mUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String title = mTitle.getText().toString();
-                String location = mLocation.getText().toString();
-                String notes = mNotes.getText().toString();
-                String date = mDate.getText().toString();
-
-                // To save these values together with the KEYs in the Firestore Database, we have
-                // to put them in some sort of container, can't just pass them directly.
-                // A MAP can do this. Map<key type, value type>
-                Map<String, Object> upload = new HashMap<>();
-                // The order of PUT is the order displayed in database
-                upload.put(KEY_TITLE, title);
-                upload.put(KEY_LOCATION, location);
-                upload.put(KEY_NOTES, notes);
-                upload.put(KEY_DATE, date);
-
-                // This creates a new collection, adds a new document and sets the values above
-                db.collection("Text Uploads").document().set(upload)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                Toast.makeText(TextPostActivity.this, "Upload saved", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(TextPostActivity.this, "Error!", Toast.LENGTH_SHORT).show();
-                                Log.d(TAG, e.toString());
-                            }
-                        });
+                // This helps prevent accidentally clicking upload button multiple times
+                if (mUploadTask != null && mUploadTask.isInProgress()) {
+                    Toast.makeText(TextPostActivity.this, "Upload in progress", Toast.LENGTH_SHORT).show();
+                } else {
+                    uploadFile();
+                }
             }
         });
+    }
 
+    private void uploadFile() {
+
+        Toast.makeText(TextPostActivity.this, "Upload successful", Toast.LENGTH_LONG).show();
+
+        mProgressBar.setProgress(100);
+
+        // This creates a new image upload object
+        TextUpload textUpload = new TextUpload(mTitle.getText().toString().trim(),
+                mLocation.getText().toString().trim(),mNotes.getText().toString().trim(),
+                mDate.getText().toString().trim());
+
+        // This will create a new entry in the database with a unique ID
+        String uploadId = mDatabaseRef.push().getKey();
+        // Take the unique ID and set its data to 'imageUpload'
+        mDatabaseRef.child(uploadId).setValue(textUpload);
     }
 
 }

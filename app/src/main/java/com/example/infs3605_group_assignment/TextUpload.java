@@ -1,23 +1,20 @@
 package com.example.infs3605_group_assignment;
 
-import android.widget.EditText;
-
 import com.google.firebase.database.Exclude;
 
-public class ImageUpload {
+public class TextUpload {
 
     private String mTitle;
     private String mLocation;
     private String mNotes;
     private String mDate;
-    private String mImageUrl;
     private String mKey;
 
-    public ImageUpload() {
+    public TextUpload() {
         // empty constructor needed
     }
 
-    public ImageUpload(String title, String location, String notes, String date, String imageUrl) {
+    public TextUpload(String title, String location, String notes, String date) {
         // If someone types in no name
         if (title.trim().equals("")) {
             title = "No Name";
@@ -27,7 +24,6 @@ public class ImageUpload {
         mLocation = location;
         mNotes = notes;
         mDate = date;
-        mImageUrl = imageUrl;
     }
 
     public String getmTitle() {
@@ -60,14 +56,6 @@ public class ImageUpload {
 
     public void setmDate(String mDate) {
         this.mDate = mDate;
-    }
-
-    public String getmImageUrl() {
-        return mImageUrl;
-    }
-
-    public void setmImageUrl(String mImageUrl) {
-        this.mImageUrl = mImageUrl;
     }
 
     @Exclude

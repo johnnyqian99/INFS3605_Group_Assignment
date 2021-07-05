@@ -8,6 +8,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -24,6 +25,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
@@ -31,109 +33,153 @@ import com.squareup.picasso.Picasso;
 
 public class VideoPostActivity extends AppCompatActivity {
 
-    // The identifier '2' is used to identify an video request
-    private static final int PICK_VIDEO_REQUEST = 2;
+    // This identifier is used for video request
+    private static final int PICK_VIDEO_REQUEST = 1;
 
-    // Variables
-    private Button chooseBtn;
-    private Button uploadBtn;
-    private VideoView videoView;
-    private Uri videoUri;
+    // Variables for XML fields
+    private VideoView mVideoView;
+    private Button mChooseFile;
+    private EditText mTitle;
+    private EditText mLocation;
+    private EditText mNotes;
+    private EditText mDate;
+    private ProgressBar mProgressBar;
+    private Button mUpload;
+
+    // This will point to the video
+    private Uri mVideoUri;
+
+    // Storage and database references
+    private StorageReference mStorageRef;
+    private DatabaseReference mDatabaseRef;
+
+    private StorageTask mUploadTask;
+
     MediaController mediaController;
-    private StorageReference storageReference;
-    private DatabaseReference databaseReference;
-    private EditText videoName;
-    private ProgressBar progressBar;
-    // private StorageTask mUploadTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_post);
 
-        chooseBtn = findViewById(R.id.button_choose_video);
-        uploadBtn = findViewById(R.id.button_upload);
-        videoView = findViewById(R.id.video_view);
-        progressBar = findViewById(R.id.progress_bar);
-        videoName = findViewById(R.id.edit_text_file_name);
+        mVideoView = findViewById(R.id.video_view);
+        mChooseFile = findViewById(R.id.button_choose_file);
+        mTitle = findViewById(R.id.edit_text_title);
+        mLocation = findViewById(R.id.edit_text_location);
+        mNotes = findViewById(R.id.edit_text_notes);
+        mDate = findViewById(R.id.edit_text_date);
+        mProgressBar = findViewById(R.id.progress_bar);
+        mUpload = findViewById(R.id.button_upload);
+
+        mStorageRef = FirebaseStorage.getInstance().getReference("Video Uploads");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Video Uploads");
 
         mediaController = new MediaController(this);
 
-        storageReference = FirebaseStorage.getInstance().getReference("uploads");
-        databaseReference = FirebaseDatabase.getInstance().getReference("uploads");
+        mVideoView.setMediaController(mediaController);
+        mediaController.setAnchorView(mVideoView);
+        mVideoView.start();
 
-        videoView.setMediaController(mediaController);
-        mediaController.setAnchorView(videoView);
-        videoView.start();
-
-        chooseBtn.setOnClickListener(new View.OnClickListener() {
+        mChooseFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chooseVideo();
+                openFileChooser();
             }
         });
 
-        uploadBtn.setOnClickListener(new View.OnClickListener() {
+        mUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadVideo();
+                // This helps prevent accidentally clicking upload button multiple times
+                if (mUploadTask != null && mUploadTask.isInProgress()) {
+                    Toast.makeText(VideoPostActivity.this, "Upload in progress", Toast.LENGTH_SHORT).show();
+                } else {
+                    uploadFile();
+                }
             }
         });
     }
 
-    private void chooseVideo() {
+    // Opens file to select an image                                            --> FIX DEPRECATION
+    private void openFileChooser() {
         Intent intent = new Intent();
         intent.setType("video/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, PICK_VIDEO_REQUEST);
     }
 
+    // This retrieves and displays image
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == PICK_VIDEO_REQUEST && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
-            videoUri = data.getData();
+            mVideoUri = data.getData();
 
-            videoView.setVideoURI(videoUri);
+            mVideoView.setVideoURI(mVideoUri);
         }
     }
 
-    private String getFileExtension(Uri videoUri) {
-        ContentResolver contentResolver = getContentResolver();
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(videoUri));
+    // Return extension of the file chosen (e.g. mp4)
+    private String getFileExtension(Uri uri) {
+        ContentResolver cR = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cR.getType(uri));
     }
 
-    private void uploadVideo() {
+    private void uploadFile() {
+        // This means we picked a video
+        if (mVideoUri != null) {
+            // This allocates a unique identifier for a file
+            // This also adds video to storage
+            StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
+                    + "." + getFileExtension(mVideoUri));
 
-        progressBar.setVisibility(View.VISIBLE);
-        if (videoUri != null) {
-            StorageReference reference = storageReference.child(System.currentTimeMillis() +
-                    "." + getFileExtension(videoUri));
-
-            reference.putFile(videoUri)
+            mUploadTask = fileReference.putFile(mVideoUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        public void onSuccess(UploadTask.TaskSnapshot snapshot) {
 
-                            progressBar.setVisibility(View.INVISIBLE);
-                            Toast.makeText(getApplicationContext(), "Upload Successful", Toast.LENGTH_SHORT).show();
-                            VideoUpload videoUpload = new VideoUpload(videoName.getText().toString().trim(),
-                                    taskSnapshot.getUploadSessionUri().toString());
-                            String upload = databaseReference.push().getKey();
-                            databaseReference.child(upload).setValue(videoUpload);
+                            // This will ensure the progress bar is seen when upload is successful
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mProgressBar.setProgress(0);
+                                }
+                            }, 500);
+
+                            Toast.makeText(VideoPostActivity.this, "Upload successful", Toast.LENGTH_LONG).show();
+
+                            // This creates a new video upload object
+                            VideoUpload videoUpload = new VideoUpload(mTitle.getText().toString().trim(),
+                                    mLocation.getText().toString().trim(),mNotes.getText().toString().trim(),
+                                    mDate.getText().toString().trim(), snapshot.getUploadSessionUri().toString());
+
+                            // This will create a new entry in the database with a unique ID
+                            String uploadId = mDatabaseRef.push().getKey();
+                            // Take the unique ID and set its data to 'videoUpload'
+                            mDatabaseRef.child(uploadId).setValue(videoUpload);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(VideoPostActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                            double progress = (100.0 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
+                            mProgressBar.setProgress((int) progress);
                         }
                     });
         } else {
-            Toast.makeText(getApplicationContext(), "No file selected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
         }
+
     }
 }
+
