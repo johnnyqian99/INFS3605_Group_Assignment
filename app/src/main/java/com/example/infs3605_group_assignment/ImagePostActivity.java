@@ -31,16 +31,18 @@ import com.squareup.picasso.Picasso;
 
 public class ImagePostActivity extends AppCompatActivity {
 
-    // The identifier '1' is used to identify an image request
+    // This identifier is used for image request
     private static final int PICK_IMAGE_REQUEST = 1;
 
-    // Variables
-    private Button mButtonChooseImage;
-    private Button mButtonUpload;
-    private TextView mTextViewShowUploads;
-    private EditText mEditTextFileName;
+    // Variables for XML fields
     private ImageView mImageView;
+    private Button mChooseFile;
+    private EditText mTitle;
+    private EditText mLocation;
+    private EditText mNotes;
+    private EditText mDate;
     private ProgressBar mProgressBar;
+    private Button mUpload;
 
     // This will point to the image
     private Uri mImageUri;
@@ -55,43 +57,39 @@ public class ImagePostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_post);
 
-        mButtonChooseImage = findViewById(R.id.button_choose_image);
-        mButtonUpload = findViewById(R.id.button_upload);
-        mTextViewShowUploads = findViewById(R.id.text_view_show_uploads);
-        mEditTextFileName = findViewById(R.id.edit_text_file_name);
         mImageView = findViewById(R.id.image_view);
+        mChooseFile = findViewById(R.id.button_choose_file);
+        mTitle = findViewById(R.id.edit_text_title);
+        mLocation = findViewById(R.id.edit_text_location);
+        mNotes = findViewById(R.id.edit_text_notes);
+        mDate = findViewById(R.id.edit_text_date);
         mProgressBar = findViewById(R.id.progress_bar);
+        mUpload = findViewById(R.id.button_upload);
 
-        mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
+//        mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
+//        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
 
-        mButtonChooseImage.setOnClickListener(new View.OnClickListener() {
+        mChooseFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openFileChooser();
             }
         });
 
-        mButtonUpload.setOnClickListener(new View.OnClickListener() {
+        mUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mUploadTask != null && mUploadTask.isInProgress()) {
-                    Toast.makeText(ImagePostActivity.this, "Upload in progress", Toast.LENGTH_SHORT).show();
-                } else {
-                    uploadFile();
-                }
+//                    if (mUploadTask != null && mUploadTask.isInProgress()) {
+//                        Toast.makeText(ImagePostActivity.this, "Upload in progress", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        uploadFile();
+//                    }
             }
         });
 
-        mTextViewShowUploads.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openImagesActivity();
-            }
-        });
     }
 
-    // Opens file to pick image from
+    // Opens file to select an image                                            --> FIX DEPRECATION
     private void openFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -99,7 +97,7 @@ public class ImagePostActivity extends AppCompatActivity {
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
-    // This method will be called when we pick our file
+    // This retrieves and displays image
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -112,66 +110,66 @@ public class ImagePostActivity extends AppCompatActivity {
         }
     }
 
-    // Get file extension of file
-    private String getFileExtension(Uri uri) {
-        ContentResolver cR = getContentResolver();
-        MimeTypeMap mime = MimeTypeMap.getSingleton();
-        return mime.getExtensionFromMimeType(cR.getType(uri));
-    }
+//    // Get file extension of file
+//    private String getFileExtension(Uri uri) {
+//        ContentResolver cR = getContentResolver();
+//        MimeTypeMap mime = MimeTypeMap.getSingleton();
+//        return mime.getExtensionFromMimeType(cR.getType(uri));
+//    }
 
-    private void uploadFile() {
-        if (mImageUri != null) {
-            StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
-            + "." + getFileExtension(mImageUri));
-
-            mUploadTask = fileReference.putFile(mImageUri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Handler handler = new Handler();
-                            handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mProgressBar.setProgress(0);
-                                }
-                            }, 500);
-
-                            Toast.makeText(ImagePostActivity.this, "Upload successful", Toast.LENGTH_LONG).show();
-//                            Upload upload = new Upload(mEditTextFileName.getText().toString().trim(),
-//                                    taskSnapshot.getMetadata().getReference().getDownloadUrl().toString());
+//    private void uploadFile() {
+//        if (mImageUri != null) {
+//            StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
+//            + "." + getFileExtension(mImageUri));
+//
+//            mUploadTask = fileReference.putFile(mImageUri)
+//                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                        @Override
+//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                            Handler handler = new Handler();
+//                            handler.postDelayed(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    mProgressBar.setProgress(0);
+//                                }
+//                            }, 500);
+//
+//                            Toast.makeText(ImagePostActivity.this, "Upload successful", Toast.LENGTH_LONG).show();
+////                            Upload upload = new Upload(mEditTextFileName.getText().toString().trim(),
+////                                    taskSnapshot.getMetadata().getReference().getDownloadUrl().toString());
+////                            String uploadId = mDatabaseRef.push().getKey();
+////                            mDatabaseRef.child(uploadId).setValue(upload);
+//                            Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
+//                            while(!urlTask.isSuccessful());
+//                            Uri downloadUrl = urlTask.getResult();
+//
+//                            // Log.d(Tag, "onSuccess: firebase download url: " + downloadUrl.toString()); // use if testing
+//                            ImageUpload imageUpload = new ImageUpload(mEditTextFileName.getText().toString().trim(), downloadUrl.toString());
+//
 //                            String uploadId = mDatabaseRef.push().getKey();
-//                            mDatabaseRef.child(uploadId).setValue(upload);
-                            Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
-                            while(!urlTask.isSuccessful());
-                            Uri downloadUrl = urlTask.getResult();
+//                            mDatabaseRef.child(uploadId).setValue(imageUpload);
+//                        }
+//                    })
+//                    .addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            Toast.makeText(ImagePostActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+//                        }
+//                    })
+//                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+//                        @Override
+//                        public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+//                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+//                            mProgressBar.setProgress((int) progress);
+//                        }
+//                    });
+//        } else {
+//            Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
-                            // Log.d(Tag, "onSuccess: firebase download url: " + downloadUrl.toString()); // use if testing
-                            ImageUpload imageUpload = new ImageUpload(mEditTextFileName.getText().toString().trim(), downloadUrl.toString());
-
-                            String uploadId = mDatabaseRef.push().getKey();
-                            mDatabaseRef.child(uploadId).setValue(imageUpload);
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(ImagePostActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                            mProgressBar.setProgress((int) progress);
-                        }
-                    });
-        } else {
-            Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void openImagesActivity() {
-        Intent intent = new Intent(this, OtherPostsActivity.class);
-        startActivity(intent);
-    }
+//    private void openImagesActivity() {
+//        Intent intent = new Intent(this, MyObservationsActivity.class);
+//        startActivity(intent);
+//    }
 }

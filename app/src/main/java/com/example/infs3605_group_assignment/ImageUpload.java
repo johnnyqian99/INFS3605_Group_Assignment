@@ -13,6 +13,7 @@ public class ImageUpload {
     }
 
     public ImageUpload(String name, String imageUrl) {
+        // If someone types in no name
         if (name.trim().equals("")) {
             name = "No Name";
         }

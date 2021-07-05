@@ -13,8 +13,6 @@ public class NewPostActivity extends AppCompatActivity {
     private Button mBtnText;
     private Button mBtnImage;
     private Button mBtnVideo;
-    private Button mBtnNews;
-    private Button mBtnOther;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,24 +49,5 @@ public class NewPostActivity extends AppCompatActivity {
             }
         });
 
-        // Direct OTHER POSTS button
-        mBtnOther = findViewById(R.id.otherPostsBtn);
-        mBtnOther.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(NewPostActivity.this, OtherPostsActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        // Direct NEWS FEED button
-        mBtnNews = findViewById(R.id.newsFeedBtn);
-        mBtnNews.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(NewPostActivity.this, NewsFeedActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 }

@@ -10,18 +10,18 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
 
     // Variables
-    Button button;
+    Button mMyObservations;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        button = findViewById(R.id.toPostBtn);
-        button.setOnClickListener(new View.OnClickListener() {
+        mMyObservations = findViewById(R.id.button_my_observations);
+        mMyObservations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, NewPostActivity.class);
+                Intent intent = new Intent(MainActivity.this, MyObservationsActivity.class);
                 startActivity(intent);
             }
         });

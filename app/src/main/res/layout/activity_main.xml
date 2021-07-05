@@ -7,10 +7,10 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/toPostBtn"
+        android:id="@+id/button_my_observations"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Go To Post Screen"
+        android:text="My Observations"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
