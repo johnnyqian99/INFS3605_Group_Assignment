@@ -71,8 +71,8 @@ public class VideoPostActivity extends AppCompatActivity {
         mProgressBar = findViewById(R.id.progress_bar);
         mUpload = findViewById(R.id.button_upload);
 
-        mStorageRef = FirebaseStorage.getInstance().getReference("Video Uploads");
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Video Uploads");
+        mStorageRef = FirebaseStorage.getInstance().getReference("Uploads/Video");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Uploads/Video");
 
         mediaController = new MediaController(this);
 

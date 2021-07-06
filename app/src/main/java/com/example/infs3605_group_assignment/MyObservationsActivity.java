@@ -27,16 +27,16 @@ import java.util.List;
 public class MyObservationsActivity extends AppCompatActivity {
 
     // Variables
-    private ImageButton newUpload;
+    private ImageButton mUpload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_observations);
 
-        newUpload = findViewById(R.id.button_add);
+        mUpload = findViewById(R.id.button_add);
 
-        newUpload.setOnClickListener(new View.OnClickListener() {
+        mUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MyObservationsActivity.this, NewPostActivity.class);

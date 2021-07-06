@@ -67,8 +67,8 @@ public class ImagePostActivity extends AppCompatActivity {
         mProgressBar = findViewById(R.id.progress_bar);
         mUpload = findViewById(R.id.button_upload);
 
-        mStorageRef = FirebaseStorage.getInstance().getReference("Image Uploads");
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Image Uploads");
+        mStorageRef = FirebaseStorage.getInstance().getReference("Uploads/Image");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Uploads/Image");
 
         mChooseFile.setOnClickListener(new View.OnClickListener() {
             @Override

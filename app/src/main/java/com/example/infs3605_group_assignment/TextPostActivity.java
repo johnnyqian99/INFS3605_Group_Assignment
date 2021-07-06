@@ -55,7 +55,7 @@ public class TextPostActivity extends AppCompatActivity {
         mProgressBar = findViewById(R.id.progress_bar);
         mUpload = findViewById(R.id.button_upload);
 
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Text Uploads");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Uploads/Text");
 
         mUpload.setOnClickListener(new View.OnClickListener() {
             @Override
