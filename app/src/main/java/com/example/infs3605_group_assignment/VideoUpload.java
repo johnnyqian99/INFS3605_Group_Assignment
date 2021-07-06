@@ -9,24 +9,24 @@ public class VideoUpload {
     private String mNotes;
     private String mDate;
     private String mVideoUrl;
-    private String mKey;
+//    private String mKey; --> is this needed?
 
-    public VideoUpload() {
-        // empty constructor needed
-    }
-
-    public VideoUpload(String title, String location, String notes, String date, String videoUrl) {
-        // If someone types in no name
-        if (title.trim().equals("")) {
-            title = "No Name";
-        }
-
-        mTitle = title;
-        mLocation = location;
-        mNotes = notes;
-        mDate = date;
-        mVideoUrl = videoUrl;
-    }
+//    public VideoUpload() {
+//        // empty constructor needed
+//    }
+//
+//    public VideoUpload(String title, String location, String notes, String date, String videoUrl) {
+//        // If someone types in no name
+//        if (title.trim().equals("")) {
+//            title = "No Name";
+//        }
+//
+//        mTitle = title;
+//        mLocation = location;
+//        mNotes = notes;
+//        mDate = date;
+//        mVideoUrl = videoUrl;
+//    }
 
     public String getmTitle() {
         return mTitle;
@@ -68,13 +68,13 @@ public class VideoUpload {
         this.mVideoUrl = mVideoUrl;
     }
 
-    @Exclude
-    public String getKey() {
-        return mKey;
-    }
-
-    @Exclude
-    public void setKey(String key) {
-        mKey = key;
-    }
+//    @Exclude
+//    public String getKey() {
+//        return mKey;
+//    }
+//
+//    @Exclude
+//    public void setKey(String key) {
+//        mKey = key;
+//    }
 }
