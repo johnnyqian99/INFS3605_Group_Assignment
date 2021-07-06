@@ -29,6 +29,12 @@ public class MyObservationsActivity extends AppCompatActivity {
     // Variables
     private ImageButton mUpload;
 
+    private RecyclerView mRecyclerView;
+    private ImageAdapter mAdapter;
+
+    private DatabaseReference mDatabaseRef;
+    private List<ImageUpload> mUploads;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +47,33 @@ public class MyObservationsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MyObservationsActivity.this, NewPostActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        mRecyclerView = findViewById(R.id.recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(MyObservationsActivity.this, LinearLayoutManager.HORIZONTAL, false));
+
+        mUploads = new ArrayList<>();
+
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Uploads/Image");
+
+        mDatabaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    ImageUpload imageUpload = postSnapshot.getValue(ImageUpload.class);
+                    mUploads.add(imageUpload);
+                }
+
+                mAdapter = new ImageAdapter(MyObservationsActivity.this, mUploads);
+
+                mRecyclerView.setAdapter(mAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(MyObservationsActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

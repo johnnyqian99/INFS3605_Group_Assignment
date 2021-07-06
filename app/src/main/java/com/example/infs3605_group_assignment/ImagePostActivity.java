@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -143,14 +144,15 @@ public class ImagePostActivity extends AppCompatActivity {
 
                             Toast.makeText(ImagePostActivity.this, "Upload successful", Toast.LENGTH_LONG).show();
 
-                            // This creates a new image upload object
-                            ImageUpload imageUpload = new ImageUpload(mTitle.getText().toString().trim(),
-                                    mLocation.getText().toString().trim(),mNotes.getText().toString().trim(),
-                                    mDate.getText().toString().trim(), snapshot.getUploadSessionUri().toString());
+                            Task<Uri> urlTask = snapshot.getStorage().getDownloadUrl();
+                            while (!urlTask.isSuccessful());
+                            Uri downloadUrl = urlTask.getResult();
 
-                            // This will create a new entry in the database with a unique ID
+                            ImageUpload imageUpload = new ImageUpload(mTitle.getText().toString().trim(),
+                                    mLocation.getText().toString().trim(), mNotes.getText().toString().trim(),
+                                    mDate.getText().toString().trim(), downloadUrl.toString());
+
                             String uploadId = mDatabaseRef.push().getKey();
-                            // Take the unique ID and set its data to 'imageUpload'
                             mDatabaseRef.child(uploadId).setValue(imageUpload);
                         }
                     })
