@@ -25,6 +25,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +44,12 @@ public class MyObservationsActivity extends AppCompatActivity {
     // Videos
     private RecyclerView videoRecyclerView;
     private DatabaseReference videoDb;
+
+    // Texts
+    private RecyclerView textRecyclerView;
+    private TextAdapter textAdapter;
+    private DatabaseReference textDb;
+    private List<TextUpload> textUploads;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,14 +93,43 @@ public class MyObservationsActivity extends AppCompatActivity {
         });
         // IMAGES***
 
-        // ***VIDEOS
+        // VIDEOS
         videoDb = FirebaseDatabase.getInstance().getReference("Uploads/Video");
         videoRecyclerView = findViewById(R.id.recycler_view2);
         videoRecyclerView.setHasFixedSize(true);
         videoRecyclerView.setLayoutManager(new LinearLayoutManager(MyObservationsActivity.this,
                 LinearLayoutManager.HORIZONTAL, false));
+
+        // ***TEXTS
+        textDb = FirebaseDatabase.getInstance().getReference("Uploads/Text");
+        textRecyclerView = findViewById(R.id.recycler_view3);
+        textRecyclerView.setHasFixedSize(true);
+        textRecyclerView.setLayoutManager(new LinearLayoutManager(MyObservationsActivity.this,
+                LinearLayoutManager.HORIZONTAL, false));
+        textUploads = new ArrayList<>();
+
+        textDb.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    TextUpload textUpload = postSnapshot.getValue(TextUpload.class);
+                    textUploads.add(textUpload);
+                }
+
+                textAdapter = new TextAdapter(MyObservationsActivity.this, textUploads);
+
+                textRecyclerView.setAdapter(textAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(MyObservationsActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        // TEXTS***
     }
 
+    // FOR VIDEOS
     @Override
     protected void onStart() {
         super.onStart();
