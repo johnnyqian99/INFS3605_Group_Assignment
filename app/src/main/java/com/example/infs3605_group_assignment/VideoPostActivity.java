@@ -44,7 +44,7 @@ public class VideoPostActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private VideoUpload videoUpload;
     private UploadTask uploadTask;
-    private Uri uri;
+    private Uri videoUri;
 
     MediaController mediaController;
 
@@ -107,8 +107,8 @@ public class VideoPostActivity extends AppCompatActivity {
         if (requestCode == PICK_VIDEO_REQUEST && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
 
-            uri = data.getData();
-            mVideoView.setVideoURI(uri);
+            videoUri = data.getData();
+            mVideoView.setVideoURI(videoUri);
         }
     }
 
@@ -126,15 +126,15 @@ public class VideoPostActivity extends AppCompatActivity {
         String notes = mNotes.getText().toString();
         String date = mDate.getText().toString();
 
-        if (uri != null || !TextUtils.isEmpty(title) || !TextUtils.isEmpty(location)
+        if (videoUri != null || !TextUtils.isEmpty(title) || !TextUtils.isEmpty(location)
                 || !TextUtils.isEmpty(notes) || !TextUtils.isEmpty(date)) {
 
             mProgressBar.setVisibility(View.VISIBLE);
             // This allocates a unique identifier for a file
             // This also adds video to storage
             StorageReference fileReference = storageReference.child(System.currentTimeMillis() +
-                    "." + getFileExtension(uri));
-            uploadTask = fileReference.putFile(uri);
+                    "." + getFileExtension(videoUri));
+            uploadTask = fileReference.putFile(videoUri);
 
             Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override

@@ -9,13 +9,16 @@ public class ImageUpload {
     private String mNotes;
     private String mDate;
     private String mImageUrl;
-    private String mKey;
+//    private String mKey;
 
     public ImageUpload() {
         // empty constructor needed
     }
 
     public ImageUpload(String title, String location, String notes, String date, String imageUrl) {
+        if (title.trim().equals("")) {
+            title = "No Name";
+        }
 
         mTitle = title;
         mLocation = location;
@@ -64,13 +67,13 @@ public class ImageUpload {
         this.mImageUrl = mImageUrl;
     }
 
-    @Exclude
-    public String getKey() {
-        return mKey;
-    }
-
-    @Exclude
-    public void setKey(String key) {
-        mKey = key;
-    }
+//    @Exclude
+//    public String getKey() {
+//        return mKey;
+//    }
+//
+//    @Exclude
+//    public void setKey(String key) {
+//        mKey = key;
+//    }
 }

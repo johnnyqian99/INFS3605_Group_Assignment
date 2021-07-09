@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -22,9 +23,12 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyImages extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+//public class MyImages extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private Spinner mSpinner;
+public class MyImages extends AppCompatActivity {
+
+//    private Spinner mSpinner;
+    private ProgressBar mProgressCircle;
     private RecyclerView mRecyclerView;
     private ImageAdapter mAdapter;
     private DatabaseReference databaseReference;
@@ -35,18 +39,20 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_images);
 
-        mSpinner = findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.imageActivityTypes, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpinner.setAdapter(adapter);
-        mSpinner.setOnItemSelectedListener(this);
+//        mSpinner = findViewById(R.id.spinner);
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+//                R.array.imageActivityTypes, android.R.layout.simple_spinner_item);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        mSpinner.setAdapter(adapter);
+//        mSpinner.setOnItemSelectedListener(this);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Image");
+        mProgressCircle = findViewById(R.id.progress_circle);
         mRecyclerView = findViewById(R.id.rv_image);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mUploads = new ArrayList<>();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Image");
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -58,32 +64,34 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
 
                 mAdapter = new ImageAdapter(MyImages.this, mUploads);
                 mRecyclerView.setAdapter(mAdapter);
+                mProgressCircle.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(MyImages.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                mProgressCircle.setVisibility(View.INVISIBLE);
             }
         });
 
     }
 
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String text = parent.getItemAtPosition(position).toString();
-        if (text.equals("Text")) {
-            Intent intent = new Intent(MyImages.this, MyTexts.class);
-            startActivity(intent);
-        }
-        if (text.equals("Video")) {
-            Intent intent = new Intent(MyImages.this, MyVideos.class);
-            startActivity(intent);
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
+//    @Override
+//    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//        String text = parent.getItemAtPosition(position).toString();
+//        if (text.equals("Text")) {
+//            Intent intent = new Intent(MyImages.this, MyTexts.class);
+//            startActivity(intent);
+//        }
+//        if (text.equals("Video")) {
+//            Intent intent = new Intent(MyImages.this, MyVideos.class);
+//            startActivity(intent);
+//        }
+//    }
+//
+//    @Override
+//    public void onNothingSelected(AdapterView<?> parent) {
+//
+//    }
 }
