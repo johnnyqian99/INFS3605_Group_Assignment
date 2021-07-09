@@ -1,7 +1,5 @@
 package com.example.infs3605_group_assignment;
 
-import android.widget.EditText;
-
 import com.google.firebase.database.Exclude;
 
 public class ImageUpload {
@@ -18,10 +16,6 @@ public class ImageUpload {
     }
 
     public ImageUpload(String title, String location, String notes, String date, String imageUrl) {
-        // If someone types in no name
-        if (title.trim().equals("")) {
-            title = "No Name";
-        }
 
         mTitle = title;
         mLocation = location;

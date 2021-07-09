@@ -9,19 +9,29 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Variables
-    Button mMyObservations;
+    private Button mMyObservations;
+    private Button mUpload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mMyObservations = findViewById(R.id.button_my_observations);
+        mMyObservations = findViewById(R.id.btn_my_observations);
+        mUpload = findViewById(R.id.btn_add_post);
+
         mMyObservations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MyObservationsActivity.class);
+                Intent intent = new Intent(MainActivity.this, MyTexts.class);
+                startActivity(intent);
+            }
+        });
+
+        mUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, NewPostActivity.class);
                 startActivity(intent);
             }
         });

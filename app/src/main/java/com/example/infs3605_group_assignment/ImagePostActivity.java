@@ -5,17 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentResolver;
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
+import android.text.TextUtils;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -24,7 +22,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
@@ -32,10 +29,8 @@ import com.squareup.picasso.Picasso;
 
 public class ImagePostActivity extends AppCompatActivity {
 
-    // This identifier is used for image request
     private static final int PICK_IMAGE_REQUEST = 1;
 
-    // Variables for XML fields
     private ImageView mImageView;
     private Button mChooseFile;
     private EditText mTitle;
@@ -45,14 +40,10 @@ public class ImagePostActivity extends AppCompatActivity {
     private ProgressBar mProgressBar;
     private Button mUpload;
 
-    // This will point to the image
-    private Uri mImageUri;
-
-    // Storage and database references
-    private StorageReference mStorageRef;
-    private DatabaseReference mDatabaseRef;
-
-    private StorageTask mUploadTask;
+    private StorageReference storageReference;
+    private DatabaseReference databaseReference;
+    private StorageTask storageTask;
+    private Uri uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,16 +51,16 @@ public class ImagePostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_image_post);
 
         mImageView = findViewById(R.id.image_view);
-        mChooseFile = findViewById(R.id.button_choose_file);
-        mTitle = findViewById(R.id.edit_text_title);
-        mLocation = findViewById(R.id.edit_text_location);
-        mNotes = findViewById(R.id.edit_text_notes);
-        mDate = findViewById(R.id.edit_text_date);
+        mChooseFile = findViewById(R.id.btn_choose_file);
+        mTitle = findViewById(R.id.et_title);
+        mLocation = findViewById(R.id.et_location);
+        mNotes = findViewById(R.id.et_notes);
+        mDate = findViewById(R.id.et_date);
         mProgressBar = findViewById(R.id.progress_bar);
-        mUpload = findViewById(R.id.button_upload);
+        mUpload = findViewById(R.id.btn_upload);
 
-        mStorageRef = FirebaseStorage.getInstance().getReference("Uploads/Image");
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Uploads/Image");
+        storageReference = FirebaseStorage.getInstance().getReference("Uploads/Image");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Image");
 
         mChooseFile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +73,7 @@ public class ImagePostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // This helps prevent accidentally clicking upload button multiple times
-                if (mUploadTask != null && mUploadTask.isInProgress()) {
+                if (storageTask != null && storageTask.isInProgress()) {
                     Toast.makeText(ImagePostActivity.this, "Upload in progress", Toast.LENGTH_SHORT).show();
                 } else {
                     uploadFile();
@@ -92,7 +83,7 @@ public class ImagePostActivity extends AppCompatActivity {
 
     }
 
-    // Opens file to select an image                                            --> FIX DEPRECATION
+    // Opens file to select an image
     private void openFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -107,9 +98,9 @@ public class ImagePostActivity extends AppCompatActivity {
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
-            mImageUri = data.getData();
 
-            Picasso.get().load(mImageUri).into(mImageView);
+            uri = data.getData();
+            Picasso.get().load(uri).into(mImageView);
         }
     }
 
@@ -121,56 +112,47 @@ public class ImagePostActivity extends AppCompatActivity {
     }
 
     private void uploadFile() {
-        // This means we picked an image
-        if (mImageUri != null) {
+
+        String title = mTitle.getText().toString().trim();
+        String location = mLocation.getText().toString().trim();
+        String notes = mNotes.getText().toString().trim();
+        String date = mDate.getText().toString().trim();
+
+        if (uri != null || !TextUtils.isEmpty(title) || !TextUtils.isEmpty(location) ||
+                !TextUtils.isEmpty(notes) || !TextUtils.isEmpty(date)) {
+
+            mProgressBar.setVisibility(View.VISIBLE);
             // This allocates a unique identifier for a file
             // This also adds image to storage
-            StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
-            + "." + getFileExtension(mImageUri));
+            StorageReference fileReference = storageReference.child(System.currentTimeMillis()
+                    + "." + getFileExtension(uri));
 
-            mUploadTask = fileReference.putFile(mImageUri)
+            storageTask = fileReference.putFile(uri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot snapshot) {
 
-                            // This will ensure the progress bar is seen when upload is successful
-                            Handler handler = new Handler();
-                            handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mProgressBar.setProgress(0);
-                                }
-                            }, 500);
-
+                            mProgressBar.setVisibility(View.INVISIBLE);
                             Toast.makeText(ImagePostActivity.this, "Upload successful", Toast.LENGTH_LONG).show();
 
                             Task<Uri> urlTask = snapshot.getStorage().getDownloadUrl();
-                            while (!urlTask.isSuccessful());
+                            while (!urlTask.isSuccessful()) ;
                             Uri downloadUrl = urlTask.getResult();
 
-                            ImageUpload imageUpload = new ImageUpload(mTitle.getText().toString().trim(),
-                                    mLocation.getText().toString().trim(), mNotes.getText().toString().trim(),
-                                    mDate.getText().toString().trim(), downloadUrl.toString());
+                            ImageUpload imageUpload = new ImageUpload(title, location, notes, date, downloadUrl.toString());
 
-                            String uploadId = mDatabaseRef.push().getKey();
-                            mDatabaseRef.child(uploadId).setValue(imageUpload);
+                            String uploadId = databaseReference.push().getKey();
+                            databaseReference.child(uploadId).setValue(imageUpload);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(ImagePostActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                            double progress = (100.0 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
-                            mProgressBar.setProgress((int) progress);
+                            Toast.makeText(ImagePostActivity.this, "Upload failed", Toast.LENGTH_SHORT).show();
                         }
                     });
         } else {
-            Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "All Fields are required", Toast.LENGTH_SHORT).show();
         }
     }
 

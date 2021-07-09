@@ -15,10 +15,6 @@ public class TextUpload {
     }
 
     public TextUpload(String title, String location, String notes, String date) {
-        // If someone types in no name
-        if (title.trim().equals("")) {
-            title = "No Name";
-        }
 
         mTitle = title;
         mLocation = location;

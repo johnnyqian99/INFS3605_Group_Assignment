@@ -9,7 +9,6 @@ import android.widget.Button;
 
 public class NewPostActivity extends AppCompatActivity {
 
-    // Variables
     private Button mBtnText;
     private Button mBtnImage;
     private Button mBtnVideo;
@@ -20,7 +19,7 @@ public class NewPostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_post);
 
         // Direct TEXT button
-        mBtnText = findViewById(R.id.postTextBtn);
+        mBtnText = findViewById(R.id.btn_post_text);
         mBtnText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -30,7 +29,7 @@ public class NewPostActivity extends AppCompatActivity {
         });
 
         // Direct IMAGE button
-        mBtnImage = findViewById(R.id.postImageBtn);
+        mBtnImage = findViewById(R.id.btn_post_image);
         mBtnImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,7 +39,7 @@ public class NewPostActivity extends AppCompatActivity {
         });
 
         // Direct VIDEO button
-        mBtnVideo = findViewById(R.id.postVideoBtn);
+        mBtnVideo = findViewById(R.id.btn_post_video);
         mBtnVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,6 +47,6 @@ public class NewPostActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
+
 }

@@ -7,13 +7,23 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/button_my_observations"
+        android:id="@+id/btn_my_observations"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
         android:text="My Observations"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_add_post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:text="Add Post"
+        app:layout_constraintEnd_toEndOf="@+id/btn_my_observations"
+        app:layout_constraintStart_toStartOf="@+id/btn_my_observations"
+        app:layout_constraintTop_toBottomOf="@+id/btn_my_observations" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
