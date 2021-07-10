@@ -4,22 +4,27 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder> {
+public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder> implements Filterable {
 
     private Context mContext;
     private List<TextUpload> mUploads;
+    private List<TextUpload> mUploadsFull;
 
     public TextAdapter(Context context, List<TextUpload> uploads) {
         mContext = context;
         mUploads = uploads;
+        mUploadsFull = new ArrayList<>(uploads);
     }
 
     @Override
@@ -62,4 +67,38 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder
         }
     }
 
+    @Override
+    public Filter getFilter() {
+        return uploadsFilter;
+    }
+
+    private Filter uploadsFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<TextUpload> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(mUploadsFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (TextUpload item : mUploadsFull) {
+                    if (item.getmTitle().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            mUploads.clear();
+            mUploads.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
 }
