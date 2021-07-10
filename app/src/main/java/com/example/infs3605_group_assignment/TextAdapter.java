@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,8 +32,10 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder
     public void onBindViewHolder(@NonNull TextViewHolder holder, int position) {
 
         TextUpload uploadCurrent = mUploads.get(position);
-        holder.textViewTitle.setText(uploadCurrent.getmTitle());
-        holder.textViewNotes.setText(uploadCurrent.getmNotes());
+        holder.mTitle.setText(uploadCurrent.getmTitle());
+        holder.mLocation.setText(uploadCurrent.getmLocation());
+        holder.mNotes.setText(uploadCurrent.getmNotes());
+        holder.mDate.setText(uploadCurrent.getmDate());
     }
 
     @Override
@@ -42,14 +45,20 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder
 
     public class TextViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView textViewTitle;
-        public TextView textViewNotes;
+        public TextView mTitle;
+        public TextView mLocation;
+        public TextView mNotes;
+        public TextView mDate;
+        public ImageView mImageView;
 
         public TextViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            textViewTitle = itemView.findViewById(R.id.tv_title);
-            textViewNotes = itemView.findViewById(R.id.tv_notes);
+            mTitle = itemView.findViewById(R.id.tv_title2);
+            mLocation = itemView.findViewById(R.id.tv_location2);
+            mNotes = itemView.findViewById(R.id.tv_notes2);
+            mDate = itemView.findViewById(R.id.tv_date);
+            mImageView = itemView.findViewById(R.id.iv_image);
         }
     }
 

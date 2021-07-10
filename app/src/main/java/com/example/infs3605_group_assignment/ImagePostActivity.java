@@ -113,15 +113,13 @@ public class ImagePostActivity extends AppCompatActivity {
 
     private void uploadFile() {
 
-//        String title = mTitle.getText().toString().trim();
-//        String location = mLocation.getText().toString().trim();
-//        String notes = mNotes.getText().toString().trim();
-//        String date = mDate.getText().toString().trim();
+        String title = mTitle.getText().toString().trim();
+        String location = mLocation.getText().toString().trim();
+        String notes = mNotes.getText().toString().trim();
+        String date = mDate.getText().toString().trim();
 
-//        if (imageUri != null || !TextUtils.isEmpty(title) || !TextUtils.isEmpty(location) ||
-//                !TextUtils.isEmpty(notes) || !TextUtils.isEmpty(date)) {
-
-        if (mImageUri != null) {
+        if (mImageUri != null || !TextUtils.isEmpty(title) || !TextUtils.isEmpty(location) ||
+                !TextUtils.isEmpty(notes) || !TextUtils.isEmpty(date)) {
 
             mProgressBar.setVisibility(View.VISIBLE);
             // This allocates a unique identifier for a file
@@ -137,18 +135,11 @@ public class ImagePostActivity extends AppCompatActivity {
                             mProgressBar.setVisibility(View.INVISIBLE);
                             Toast.makeText(ImagePostActivity.this, "Upload successful", Toast.LENGTH_LONG).show();
 
-//                            ImageUpload imageUpload = new ImageUpload(mTitle.getText().toString().trim(),
-//                                    mLocation.getText().toString().trim(), mNotes.getText().toString().trim(),
-//                                    mDate.getText().toString().trim(), snapshot.getUploadSessionUri().toString());
-//
-//                            String uploadId = databaseReference.push().getKey();
-//                            databaseReference.child(uploadId).setValue(imageUpload);
                             Task<Uri> uriTask = snapshot.getStorage().getDownloadUrl();
                             while (!uriTask.isSuccessful());
                             Uri downloadUri = uriTask.getResult();
 
-                            ImageUpload imageUpload = new ImageUpload(mTitle.getText().toString().trim(), mLocation.getText().toString().trim(),
-                                    mNotes.getText().toString().trim(), mDate.getText().toString().trim(), downloadUri.toString());
+                            ImageUpload imageUpload = new ImageUpload(title, location, notes, date, downloadUri.toString());
 
                             String uploadId = databaseReference.push().getKey();
                             databaseReference.child(uploadId).setValue(imageUpload);

@@ -57,7 +57,8 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
                     @Override
                     protected void onBindViewHolder(@NonNull VideoAdapter holder, int position, @NonNull VideoUpload model) {
 
-                        holder.setExoplayer(getApplication(), model.getmTitle(), model.getmVideoUrl());
+                        holder.setExoplayer(getApplication(), model.getmTitle(), model.getmLocation(), model.getmNotes(),
+                                model.getmDate(), model.getmVideoUrl());
                     }
 
                     @Override

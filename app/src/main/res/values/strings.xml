@@ -2,19 +2,19 @@
     <string name="app_name">INFS3605_Group_Assignment</string>
 
     <string-array name="textActivityTypes">
-        <item>Select Post Type</item>
+        <item>Select Post</item>
         <item>Image</item>
         <item>Video</item>
     </string-array>
 
     <string-array name="imageActivityTypes">
-        <item>Select Post Type</item>
+        <item>Select Post</item>
         <item>Text</item>
         <item>Video</item>
     </string-array>
 
     <string-array name="videoActivityTypes">
-        <item>Select Post Type</item>
+        <item>Select Post</item>
         <item>Text</item>
         <item>Image</item>
     </string-array>

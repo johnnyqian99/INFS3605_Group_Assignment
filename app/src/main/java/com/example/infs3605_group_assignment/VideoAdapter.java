@@ -32,12 +32,18 @@ public class VideoAdapter extends RecyclerView.ViewHolder {
         super(itemView);
     }
 
-    public void setExoplayer(Application application, String mTitle, String mVideoUrl) {
+    public void setExoplayer(Application application, String title, String location, String notes, String date, String mVideoUrl) {
 
-        TextView title = itemView.findViewById(R.id.tv_title);
+        TextView mTitle = itemView.findViewById(R.id.tv_title2);
+        TextView mLocation = itemView.findViewById(R.id.tv_location2);
+        TextView mNotes = itemView.findViewById(R.id.tv_notes2);
+        TextView mDate = itemView.findViewById(R.id.tv_date);
         mPlayerView = itemView.findViewById(R.id.exoplayer_video);
 
-        title.setText(mTitle);
+        mTitle.setText(title);
+        mLocation.setText(location);
+        mNotes.setText(notes);
+        mDate.setText(date);
 
         try {
             BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter.Builder(application).build();

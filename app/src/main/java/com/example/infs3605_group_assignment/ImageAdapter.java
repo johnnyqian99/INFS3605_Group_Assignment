@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
@@ -35,6 +37,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
         ImageUpload uploadCurrent = mUploads.get(position);
         holder.mTitle.setText(uploadCurrent.getmTitle());
+        holder.mLocation.setText(uploadCurrent.getmLocation());
+        holder.mNotes.setText(uploadCurrent.getmNotes());
+        holder.mDate.setText(uploadCurrent.getmDate());
         Picasso.get()
                 .load(uploadCurrent.getmImageUrl())
                 .placeholder(R.mipmap.ic_launcher)
@@ -51,12 +56,18 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     public class ImageViewHolder extends RecyclerView.ViewHolder {
 
         public TextView mTitle;
+        public TextView mLocation;
+        public TextView mNotes;
+        public TextView mDate;
         public ImageView mImageView;
 
         public ImageViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            mTitle = itemView.findViewById(R.id.tv_title);
+            mTitle = itemView.findViewById(R.id.tv_title2);
+            mLocation = itemView.findViewById(R.id.tv_location2);
+            mNotes = itemView.findViewById(R.id.tv_notes2);
+            mDate = itemView.findViewById(R.id.tv_date);
             mImageView = itemView.findViewById(R.id.iv_image);
         }
     }
