@@ -118,8 +118,8 @@ public class ImagePostActivity extends AppCompatActivity {
         String notes = mNotes.getText().toString().trim();
         String date = mDate.getText().toString().trim();
 
-        if (mImageUri != null || !TextUtils.isEmpty(title) || !TextUtils.isEmpty(location) ||
-                !TextUtils.isEmpty(notes) || !TextUtils.isEmpty(date)) {
+        if (mImageUri != null && !TextUtils.isEmpty(title) && !TextUtils.isEmpty(location) &&
+                !TextUtils.isEmpty(notes) && !TextUtils.isEmpty(date)) {
 
             mProgressBar.setVisibility(View.VISIBLE);
             // This allocates a unique identifier for a file

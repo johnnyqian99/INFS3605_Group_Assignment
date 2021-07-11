@@ -50,8 +50,8 @@ public class TextPostActivity extends AppCompatActivity {
         String notes = mNotes.getText().toString().trim();
         String date = mDate.getText().toString().trim();
 
-        if (!TextUtils.isEmpty(title) || !TextUtils.isEmpty(location) ||
-                !TextUtils.isEmpty(notes) || !TextUtils.isEmpty(date)) {
+        if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(location) &&
+                !TextUtils.isEmpty(notes) && !TextUtils.isEmpty(date)) {
 
             Toast.makeText(TextPostActivity.this, "Upload successful", Toast.LENGTH_LONG).show();
 

@@ -126,8 +126,8 @@ public class VideoPostActivity extends AppCompatActivity {
         String notes = mNotes.getText().toString();
         String date = mDate.getText().toString();
 
-        if (videoUri != null || !TextUtils.isEmpty(title) || !TextUtils.isEmpty(location)
-                || !TextUtils.isEmpty(notes) || !TextUtils.isEmpty(date)) {
+        if (videoUri != null && !TextUtils.isEmpty(title) && !TextUtils.isEmpty(location)
+                && !TextUtils.isEmpty(notes) && !TextUtils.isEmpty(date)) {
 
             mProgressBar.setVisibility(View.VISIBLE);
             // This allocates a unique identifier for a file
