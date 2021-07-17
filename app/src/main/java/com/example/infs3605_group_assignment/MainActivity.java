@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button mMyObservations;
     private Button mUpload;
+    private Button mNews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
         mMyObservations = findViewById(R.id.btn_my_observations);
         mUpload = findViewById(R.id.btn_add_post);
+        mNews = findViewById(R.id.btn_news);
 
         mMyObservations.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,6 +36,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, NewPostActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mNews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, NewsActivity.class);
                 startActivity(intent);
             }
         });
