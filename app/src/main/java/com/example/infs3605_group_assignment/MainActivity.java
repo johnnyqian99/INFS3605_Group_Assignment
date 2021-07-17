@@ -17,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getSupportActionBar().hide();
+
         mMyObservations = findViewById(R.id.btn_my_observations);
         mUpload = findViewById(R.id.btn_add_post);
 
