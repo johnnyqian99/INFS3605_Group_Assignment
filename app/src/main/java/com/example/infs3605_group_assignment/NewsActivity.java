@@ -1,6 +1,9 @@
 package com.example.infs3605_group_assignment;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.util.Pair;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +19,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -115,6 +119,7 @@ public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayou
         adapter.setOnItemClickListener(new NewsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                ImageView imageView = view.findViewById(R.id.img);
                 Intent intent = new Intent(NewsActivity.this, NewsDetailActivity.class);
 
                 Article article = articles.get(position);
@@ -125,7 +130,13 @@ public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayou
                 intent.putExtra("source", article.getSource().getName());
                 intent.putExtra("author", article.getAuthor());
 
-                startActivity(intent);
+                Pair<View, String> pair = Pair.create((View)imageView, ViewCompat.getTransitionName(imageView));
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        NewsActivity.this,
+                        pair
+                );
+
+                startActivity(intent, optionsCompat.toBundle());
             }
         });
 
