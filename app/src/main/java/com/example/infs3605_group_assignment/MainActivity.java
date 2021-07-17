@@ -6,12 +6,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button mMyObservations;
+    private ImageButton mOpinion;
+    private ImageButton mPhoto;
+    private ImageButton mVideo;
     private Button mUpload;
-    private Button mNews;
+    private ImageButton mNews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,11 +23,13 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-        mMyObservations = findViewById(R.id.btn_my_observations);
-        mUpload = findViewById(R.id.btn_add_post);
+        mOpinion = findViewById(R.id.btn_opinion);
+        mPhoto = findViewById(R.id.btn_photos);
+        mVideo = findViewById(R.id.btn_videos);
+//        mUpload = findViewById(R.id.btn_add_post);
         mNews = findViewById(R.id.btn_news);
 
-        mMyObservations.setOnClickListener(new View.OnClickListener() {
+        mOpinion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, MyTexts.class);
@@ -32,13 +37,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mUpload.setOnClickListener(new View.OnClickListener() {
+        mPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, NewPostActivity.class);
+                Intent intent = new Intent(MainActivity.this, MyImages.class);
                 startActivity(intent);
             }
         });
+
+        mVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MyVideos.class);
+                startActivity(intent);
+            }
+        });
+
+//        mUpload.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MainActivity.this, NewPostActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         mNews.setOnClickListener(new View.OnClickListener() {
             @Override

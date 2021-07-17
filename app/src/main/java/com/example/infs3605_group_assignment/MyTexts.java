@@ -40,6 +40,8 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_texts);
 
+        getSupportActionBar().hide();
+
         mSpinner = findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.textActivityTypes, android.R.layout.simple_spinner_item);
