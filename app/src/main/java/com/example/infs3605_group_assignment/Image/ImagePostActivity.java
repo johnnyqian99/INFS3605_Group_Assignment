@@ -1,4 +1,4 @@
-package com.example.infs3605_group_assignment;
+package com.example.infs3605_group_assignment.Image;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +16,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.infs3605_group_assignment.R;
+import com.example.infs3605_group_assignment.Text.MyTexts;
+import com.example.infs3605_group_assignment.Text.TextPostActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -143,6 +146,9 @@ public class ImagePostActivity extends AppCompatActivity {
 
                             String uploadId = databaseReference.push().getKey();
                             databaseReference.child(uploadId).setValue(imageUpload);
+
+                            Intent intent = new Intent(ImagePostActivity.this, MyImages.class);
+                            startActivity(intent);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

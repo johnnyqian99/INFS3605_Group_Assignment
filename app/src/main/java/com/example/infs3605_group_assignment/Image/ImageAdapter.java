@@ -1,4 +1,4 @@
-package com.example.infs3605_group_assignment;
+package com.example.infs3605_group_assignment.Image;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,9 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.infs3605_group_assignment.R;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +46,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         holder.mDate.setText(uploadCurrent.getmDate());
         Picasso.get()
                 .load(uploadCurrent.getmImageUrl())
-                .placeholder(R.mipmap.ic_launcher)
+                .placeholder(R.drawable.ic_image)
                 .fit()
                 .centerCrop()
                 .into(holder.mImageView);

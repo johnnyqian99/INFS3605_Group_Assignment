@@ -1,4 +1,4 @@
-package com.example.infs3605_group_assignment;
+package com.example.infs3605_group_assignment.News;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
@@ -22,6 +22,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.infs3605_group_assignment.R;
 
 import java.util.ArrayList;
 import java.util.List;

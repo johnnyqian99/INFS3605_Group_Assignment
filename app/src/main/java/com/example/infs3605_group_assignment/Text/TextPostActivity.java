@@ -1,7 +1,8 @@
-package com.example.infs3605_group_assignment;
+package com.example.infs3605_group_assignment.Text;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.infs3605_group_assignment.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -63,6 +65,10 @@ public class TextPostActivity extends AppCompatActivity {
 
             // Take the unique ID and set its data to 'imageUpload'
             databaseReference.child(uploadId).setValue(textUpload);
+
+            Intent intent = new Intent(TextPostActivity.this, MyTexts.class);
+            startActivity(intent);
+
         } else {
             Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
         }

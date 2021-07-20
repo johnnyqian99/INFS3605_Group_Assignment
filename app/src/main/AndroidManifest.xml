@@ -11,16 +11,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.INFS3605_Group_Assignment">
-        <activity android:name=".NewsDetailActivity"
+        <activity android:name=".News.NewsDetailActivity"
             android:theme="@style/Theme.INFS3605_Group_Assignment.NoActionBar">
         </activity>
-        <activity android:name=".NewsActivity" />
-        <activity android:name=".MyVideos" />
-        <activity android:name=".MyImages" />
-        <activity android:name=".MyTexts" />
-        <activity android:name=".VideoPostActivity" />
-        <activity android:name=".ImagePostActivity" />
-        <activity android:name=".TextPostActivity" />
+        <activity android:name=".News.NewsActivity" />
+        <activity android:name=".Video.MyVideos" />
+        <activity android:name=".Image.MyImages" />
+        <activity android:name=".Text.MyTexts" />
+        <activity android:name=".Video.VideoPostActivity" />
+        <activity android:name=".Image.ImagePostActivity" />
+        <activity android:name=".Text.TextPostActivity" />
         <activity android:name=".NewPostActivity" />
         <activity android:name=".SplashActivity">
 

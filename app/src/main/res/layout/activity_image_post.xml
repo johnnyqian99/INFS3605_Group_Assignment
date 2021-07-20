@@ -7,7 +7,7 @@
     android:layout_margin="10dp"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".ImagePostActivity">
+    tools:context=".Image.ImagePostActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

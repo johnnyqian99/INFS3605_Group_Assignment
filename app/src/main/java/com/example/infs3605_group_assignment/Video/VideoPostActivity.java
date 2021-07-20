@@ -1,4 +1,4 @@
-package com.example.infs3605_group_assignment;
+package com.example.infs3605_group_assignment.Video;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.example.infs3605_group_assignment.R;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -161,6 +162,10 @@ public class VideoPostActivity extends AppCompatActivity {
                                 videoUpload.setmVideoUrl(downloadUrl.toString());
                                 String i = databaseReference.push().getKey();
                                 databaseReference.child(i).setValue(videoUpload);
+
+                                Intent intent = new Intent(VideoPostActivity.this, MyVideos.class);
+                                startActivity(intent);
+
                             } else {
                                 Toast.makeText(VideoPostActivity.this, "Upload failed", Toast.LENGTH_SHORT).show();
                             }

@@ -7,7 +7,7 @@
     android:layout_margin="10dp"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".VideoPostActivity">
+    tools:context=".Video.VideoPostActivity">
 
     <VideoView
         android:id="@+id/video_view"

@@ -1,5 +1,6 @@
-package com.example.infs3605_group_assignment;
+package com.example.infs3605_group_assignment.News;
 
+import com.example.infs3605_group_assignment.News.Article;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

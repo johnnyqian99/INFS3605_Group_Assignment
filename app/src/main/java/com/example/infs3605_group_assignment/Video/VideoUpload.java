@@ -1,30 +1,27 @@
-package com.example.infs3605_group_assignment;
+package com.example.infs3605_group_assignment.Video;
 
 import com.google.firebase.database.Exclude;
 
-public class ImageUpload {
+public class VideoUpload {
 
     private String mTitle;
     private String mLocation;
     private String mNotes;
     private String mDate;
-    private String mImageUrl;
-//    private String mKey;
+    private String mVideoUrl;
+    private String mKey;
 
-    public ImageUpload() {
+    public VideoUpload() {
         // empty constructor needed
     }
 
-    public ImageUpload(String title, String location, String notes, String date, String imageUrl) {
-        if (title.trim().equals("")) {
-            title = "No Name";
-        }
+    public VideoUpload(String title, String location, String notes, String date, String videoUrl) {
 
         mTitle = title;
         mLocation = location;
         mNotes = notes;
         mDate = date;
-        mImageUrl = imageUrl;
+        mVideoUrl = videoUrl;
     }
 
     public String getmTitle() {
@@ -59,21 +56,21 @@ public class ImageUpload {
         this.mDate = mDate;
     }
 
-    public String getmImageUrl() {
-        return mImageUrl;
+    public String getmVideoUrl() {
+        return mVideoUrl;
     }
 
-    public void setmImageUrl(String mImageUrl) {
-        this.mImageUrl = mImageUrl;
+    public void setmVideoUrl(String mVideoUrl) {
+        this.mVideoUrl = mVideoUrl;
     }
 
-//    @Exclude
-//    public String getKey() {
-//        return mKey;
-//    }
-//
-//    @Exclude
-//    public void setKey(String key) {
-//        mKey = key;
-//    }
+    @Exclude
+    public String getKey() {
+        return mKey;
+    }
+
+    @Exclude
+    public void setKey(String key) {
+        mKey = key;
+    }
 }

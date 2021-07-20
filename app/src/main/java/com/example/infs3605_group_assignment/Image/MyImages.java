@@ -1,4 +1,4 @@
-package com.example.infs3605_group_assignment;
+package com.example.infs3605_group_assignment.Image;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,9 +15,15 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.infs3605_group_assignment.NewPostActivity;
+import com.example.infs3605_group_assignment.Video.MyVideos;
+import com.example.infs3605_group_assignment.R;
+import com.example.infs3605_group_assignment.Text.MyTexts;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,49 +33,63 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class MyImages extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    private FloatingActionButton floatingActionButton;
     private Spinner mSpinner;
+    private ProgressBar mProgressCircle;
     private RecyclerView mRecyclerView;
-    private TextAdapter mAdapter;
+    private ImageAdapter mAdapter;
     private DatabaseReference databaseReference;
-    private List<TextUpload> mUploads;
+    private List<ImageUpload> mUploads;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_texts);
+        setContentView(R.layout.activity_my_images);
 
-        getSupportActionBar().hide();
-
+        floatingActionButton = findViewById(R.id.floatingActionButton);
         mSpinner = findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.textActivityTypes, android.R.layout.simple_spinner_item);
+                R.array.imageActivityTypes, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(adapter);
         mSpinner.setOnItemSelectedListener(this);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Text");
-        mRecyclerView = findViewById(R.id.rv_text);
+        mProgressCircle = findViewById(R.id.progress_circle);
+        mRecyclerView = findViewById(R.id.rv_image);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mUploads = new ArrayList<>();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Image");
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyImages.this, NewPostActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    TextUpload textUpload = postSnapshot.getValue(TextUpload.class);
-                    mUploads.add(textUpload);
+                    ImageUpload imageUpload = postSnapshot.getValue(ImageUpload.class);
+                    mUploads.add(imageUpload);
                 }
 
-                mAdapter = new TextAdapter(MyTexts.this, mUploads);
+                mAdapter = new ImageAdapter(MyImages.this, mUploads);
                 mRecyclerView.setAdapter(mAdapter);
+                mProgressCircle.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(MyTexts.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyImages.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                mProgressCircle.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -78,12 +98,12 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String text = parent.getItemAtPosition(position).toString();
-        if (text.equals("Image")) {
-            Intent intent = new Intent(MyTexts.this, MyImages.class);
+        if (text.equals("Text")) {
+            Intent intent = new Intent(MyImages.this, MyTexts.class);
             startActivity(intent);
         }
         if (text.equals("Video")) {
-            Intent intent = new Intent(MyTexts.this, MyVideos.class);
+            Intent intent = new Intent(MyImages.this, MyVideos.class);
             startActivity(intent);
         }
     }
@@ -96,9 +116,9 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.text_menu, menu);
+        inflater.inflate(R.menu.image_menu, menu);
 
-        MenuItem searchItem = menu.findItem(R.id.text_search);
+        MenuItem searchItem = menu.findItem(R.id.image_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
 
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);

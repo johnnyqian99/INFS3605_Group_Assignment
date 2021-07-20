@@ -1,4 +1,4 @@
-package com.example.infs3605_group_assignment;
+package com.example.infs3605_group_assignment.News;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

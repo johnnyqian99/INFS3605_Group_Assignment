@@ -7,6 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.infs3605_group_assignment.Image.ImagePostActivity;
+import com.example.infs3605_group_assignment.Text.TextPostActivity;
+import com.example.infs3605_group_assignment.Video.VideoPostActivity;
+
 public class NewPostActivity extends AppCompatActivity {
 
     private Button mBtnText;

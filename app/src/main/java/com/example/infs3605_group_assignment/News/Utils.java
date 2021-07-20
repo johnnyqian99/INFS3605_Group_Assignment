@@ -1,4 +1,4 @@
-package com.example.infs3605_group_assignment;
+package com.example.infs3605_group_assignment.News;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;

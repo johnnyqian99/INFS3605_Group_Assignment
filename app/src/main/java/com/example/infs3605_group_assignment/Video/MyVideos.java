@@ -1,4 +1,4 @@
-package com.example.infs3605_group_assignment;
+package com.example.infs3605_group_assignment.Video;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,10 +17,16 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 
+import com.example.infs3605_group_assignment.Image.MyImages;
+import com.example.infs3605_group_assignment.NewPostActivity;
+import com.example.infs3605_group_assignment.R;
+import com.example.infs3605_group_assignment.Text.MyTexts;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +38,8 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    private FloatingActionButton floatingActionButton;
+    private ProgressBar progressCircle;
     private Spinner mSpinner;
     private RecyclerView mRecyclerView;
     private DatabaseReference databaseReference, likesReference;
@@ -42,6 +50,8 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_videos);
 
+        floatingActionButton = findViewById(R.id.floatingActionButton);
+        progressCircle = findViewById(R.id.progress_circle);
         mSpinner = findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.videoActivityTypes, android.R.layout.simple_spinner_item);
@@ -54,6 +64,15 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         likesReference = FirebaseDatabase.getInstance().getReference("Uploads/Likes");
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyVideos.this, NewPostActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     @Override
@@ -115,7 +134,7 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
                     public VideoAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                         View view = LayoutInflater.from(parent.getContext())
                                 .inflate(R.layout.video_item, parent, false);
-
+                        progressCircle.setVisibility(View.INVISIBLE);
                         return new VideoAdapter(view);
                     }
                 };
