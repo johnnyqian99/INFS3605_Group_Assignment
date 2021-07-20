@@ -21,15 +21,21 @@ import android.widget.Spinner;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Spinner mSpinner;
     private RecyclerView mRecyclerView;
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference, likesReference;
+    Boolean likeChecker = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +53,7 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
         mRecyclerView = findViewById(R.id.rv_video);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        likesReference = FirebaseDatabase.getInstance().getReference("Uploads/Likes");
     }
 
     @Override
@@ -63,8 +70,45 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
                     @Override
                     protected void onBindViewHolder(@NonNull VideoAdapter holder, int position, @NonNull VideoUpload model) {
 
+                        // This will help get the userID for like function
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        String currentUserId = user.getUid();
+                        final String postKey = getRef(position).getKey();
+
                         holder.setExoplayer(getApplication(), model.getmTitle(), model.getmLocation(), model.getmNotes(),
                                 model.getmDate(), model.getmVideoUrl());
+
+                        holder.setLikesButtonStatus(postKey);
+                        holder.likeButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                likeChecker = true;
+
+                                likesReference.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                        // Check if user already liked video or not
+                                        if (likeChecker.equals(true)) {
+                                            if (snapshot.child(postKey).hasChild(currentUserId)) {
+                                                likesReference.child(postKey).child(currentUserId).removeValue();
+                                                likeChecker = false;
+                                            } else {
+                                                likesReference.child(postKey).child(currentUserId).setValue(true);
+                                                likeChecker = false;
+                                            }
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        // Can show a toast message
+                                    }
+                                });
+                            }
+                        });
                     }
 
                     @Override
