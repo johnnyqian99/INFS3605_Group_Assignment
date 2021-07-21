@@ -1,5 +1,6 @@
 package com.example.infs3605_group_assignment.News;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.util.Pair;
@@ -23,7 +24,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.infs3605_group_assignment.MainActivity;
+import com.example.infs3605_group_assignment.NewPostActivity;
+import com.example.infs3605_group_assignment.ProfileActivity;
 import com.example.infs3605_group_assignment.R;
+import com.example.infs3605_group_assignment.RewardActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,11 +48,46 @@ public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayou
     private String TAG = NewsActivity.class.getSimpleName();
     private TextView topHeadline;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
+
+        // Assign variable
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        // Set home selected
+        bottomNavigationView.setSelectedItemId(R.id.news);
+        // Perform ItemSelectedListener
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()) {
+                    case R.id.home:
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.news:
+                        return true;
+                    case R.id.post:
+                        startActivity(new Intent(getApplicationContext(), NewPostActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.reward:
+                        startActivity(new Intent(getApplicationContext(), RewardActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.profile:
+                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                }
+
+                return false;
+            }
+        });
 
 //        getSupportActionBar().hide();
 

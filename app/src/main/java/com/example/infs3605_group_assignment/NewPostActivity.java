@@ -1,26 +1,65 @@
 package com.example.infs3605_group_assignment;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.infs3605_group_assignment.Image.ImagePostActivity;
+import com.example.infs3605_group_assignment.News.NewsActivity;
 import com.example.infs3605_group_assignment.Text.TextPostActivity;
 import com.example.infs3605_group_assignment.Video.VideoPostActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class NewPostActivity extends AppCompatActivity {
 
     private Button mBtnText;
     private Button mBtnImage;
     private Button mBtnVideo;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_post);
+
+        // Assign variable
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        // Set home selected
+        bottomNavigationView.setSelectedItemId(R.id.post);
+        // Perform ItemSelectedListener
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()) {
+                    case R.id.home:
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.news:
+                        startActivity(new Intent(getApplicationContext(), NewsActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.post:
+                        return true;
+                    case R.id.reward:
+                        startActivity(new Intent(getApplicationContext(), RewardActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.profile:
+                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                }
+
+                return false;
+            }
+        });
 
         // Direct TEXT button
         mBtnText = findViewById(R.id.btn_post_text);
