@@ -20,7 +20,9 @@
             android:theme="@style/Theme.INFS3605_Group_Assignment.NoActionBar" />
         <activity android:name=".News.NewsActivity" />
         <activity android:name=".Video.MyVideos" />
-        <activity android:name=".Image.MyImages" />
+        <activity android:name=".Image.MyImages"
+            android:parentActivityName=".MainActivity">
+        </activity>
         <activity android:name=".Text.MyTexts" />
         <activity android:name=".Video.VideoPostActivity" />
         <activity android:name=".Image.ImagePostActivity" />

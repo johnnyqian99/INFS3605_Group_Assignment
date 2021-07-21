@@ -49,6 +49,9 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_images);
 
+        // Enable back button in action bar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         // Assign variables
         databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Image");
         floatingActionButton = findViewById(R.id.floatingActionButton);
@@ -147,4 +150,5 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
 
         return true;
     }
+
 }
