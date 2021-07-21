@@ -1,10 +1,11 @@
-package com.example.infs3605_group_assignment;
+package com.example.infs3605_group_assignment.Image;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.infs3605_group_assignment.R;
 import com.squareup.picasso.Picasso;
 
 public class ImageDetailActivity extends AppCompatActivity {

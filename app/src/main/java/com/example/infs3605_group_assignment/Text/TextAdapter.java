@@ -1,6 +1,7 @@
 package com.example.infs3605_group_assignment.Text;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,10 +9,13 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.infs3605_group_assignment.Image.ImageDetailActivity;
 import com.example.infs3605_group_assignment.R;
 
 import java.util.ArrayList;
@@ -43,6 +47,17 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder
         holder.mLocation.setText(uploadCurrent.getmLocation());
         holder.mNotes.setText(uploadCurrent.getmNotes());
         holder.mDate.setText(uploadCurrent.getmDate());
+
+        holder.textLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, "Click position: " + mUploads.get(position).getmTitle(), Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(mContext, TextDetailActivity.class);
+                intent.putExtra("text_name", mUploads.get(position).getmTitle());
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -57,6 +72,7 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder
         public TextView mNotes;
         public TextView mDate;
         public ImageView mImageView;
+        CardView textLayout;
 
         public TextViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,6 +82,7 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder
             mNotes = itemView.findViewById(R.id.tv_notes2);
             mDate = itemView.findViewById(R.id.tv_date);
             mImageView = itemView.findViewById(R.id.iv_image);
+            textLayout = itemView.findViewById(R.id.text_layout);
         }
     }
 

@@ -2,8 +2,6 @@ package com.example.infs3605_group_assignment.Image;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.infs3605_group_assignment.ImageDetailActivity;
 import com.example.infs3605_group_assignment.R;
 import com.squareup.picasso.Picasso;
 
