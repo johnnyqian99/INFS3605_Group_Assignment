@@ -11,9 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.INFS3605_Group_Assignment">
-        <activity android:name=".News.NewsDetailActivity"
-            android:theme="@style/Theme.INFS3605_Group_Assignment.NoActionBar">
-        </activity>
+        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".RewardActivity" />
+        <activity
+            android:name=".News.NewsDetailActivity"
+            android:theme="@style/Theme.INFS3605_Group_Assignment.NoActionBar" />
         <activity android:name=".News.NewsActivity" />
         <activity android:name=".Video.MyVideos" />
         <activity android:name=".Image.MyImages" />
@@ -24,12 +26,12 @@
         <activity android:name=".NewPostActivity" />
         <activity android:name=".SplashActivity">
 
-<!--             <intent-filter>-->
-<!--             <action android:name="android.intent.action.MAIN" />-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
 
 
-<!--             <category android:name="android.intent.category.LAUNCHER" />-->
-<!--             </intent-filter>-->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
