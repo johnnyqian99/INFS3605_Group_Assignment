@@ -17,8 +17,6 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.infs3605_group_assignment.R;
-import com.example.infs3605_group_assignment.Text.MyTexts;
-import com.example.infs3605_group_assignment.Text.TextPostActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -32,6 +30,7 @@ import com.squareup.picasso.Picasso;
 
 public class ImagePostActivity extends AppCompatActivity {
 
+    // Declare variables
     private static final int PICK_IMAGE_REQUEST = 1;
 
     private ImageView mImageView;
@@ -114,6 +113,7 @@ public class ImagePostActivity extends AppCompatActivity {
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
 
+    // Upload file to firebase database and storage
     private void uploadFile() {
 
         String title = mTitle.getText().toString().trim();

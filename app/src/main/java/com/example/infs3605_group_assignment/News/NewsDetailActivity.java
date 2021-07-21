@@ -27,6 +27,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 public class NewsDetailActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
 
+    // Declare variables
     private ImageView imageView;
     private TextView appbar_title, appbar_subtitle, date, time, title;
     private boolean isHideToolbarView = false;
@@ -49,6 +50,7 @@ public class NewsDetailActivity extends AppCompatActivity implements AppBarLayou
         final CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitle("");
 
+        // Assign variables
         appBarLayout = findViewById(R.id.appbar);
         appBarLayout.addOnOffsetChangedListener(this);
         date_behaviour = findViewById(R.id.date_behavior);
@@ -60,6 +62,7 @@ public class NewsDetailActivity extends AppCompatActivity implements AppBarLayou
         time = findViewById(R.id.time);
         title = findViewById(R.id.title);
 
+        // Retrieve getExtras from previous activity
         Intent intent = getIntent();
         mUrl = intent.getStringExtra("url");
         mImg = intent.getStringExtra("img");
@@ -71,6 +74,7 @@ public class NewsDetailActivity extends AppCompatActivity implements AppBarLayou
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.error(Utils.getRandomDrawbleColor());
 
+        // Set variables in XML
         Glide.with(this)
                 .load(mImg)
                 .apply(requestOptions)
@@ -116,7 +120,6 @@ public class NewsDetailActivity extends AppCompatActivity implements AppBarLayou
 
     @Override
     public boolean onSupportNavigateUp() {
-
         onBackPressed();
         return true;
     }
@@ -139,6 +142,7 @@ public class NewsDetailActivity extends AppCompatActivity implements AppBarLayou
 
     }
 
+    // For options menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.news_share_menu, menu);

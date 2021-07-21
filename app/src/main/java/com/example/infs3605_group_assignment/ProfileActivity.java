@@ -19,11 +19,14 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        // Assign variable
+        // Assign variables
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        // Set home selected
+
+        // ***NAVIGATION BAR
+
+        // Set current selected item
         bottomNavigationView.setSelectedItemId(R.id.profile);
-        // Perform ItemSelectedListener
+        // Set up select listener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -52,5 +55,7 @@ public class ProfileActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        // NAVIGATION BAR***
     }
 }

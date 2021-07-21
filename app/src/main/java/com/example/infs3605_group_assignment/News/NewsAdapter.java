@@ -27,18 +27,32 @@ import java.util.List;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> {
 
+    // Declare variables
     private List<Article> articles;
     private Context context;
     private OnItemClickListener onItemClickListener;
 
+    // Constructor
     public NewsAdapter(List<Article> articles, Context context) {
         this.articles = articles;
         this.context = context;
     }
 
+    // Below 2 methods for click listener in Recyclerview
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
+    // Below 3 methods for adapter
+
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.news_item, parent, false);
         return new MyViewHolder(view, onItemClickListener);
     }
 
@@ -78,7 +92,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
         holder.time.setText(" \u2022 " + Utils.DateToTimeFormat(model.getPublishedAt()));
         holder.publishedAt.setText(Utils.DateFormat(model.getPublishedAt()));
         holder.author.setText(model.getAuthor());
-
     }
 
     @Override
@@ -86,16 +99,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
         return articles.size();
     }
 
-    // DONE
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
-    }
-
-    // DONE
-    public interface OnItemClickListener {
-        void onItemClick(View view, int position);
-    }
-
+    // Display content into Cardview
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView title, desc, author, publishedAt, source, time;
@@ -104,7 +108,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
         OnItemClickListener onItemClickListener;
 
         public MyViewHolder(@NonNull View itemView, OnItemClickListener onItemClickListener) {
-
             super(itemView);
 
             itemView.setOnClickListener(this);

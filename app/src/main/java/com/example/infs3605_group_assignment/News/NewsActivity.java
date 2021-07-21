@@ -55,11 +55,17 @@ public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayou
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
 
-        // Assign variable
+        // Assign variables
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        // Set home selected
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+        topHeadline = findViewById(R.id.top_head_lines);
+        recyclerView = findViewById(R.id.recyclerView);
+
+        // ***NAVIGATION BAR
+
+        // Set current selected item
         bottomNavigationView.setSelectedItemId(R.id.news);
-        // Perform ItemSelectedListener
+        // Set up select listener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -89,32 +95,26 @@ public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayou
             }
         });
 
-//        getSupportActionBar().hide();
+        // NAVIGATION BAR***
 
-        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
-        swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
-
-        topHeadline = findViewById(R.id.top_head_lines);
-        recyclerView = findViewById(R.id.recyclerView);
+        // Recyclerview set up
         layoutManager = new LinearLayoutManager(NewsActivity.this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setNestedScrollingEnabled(false);
 
+        // For swipe-top refresh
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         onLoadingSwipeRefresh("");
     }
 
+    // Retrieve news data via Json
     public void LoadJson(final String keyword) {
 
-//        topHeadline.setVisibility(View.INVISIBLE);
         swipeRefreshLayout.setRefreshing(true);
-
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-
         String country = Utils.getCountry();
-//        String language = Utils.getLanguage();
-
         Call<NewsModel> call;
 
         if (keyword.length() > 0) {
@@ -159,6 +159,7 @@ public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayou
         });
     }
 
+    // Click listener for items in Recyclerview
     private void initListener() {
 
         adapter.setOnItemClickListener(new NewsAdapter.OnItemClickListener() {
@@ -168,6 +169,7 @@ public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayou
                 Intent intent = new Intent(NewsActivity.this, NewsDetailActivity.class);
 
                 Article article = articles.get(position);
+                // Send extras for detail
                 intent.putExtra("url", article.getUrl());
                 intent.putExtra("title", article.getTitle());
                 intent.putExtra("img", article.getUrlToImage());
@@ -187,6 +189,7 @@ public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     }
 
+    // For options menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -217,6 +220,8 @@ public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         return true;
     }
+
+    // Below two methods are for swipe-top refresh
 
     @Override
     public void onRefresh() {

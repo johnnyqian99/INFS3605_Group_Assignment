@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.example.infs3605_group_assignment.Image.MyImages;
@@ -18,11 +17,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Declare variables
+    private ImageButton mProfile;
     private ImageButton mOpinion;
     private ImageButton mPhoto;
     private ImageButton mVideo;
-    private Button mUpload;
     private ImageButton mNews;
+    private ImageButton mDonate;
     private BottomNavigationView bottomNavigationView;
 
     @Override
@@ -30,13 +31,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Remove action bar
         getSupportActionBar().hide();
 
-        // Assign variable
+        // Assign variables
+        mProfile = findViewById(R.id.btn_profile);
+        mOpinion = findViewById(R.id.btn_opinion);
+        mPhoto = findViewById(R.id.btn_photos);
+        mVideo = findViewById(R.id.btn_videos);
+        mNews = findViewById(R.id.btn_news);
+        mDonate = findViewById(R.id.btn_donate);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        // Set home selected
+
+        // ***NAVIGATION BAR
+
+        // Set current selected item
         bottomNavigationView.setSelectedItemId(R.id.home);
-        // Perform ItemSelectedListener
+        // Set up select listener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -66,12 +77,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mOpinion = findViewById(R.id.btn_opinion);
-        mPhoto = findViewById(R.id.btn_photos);
-        mVideo = findViewById(R.id.btn_videos);
-//        mUpload = findViewById(R.id.btn_add_post);
-        mNews = findViewById(R.id.btn_news);
+        // NAVIGATION BAR***
 
+        // Navigate to ProfileActivity
+        mProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // Navigate to MyTexts
         mOpinion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Navigate to MyImages
         mPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Navigate to MyVideos
         mVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,18 +115,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        mUpload.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, NewPostActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
+        // Navigate to NewsActivity
         mNews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, NewsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // Navigate to RewardActivity
+        mDonate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, RewardActivity.class);
                 startActivity(intent);
             }
         });

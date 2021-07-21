@@ -35,6 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class VideoAdapter extends RecyclerView.ViewHolder {
 
+    // Declare variables
     SimpleExoPlayer mExoplayer;
     PlayerView mPlayerView;
     ImageButton likeButton;
@@ -46,6 +47,7 @@ public class VideoAdapter extends RecyclerView.ViewHolder {
         super(itemView);
     }
 
+    // For Videoview in Recyclerview
     public void setExoplayer(Application application, String title, String location, String notes, String date, String mVideoUrl) {
 
         TextView mTitle = itemView.findViewById(R.id.tv_title2);
@@ -75,6 +77,7 @@ public class VideoAdapter extends RecyclerView.ViewHolder {
         }
     }
 
+    // For like button
     public void setLikesButtonStatus(final String postKey) {
         likeButton = itemView.findViewById(R.id.like_btn);
         likesDisplay = itemView.findViewById(R.id.likes_textView);
@@ -101,7 +104,7 @@ public class VideoAdapter extends RecyclerView.ViewHolder {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Can show a toast message
+                // Can show a Toast message
             }
         });
     }

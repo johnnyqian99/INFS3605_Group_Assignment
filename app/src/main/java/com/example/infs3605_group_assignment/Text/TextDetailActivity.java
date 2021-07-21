@@ -3,11 +3,9 @@ package com.example.infs3605_group_assignment.Text;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.infs3605_group_assignment.R;
-import com.squareup.picasso.Picasso;
 
 public class TextDetailActivity extends AppCompatActivity {
 
@@ -19,18 +17,31 @@ public class TextDetailActivity extends AppCompatActivity {
         getIncomingIntent();
     }
 
+    // Retrieve post data when item clicked in Recyclerview
     private void getIncomingIntent() {
-        if (getIntent().hasExtra("text_name")) {
-            String textName = getIntent().getStringExtra("text_name");
+        // Ensure that the previous intent has all the "getExtra" required
+        if (getIntent().hasExtra("text_title") && getIntent().hasExtra("text_location")
+                && getIntent().hasExtra("text_notes") && getIntent().hasExtra("text_date")) {
+            String textTitle = getIntent().getStringExtra("text_title");
+            String textLocation = getIntent().getStringExtra("text_location");
+            String textNotes = getIntent().getStringExtra("text_notes");
+            String textDate = getIntent().getStringExtra("text_date");
 
-            setText(textName);
+            setText(textTitle, textLocation, textNotes, textDate);
         }
     }
 
-    private void setText(String textName) {
+    // Set XML variables
+    private void setText(String textTitle, String textLocation, String textNotes, String textDate) {
 
-        TextView name = findViewById(R.id.text_title);
-        name.setText(textName);
+        TextView title = findViewById(R.id.text_title);
+        title.setText(textTitle);
+        TextView location = findViewById(R.id.text_location);
+        location.setText(textLocation);
+        TextView notes = findViewById(R.id.text_notes);
+        notes.setText(textNotes);
+        TextView date = findViewById(R.id.text_date);
+        date.setText(textDate);
 
     }
 }

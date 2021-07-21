@@ -35,6 +35,7 @@ import java.util.List;
 
 public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    // Declare variables
     private FloatingActionButton floatingActionButton;
     private Spinner mSpinner;
     private RecyclerView mRecyclerView;
@@ -48,17 +49,30 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_texts);
 
-        getSupportActionBar().hide();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Text");
 
+        // Remove action bar
+//        getSupportActionBar().hide();
+
+        // Assign variables
         floatingActionButton = findViewById(R.id.floatingActionButton);
         progressCircle = findViewById(R.id.progress_circle);
         mSpinner = findViewById(R.id.spinner);
+        mRecyclerView = findViewById(R.id.rv_text);
+
+        // Spinner
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.textActivityTypes, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(adapter);
         mSpinner.setOnItemSelectedListener(this);
 
+        // Recyclerview
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mUploads = new ArrayList<>();
+
+        // Navigate to NewPostActivity
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,12 +82,7 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
             }
         });
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Text");
-        mRecyclerView = findViewById(R.id.rv_text);
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mUploads = new ArrayList<>();
-
+        // Load data into Recyclerview
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -96,6 +105,8 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
 
     }
 
+    // Below two methods are for item selected on spinner
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String text = parent.getItemAtPosition(position).toString();
@@ -114,6 +125,7 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
 
     }
 
+    // For options menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -136,6 +148,7 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
                 return false;
             }
         });
+
         return true;
     }
 }

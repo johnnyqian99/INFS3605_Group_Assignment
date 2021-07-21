@@ -15,7 +15,7 @@ public class SplashActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-        // splash screen length
+        // Splash screen length
         Handler mHandler = new Handler();
         mHandler.postDelayed(mLaunchApp, 300);
     }

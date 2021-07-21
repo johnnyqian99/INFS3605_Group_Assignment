@@ -35,6 +35,7 @@ import java.util.List;
 
 public class MyImages extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    // Declare variables
     private FloatingActionButton floatingActionButton;
     private Spinner mSpinner;
     private ProgressBar mProgressCircle;
@@ -48,22 +49,26 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_images);
 
+        // Assign variables
+        databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Image");
         floatingActionButton = findViewById(R.id.floatingActionButton);
         mSpinner = findViewById(R.id.spinner);
+        mRecyclerView = findViewById(R.id.rv_image);
+        mProgressCircle = findViewById(R.id.progress_circle);
+
+        // Spinner
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.imageActivityTypes, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(adapter);
         mSpinner.setOnItemSelectedListener(this);
 
-        mProgressCircle = findViewById(R.id.progress_circle);
-        mRecyclerView = findViewById(R.id.rv_image);
+        // Recyclerview
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mUploads = new ArrayList<>();
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Image");
-
+        // Navigate to NewPostActivity
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,6 +78,7 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
             }
         });
 
+        // Load data into Recyclerview
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -95,6 +101,8 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
 
     }
 
+    // Below two methods are for item selected on spinner
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String text = parent.getItemAtPosition(position).toString();
@@ -113,6 +121,7 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
 
     }
 
+    // For options menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -135,6 +144,7 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
                 return false;
             }
         });
+
         return true;
     }
 }

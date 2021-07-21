@@ -1,7 +1,5 @@
 package com.example.infs3605_group_assignment.Image;
 
-import com.google.firebase.database.Exclude;
-
 public class ImageUpload {
 
     private String mTitle;
@@ -9,10 +7,8 @@ public class ImageUpload {
     private String mNotes;
     private String mDate;
     private String mImageUrl;
-//    private String mKey;
 
     public ImageUpload() {
-        // empty constructor needed
     }
 
     public ImageUpload(String title, String location, String notes, String date, String imageUrl) {
@@ -66,14 +62,4 @@ public class ImageUpload {
     public void setmImageUrl(String mImageUrl) {
         this.mImageUrl = mImageUrl;
     }
-
-//    @Exclude
-//    public String getKey() {
-//        return mKey;
-//    }
-//
-//    @Exclude
-//    public void setKey(String key) {
-//        mKey = key;
-//    }
 }

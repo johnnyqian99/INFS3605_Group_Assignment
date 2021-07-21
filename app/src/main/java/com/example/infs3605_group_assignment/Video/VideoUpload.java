@@ -9,10 +9,8 @@ public class VideoUpload {
     private String mNotes;
     private String mDate;
     private String mVideoUrl;
-    private String mKey;
 
     public VideoUpload() {
-        // empty constructor needed
     }
 
     public VideoUpload(String title, String location, String notes, String date, String videoUrl) {
@@ -64,13 +62,4 @@ public class VideoUpload {
         this.mVideoUrl = mVideoUrl;
     }
 
-    @Exclude
-    public String getKey() {
-        return mKey;
-    }
-
-    @Exclude
-    public void setKey(String key) {
-        mKey = key;
-    }
 }

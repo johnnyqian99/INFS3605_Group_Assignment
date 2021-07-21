@@ -17,6 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class NewPostActivity extends AppCompatActivity {
 
+    // Declare variables
     private Button mBtnText;
     private Button mBtnImage;
     private Button mBtnVideo;
@@ -27,11 +28,17 @@ public class NewPostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_post);
 
-        // Assign variable
+        // Assign variables
+        mBtnText = findViewById(R.id.btn_post_text);
+        mBtnImage = findViewById(R.id.btn_post_image);
+        mBtnVideo = findViewById(R.id.btn_post_video);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        // Set home selected
+
+        // ***NAVIGATION BAR
+
+        // Set current selected item
         bottomNavigationView.setSelectedItemId(R.id.post);
-        // Perform ItemSelectedListener
+        // Set up select listener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -61,8 +68,9 @@ public class NewPostActivity extends AppCompatActivity {
             }
         });
 
-        // Direct TEXT button
-        mBtnText = findViewById(R.id.btn_post_text);
+        // NAVIGATION BAR***
+
+        // Navigate to TextPostActivity
         mBtnText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,8 +79,7 @@ public class NewPostActivity extends AppCompatActivity {
             }
         });
 
-        // Direct IMAGE button
-        mBtnImage = findViewById(R.id.btn_post_image);
+        // Navigate to ImagePostActivity
         mBtnImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,8 +88,7 @@ public class NewPostActivity extends AppCompatActivity {
             }
         });
 
-        // Direct VIDEO button
-        mBtnVideo = findViewById(R.id.btn_post_video);
+        // Navigate to VideoPostActivity
         mBtnVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

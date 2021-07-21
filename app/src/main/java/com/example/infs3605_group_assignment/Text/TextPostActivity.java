@@ -16,12 +16,12 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class TextPostActivity extends AppCompatActivity {
 
+    // Declare variables
     private EditText mTitle;
     private EditText mLocation;
     private EditText mNotes;
     private EditText mDate;
     private Button mUpload;
-
     private DatabaseReference databaseReference;
 
     @Override
@@ -29,13 +29,14 @@ public class TextPostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_post);
 
+        databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Text");
+
+        // Assign variables
         mTitle = findViewById(R.id.et_title);
         mLocation = findViewById(R.id.et_location);
         mNotes = findViewById(R.id.et_notes);
         mDate = findViewById(R.id.et_date);
         mUpload = findViewById(R.id.btn_upload);
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Text");
 
         mUpload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,13 +46,16 @@ public class TextPostActivity extends AppCompatActivity {
         });
     }
 
+    // Upload file into firebase database and storage
     private void uploadFile() {
 
+        // Retrieve text in the EditText fields
         String title = mTitle.getText().toString().trim();
         String location = mLocation.getText().toString().trim();
         String notes = mNotes.getText().toString().trim();
         String date = mDate.getText().toString().trim();
 
+        // Ensure that no entry is blank
         if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(location) &&
                 !TextUtils.isEmpty(notes) && !TextUtils.isEmpty(date)) {
 
@@ -73,5 +77,4 @@ public class TextPostActivity extends AppCompatActivity {
             Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
         }
     }
-
 }

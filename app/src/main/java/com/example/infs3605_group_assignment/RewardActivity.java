@@ -19,11 +19,14 @@ public class RewardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reward);
 
-        // Assign variable
+        // Assign variables
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        // Set home selected
+
+        // ***NAVIGATION BAR
+
+        // Set current selected item
         bottomNavigationView.setSelectedItemId(R.id.reward);
-        // Perform ItemSelectedListener
+        // Set up select listener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -52,5 +55,7 @@ public class RewardActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        // NAVIGATION BAR***
     }
 }

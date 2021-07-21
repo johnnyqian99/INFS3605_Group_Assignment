@@ -25,13 +25,16 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder
 
     private Context mContext;
     private List<TextUpload> mUploads;
-    private List<TextUpload> mUploadsFull;
+    private List<TextUpload> mUploadsFull; // filtered list
 
+    // Constructor
     public TextAdapter(Context context, List<TextUpload> uploads) {
         mContext = context;
         mUploads = uploads;
         mUploadsFull = new ArrayList<>(uploads);
     }
+
+    // Below 3 methods for adapter
 
     @Override
     public TextViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -48,13 +51,16 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder
         holder.mNotes.setText(uploadCurrent.getmNotes());
         holder.mDate.setText(uploadCurrent.getmDate());
 
+        // Click listener for items in Recyclerview
         holder.textLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "Click position: " + mUploads.get(position).getmTitle(), Toast.LENGTH_SHORT).show();
-
+                // Send extras for detail
                 Intent intent = new Intent(mContext, TextDetailActivity.class);
-                intent.putExtra("text_name", mUploads.get(position).getmTitle());
+                intent.putExtra("text_title", mUploads.get(position).getmTitle());
+                intent.putExtra("text_location", mUploads.get(position).getmLocation());
+                intent.putExtra("text_notes", mUploads.get(position).getmNotes());
+                intent.putExtra("text_date", mUploads.get(position).getmDate());
                 mContext.startActivity(intent);
             }
         });
@@ -65,6 +71,7 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder
         return mUploads.size();
     }
 
+    // Display content into Cardview
     public class TextViewHolder extends RecyclerView.ViewHolder {
 
         public TextView mTitle;
@@ -85,6 +92,8 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder
             textLayout = itemView.findViewById(R.id.text_layout);
         }
     }
+
+    // Below methods are for search filter
 
     @Override
     public Filter getFilter() {

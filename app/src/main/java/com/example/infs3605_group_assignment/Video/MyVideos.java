@@ -38,6 +38,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    // Declare variables
     private FloatingActionButton floatingActionButton;
     private ProgressBar progressCircle;
     private Spinner mSpinner;
@@ -50,21 +51,27 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_videos);
 
+        databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Video");
+        likesReference = FirebaseDatabase.getInstance().getReference("Uploads/Likes");
+
+        // Assign variables
         floatingActionButton = findViewById(R.id.floatingActionButton);
         progressCircle = findViewById(R.id.progress_circle);
         mSpinner = findViewById(R.id.spinner);
+
+        // Spinner
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.videoActivityTypes, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(adapter);
         mSpinner.setOnItemSelectedListener(this);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Video");
+        // Recyclerview
         mRecyclerView = findViewById(R.id.rv_video);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        likesReference = FirebaseDatabase.getInstance().getReference("Uploads/Likes");
 
+        // Navigate to NewPostActivity
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,6 +82,7 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
         });
     }
 
+    // Populate Recyclerview
     @Override
     protected void onStart() {
         super.onStart();
@@ -89,7 +97,7 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
                     @Override
                     protected void onBindViewHolder(@NonNull VideoAdapter holder, int position, @NonNull VideoUpload model) {
 
-                        // This will help get the userID for like function
+                        // This will get the userID for like function
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                         String currentUserId = user.getUid();
                         final String postKey = getRef(position).getKey();
@@ -123,7 +131,7 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
 
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError error) {
-                                        // Can show a toast message
+                                        // Can show a Toast message
                                     }
                                 });
                             }
@@ -143,6 +151,8 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
         mRecyclerView.setAdapter(firebaseRecyclerAdapter);
     }
 
+    // Below two methods are for item selected on spinner
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String text = parent.getItemAtPosition(position).toString();
@@ -161,6 +171,7 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
 
     }
 
+    // Search by title
     private void firebaseSearch(String searchText) {
         String query = searchText;
         Query firebaseQuery = databaseReference.orderByChild("mTitle").startAt(query).endAt(query + "\uf8ff");
@@ -192,6 +203,7 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
         mRecyclerView.setAdapter(firebaseRecyclerAdapter);
     }
 
+    // For options menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();

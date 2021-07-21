@@ -25,13 +25,16 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     private Context mContext;
     private List<ImageUpload> mUploads;
-    private List<ImageUpload> mUploadsFull;
+    private List<ImageUpload> mUploadsFull; // filtered list
 
+    // Constructor
     public ImageAdapter(Context context, List<ImageUpload> uploads) {
         mContext = context;
         mUploads = uploads;
         mUploadsFull = new ArrayList<>(uploads);
     }
+
+    // Below 3 methods for adapter
 
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -54,14 +57,17 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
                 .centerCrop()
                 .into(holder.mImageView);
 
+        // Click listener for items in Recyclerview
         holder.imageLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "Click position: " + mUploads.get(position).getmTitle(), Toast.LENGTH_SHORT).show();
-
                 Intent intent = new Intent(mContext, ImageDetailActivity.class);
+                // Send extras for detail
                 intent.putExtra("image_url", mUploads.get(position).getmImageUrl());
-                intent.putExtra("image_name", mUploads.get(position).getmTitle());
+                intent.putExtra("image_title", mUploads.get(position).getmTitle());
+                intent.putExtra("image_location", mUploads.get(position).getmLocation());
+                intent.putExtra("image_notes", mUploads.get(position).getmNotes());
+                intent.putExtra("image_date", mUploads.get(position).getmDate());
                 mContext.startActivity(intent);
             }
         });
@@ -72,6 +78,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         return mUploads.size();
     }
 
+    // Display content into Cardview
     public class ImageViewHolder extends RecyclerView.ViewHolder {
 
         public TextView mTitle;
@@ -92,6 +99,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             imageLayout = itemView.findViewById(R.id.image_layout);
         }
     }
+
+    // Below methods are for search filter
 
     @Override
     public Filter getFilter() {

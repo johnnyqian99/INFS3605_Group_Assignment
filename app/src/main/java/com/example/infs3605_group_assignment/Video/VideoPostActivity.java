@@ -32,6 +32,7 @@ public class VideoPostActivity extends AppCompatActivity {
 
     private static final int PICK_VIDEO_REQUEST = 1;
 
+    // Declare variables
     private VideoView mVideoView;
     private EditText mTitle;
     private EditText mLocation;
@@ -54,6 +55,10 @@ public class VideoPostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_post);
 
+        storageReference = FirebaseStorage.getInstance().getReference("Uploads/Video");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Video");
+
+        // Assign variables
         mVideoView = findViewById(R.id.video_view);
         mTitle = findViewById(R.id.et_title);
         mLocation = findViewById(R.id.et_location);
@@ -68,10 +73,9 @@ public class VideoPostActivity extends AppCompatActivity {
         mediaController.setAnchorView(mVideoView);
         mVideoView.start();
 
-        storageReference = FirebaseStorage.getInstance().getReference("Uploads/Video");
-        databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Video");
         videoUpload = new VideoUpload();
 
+        // Open file to choose media from
         mChooseFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,6 +83,7 @@ public class VideoPostActivity extends AppCompatActivity {
             }
         });
 
+        // Upload data
         mUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,6 +125,7 @@ public class VideoPostActivity extends AppCompatActivity {
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
 
+    // Upload data into firebase database and storage
     private void uploadFile() {
 
         String title = mTitle.getText().toString();
