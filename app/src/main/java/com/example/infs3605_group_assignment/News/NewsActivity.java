@@ -46,7 +46,6 @@ public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayou
     private List<Article> articles = new ArrayList<>();
     private NewsAdapter adapter;
     private String TAG = NewsActivity.class.getSimpleName();
-    private TextView topHeadline;
     private SwipeRefreshLayout swipeRefreshLayout;
     private BottomNavigationView bottomNavigationView;
 
@@ -58,7 +57,6 @@ public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayou
         // Assign variables
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
-        topHeadline = findViewById(R.id.top_head_lines);
         recyclerView = findViewById(R.id.recyclerView);
 
         // ***NAVIGATION BAR
@@ -139,12 +137,9 @@ public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayou
 
                     initListener();
 
-                    topHeadline.setVisibility(View.VISIBLE);
                     swipeRefreshLayout.setRefreshing(false);
 
                 } else {
-
-                    topHeadline.setVisibility(View.INVISIBLE);
                     swipeRefreshLayout.setRefreshing(false);
                     Toast.makeText(NewsActivity.this, "No Result!", Toast.LENGTH_SHORT).show();
                 }
@@ -152,8 +147,6 @@ public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayou
 
             @Override
             public void onFailure(Call<NewsModel> call, Throwable t) {
-
-                topHeadline.setVisibility(View.INVISIBLE);
                 swipeRefreshLayout.setRefreshing(false);
             }
         });

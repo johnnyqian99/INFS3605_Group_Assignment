@@ -21,17 +21,15 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> implements Filterable {
+public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
 
     private Context mContext;
     private List<ImageUpload> mUploads;
-    private List<ImageUpload> mUploadsFull; // filtered list
 
     // Constructor
     public ImageAdapter(Context context, List<ImageUpload> uploads) {
         mContext = context;
         mUploads = uploads;
-        mUploadsFull = new ArrayList<>(uploads);
     }
 
     // Below 3 methods for adapter
@@ -99,42 +97,5 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             imageLayout = itemView.findViewById(R.id.image_layout);
         }
     }
-
-    // Below methods are for search filter
-
-    @Override
-    public Filter getFilter() {
-        return uploadsFilter;
-    }
-
-    private Filter uploadsFilter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            List<ImageUpload> filteredList = new ArrayList<>();
-
-            if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(mUploadsFull);
-            } else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
-
-                for (ImageUpload item : mUploadsFull) {
-                    if (item.getmTitle().toLowerCase().contains(filterPattern)) {
-                        filteredList.add(item);
-                    }
-                }
-            }
-            FilterResults results = new FilterResults();
-            results.values = filteredList;
-
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            mUploads.clear();
-            mUploads.addAll((List) results.values);
-            notifyDataSetChanged();
-        }
-    };
 
 }

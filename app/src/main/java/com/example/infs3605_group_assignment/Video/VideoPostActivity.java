@@ -30,9 +30,8 @@ import com.google.firebase.storage.UploadTask;
 
 public class VideoPostActivity extends AppCompatActivity {
 
-    private static final int PICK_VIDEO_REQUEST = 1;
-
     // Declare variables
+    private static final int PICK_VIDEO_REQUEST = 1;
     private VideoView mVideoView;
     private EditText mTitle;
     private EditText mLocation;
@@ -41,19 +40,20 @@ public class VideoPostActivity extends AppCompatActivity {
     private Button mChooseFile;
     private Button mUpload;
     private ProgressBar mProgressBar;
-
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
     private VideoUpload videoUpload;
     private UploadTask uploadTask;
     private Uri videoUri;
-
     MediaController mediaController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_post);
+
+        // Remove action bar
+        getSupportActionBar().hide();
 
         storageReference = FirebaseStorage.getInstance().getReference("Uploads/Video");
         databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Video");

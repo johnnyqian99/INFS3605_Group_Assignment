@@ -29,6 +29,9 @@ public class TextPostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_post);
 
+        // Remove action bar
+        getSupportActionBar().hide();
+
         databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Text");
 
         // Assign variables

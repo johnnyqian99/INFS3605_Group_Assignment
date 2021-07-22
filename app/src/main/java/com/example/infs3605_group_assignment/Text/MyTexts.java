@@ -2,24 +2,21 @@ package com.example.infs3605_group_assignment.Text;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.infs3605_group_assignment.Image.MyImages;
+import com.example.infs3605_group_assignment.MainActivity;
 import com.example.infs3605_group_assignment.NewPostActivity;
 import com.example.infs3605_group_assignment.Video.MyVideos;
 import com.example.infs3605_group_assignment.R;
@@ -36,6 +33,7 @@ import java.util.List;
 public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     // Declare variables
+    private ImageButton backBtn;
     private FloatingActionButton floatingActionButton;
     private Spinner mSpinner;
     private RecyclerView mRecyclerView;
@@ -52,13 +50,24 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
         databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Text");
 
         // Remove action bar
-//        getSupportActionBar().hide();
+        getSupportActionBar().hide();
 
         // Assign variables
+        backBtn = findViewById(R.id.back_btn);
         floatingActionButton = findViewById(R.id.floatingActionButton);
         progressCircle = findViewById(R.id.progress_circle);
         mSpinner = findViewById(R.id.spinner);
         mRecyclerView = findViewById(R.id.rv_text);
+
+        // Navigate to MainActivity
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyTexts.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         // Spinner
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -125,30 +134,4 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
 
     }
 
-    // For options menu
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.text_menu, menu);
-
-        MenuItem searchItem = menu.findItem(R.id.text_search);
-        SearchView searchView = (SearchView) searchItem.getActionView();
-
-        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                mAdapter.getFilter().filter(newText);
-                return false;
-            }
-        });
-
-        return true;
-    }
 }

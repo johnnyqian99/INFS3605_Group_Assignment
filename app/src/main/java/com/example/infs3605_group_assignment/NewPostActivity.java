@@ -28,6 +28,9 @@ public class NewPostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_post);
 
+        // Remove action bar
+        getSupportActionBar().hide();
+
         // Assign variables
         mBtnText = findViewById(R.id.btn_post_text);
         mBtnImage = findViewById(R.id.btn_post_image);

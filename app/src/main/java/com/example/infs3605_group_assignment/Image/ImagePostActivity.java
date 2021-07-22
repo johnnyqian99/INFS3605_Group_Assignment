@@ -32,7 +32,6 @@ public class ImagePostActivity extends AppCompatActivity {
 
     // Declare variables
     private static final int PICK_IMAGE_REQUEST = 1;
-
     private ImageView mImageView;
     private Button mButtonChooseImage;
     private Button mButtonUpload;
@@ -41,7 +40,6 @@ public class ImagePostActivity extends AppCompatActivity {
     private EditText mNotes;
     private EditText mDate;
     private ProgressBar mProgressBar;
-
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
     private StorageTask storageTask;
@@ -52,6 +50,13 @@ public class ImagePostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_post);
 
+        // Remove action bar
+        getSupportActionBar().hide();
+
+        storageReference = FirebaseStorage.getInstance().getReference("Uploads/Image");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Image");
+
+        // Assign variables
         mImageView = findViewById(R.id.image_view);
         mButtonChooseImage = findViewById(R.id.button_choose_image);
         mButtonUpload = findViewById(R.id.button_upload);
@@ -60,9 +65,6 @@ public class ImagePostActivity extends AppCompatActivity {
         mNotes = findViewById(R.id.et_notes);
         mDate = findViewById(R.id.et_date);
         mProgressBar = findViewById(R.id.progress_bar);
-
-        storageReference = FirebaseStorage.getInstance().getReference("Uploads/Image");
-        databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Image");
 
         mButtonChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override

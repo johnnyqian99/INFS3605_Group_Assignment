@@ -19,6 +19,9 @@ public class RewardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reward);
 
+        // Remove action bar
+        getSupportActionBar().hide();
+
         // Assign variables
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 

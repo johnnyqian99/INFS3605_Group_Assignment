@@ -7,29 +7,30 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label=""
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.INFS3605_Group_Assignment">
-        <activity android:name=".Text.TextDetailActivity"></activity>
+        <activity android:name=".Text.TextDetailActivity" />
         <activity android:name=".Image.ImageDetailActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".RewardActivity" />
         <activity
             android:name=".News.NewsDetailActivity"
             android:theme="@style/Theme.INFS3605_Group_Assignment.NoActionBar" />
-        <activity android:name=".News.NewsActivity" />
+        <activity
+            android:name=".News.NewsActivity"
+            android:label="Top Headlines" />
         <activity android:name=".Video.MyVideos" />
-        <activity android:name=".Image.MyImages"
-            android:parentActivityName=".MainActivity">
-        </activity>
+        <activity
+            android:name=".Image.MyImages"
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".Text.MyTexts" />
         <activity android:name=".Video.VideoPostActivity" />
         <activity android:name=".Image.ImagePostActivity" />
         <activity android:name=".Text.TextPostActivity" />
         <activity android:name=".NewPostActivity" />
         <activity android:name=".SplashActivity">
-
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
 

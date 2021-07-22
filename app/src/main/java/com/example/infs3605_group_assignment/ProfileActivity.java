@@ -19,6 +19,9 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        // Remove action bar
+        getSupportActionBar().hide();
+
         // Assign variables
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 

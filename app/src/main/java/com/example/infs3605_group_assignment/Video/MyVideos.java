@@ -2,25 +2,22 @@ package com.example.infs3605_group_assignment.Video;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import com.example.infs3605_group_assignment.Image.MyImages;
+import com.example.infs3605_group_assignment.MainActivity;
 import com.example.infs3605_group_assignment.NewPostActivity;
 import com.example.infs3605_group_assignment.R;
 import com.example.infs3605_group_assignment.Text.MyTexts;
@@ -33,12 +30,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     // Declare variables
+    private ImageButton backBtn;
     private FloatingActionButton floatingActionButton;
     private ProgressBar progressCircle;
     private Spinner mSpinner;
@@ -51,10 +48,14 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_videos);
 
+        // Remove action bar
+        getSupportActionBar().hide();
+
         databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Video");
         likesReference = FirebaseDatabase.getInstance().getReference("Uploads/Likes");
 
         // Assign variables
+        backBtn = findViewById(R.id.back_btn);
         floatingActionButton = findViewById(R.id.floatingActionButton);
         progressCircle = findViewById(R.id.progress_circle);
         mSpinner = findViewById(R.id.spinner);
@@ -70,6 +71,16 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
         mRecyclerView = findViewById(R.id.rv_video);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Navigate to MainActivity
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyVideos.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         // Navigate to NewPostActivity
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -171,63 +182,4 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
 
     }
 
-    // Search by title
-    private void firebaseSearch(String searchText) {
-        String query = searchText;
-        Query firebaseQuery = databaseReference.orderByChild("mTitle").startAt(query).endAt(query + "\uf8ff");
-
-        FirebaseRecyclerOptions<VideoUpload> options =
-                new FirebaseRecyclerOptions.Builder<VideoUpload>()
-                        .setQuery(firebaseQuery, VideoUpload.class)
-                        .build();
-
-        FirebaseRecyclerAdapter<VideoUpload, VideoAdapter> firebaseRecyclerAdapter =
-                new FirebaseRecyclerAdapter<VideoUpload, VideoAdapter>(options) {
-                    @Override
-                    protected void onBindViewHolder(@NonNull VideoAdapter holder, int position, @NonNull VideoUpload model) {
-
-                        holder.setExoplayer(getApplication(), model.getmTitle(), model.getmLocation(), model.getmNotes(),
-                                model.getmDate(), model.getmVideoUrl());
-                    }
-
-                    @Override
-                    public VideoAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                        View view = LayoutInflater.from(parent.getContext())
-                                .inflate(R.layout.video_item, parent, false);
-
-                        return new VideoAdapter(view);
-                    }
-                };
-
-        firebaseRecyclerAdapter.startListening();
-        mRecyclerView.setAdapter(firebaseRecyclerAdapter);
-    }
-
-    // For options menu
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.video_menu, menu);
-
-        MenuItem searchItem = menu.findItem(R.id.video_search);
-        SearchView searchView = (SearchView) searchItem.getActionView();
-
-        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                firebaseSearch(query);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                firebaseSearch(newText);
-                return false;
-            }
-        });
-
-        return super.onCreateOptionsMenu(menu);
-    }
 }

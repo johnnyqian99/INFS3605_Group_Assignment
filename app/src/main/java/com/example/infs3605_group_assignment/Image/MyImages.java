@@ -2,23 +2,20 @@ package com.example.infs3605_group_assignment.Image;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.infs3605_group_assignment.MainActivity;
 import com.example.infs3605_group_assignment.NewPostActivity;
 import com.example.infs3605_group_assignment.Video.MyVideos;
 import com.example.infs3605_group_assignment.R;
@@ -36,6 +33,7 @@ import java.util.List;
 public class MyImages extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     // Declare variables
+    private ImageButton backBtn;
     private FloatingActionButton floatingActionButton;
     private Spinner mSpinner;
     private ProgressBar mProgressCircle;
@@ -49,11 +47,13 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_images);
 
-        // Enable back button in action bar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // Remove action bar
+        getSupportActionBar().hide();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Image");
 
         // Assign variables
-        databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Image");
+        backBtn = findViewById(R.id.back_btn);
         floatingActionButton = findViewById(R.id.floatingActionButton);
         mSpinner = findViewById(R.id.spinner);
         mRecyclerView = findViewById(R.id.rv_image);
@@ -70,6 +70,16 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mUploads = new ArrayList<>();
+
+        // Navigate to MainActivity
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyImages.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         // Navigate to NewPostActivity
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -122,33 +132,6 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
-    }
-
-    // For options menu
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.image_menu, menu);
-
-        MenuItem searchItem = menu.findItem(R.id.image_search);
-        SearchView searchView = (SearchView) searchItem.getActionView();
-
-        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                mAdapter.getFilter().filter(newText);
-                return false;
-            }
-        });
-
-        return true;
     }
 
 }
