@@ -141,35 +141,35 @@ public class NewsDetailActivity extends AppCompatActivity implements AppBarLayou
         }
 
     }
-
-    // For options menu
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.news_share_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        int id = item.getItemId();
-        if (id == R.id.view_web) {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(mUrl));
-            startActivity(intent);
-        } else if (id == R.id.share) {
-            try {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/plan");
-                intent.putExtra(Intent.EXTRA_SUBJECT, mSource);
-                String body = mTitle + "\n\n" + mUrl + "\n\n" + "Share from the News App" + "\n";
-                intent.putExtra(Intent.EXTRA_TEXT, body);
-                startActivity(Intent.createChooser(intent, "Share with :"));
-            } catch (Exception e) {
-                Toast.makeText(this, "Hmm.. Sorry, \nCannot share", Toast.LENGTH_SHORT).show();
-            }
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//
+//    // For options menu
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.news_share_menu, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//
+//        int id = item.getItemId();
+//        if (id == R.id.view_web) {
+//            Intent intent = new Intent(Intent.ACTION_VIEW);
+//            intent.setData(Uri.parse(mUrl));
+//            startActivity(intent);
+//        } else if (id == R.id.share) {
+//            try {
+//                Intent intent = new Intent(Intent.ACTION_SEND);
+//                intent.setType("text/plan");
+//                intent.putExtra(Intent.EXTRA_SUBJECT, mSource);
+//                String body = mTitle + "\n\n" + mUrl + "\n\n" + "Share from the News App" + "\n";
+//                intent.putExtra(Intent.EXTRA_TEXT, body);
+//                startActivity(Intent.createChooser(intent, "Share with :"));
+//            } catch (Exception e) {
+//                Toast.makeText(this, "Hmm.. Sorry, \nCannot share", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 }

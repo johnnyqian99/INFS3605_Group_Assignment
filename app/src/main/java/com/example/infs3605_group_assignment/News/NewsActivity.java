@@ -141,7 +141,7 @@ public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayou
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
 
-//                    initListener();
+                    initListener();
 
 //                    topHeadline.setVisibility(View.VISIBLE);
                     swipeRefreshLayout.setRefreshing(false);
@@ -162,25 +162,25 @@ public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayou
             }
         });
     }
-//
-//    // Click listener for items in Recyclerview
-//    private void initListener() {
-//
-//        adapter.setOnItemClickListener(new NewsAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(View view, int position) {
+
+    // Click listener for items in Recyclerview
+    private void initListener() {
+
+        adapter.setOnItemClickListener(new NewsAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
 //                ImageView imageView = view.findViewById(R.id.img);
-//                Intent intent = new Intent(NewsActivity.this, NewsDetailActivity.class);
-//
-//                Article article = articles.get(position);
-//                // Send extras for detail
-//                intent.putExtra("url", article.getUrl());
-//                intent.putExtra("title", article.getTitle());
-//                intent.putExtra("img", article.getUrlToImage());
-//                intent.putExtra("date", article.getPublishedAt());
-//                intent.putExtra("source", article.getSource().getName());
-//                intent.putExtra("author", article.getAuthor());
-//
+                Intent intent = new Intent(NewsActivity.this, NewsDetailActivity.class);
+
+                Article article = articles.get(position);
+                // Send extras for detail
+                intent.putExtra("url", article.getUrl());
+                intent.putExtra("title", article.getTitle());
+                intent.putExtra("img", article.getUrlToImage());
+                intent.putExtra("date", article.getPublishedAt());
+                intent.putExtra("source", article.getSource().getName());
+                intent.putExtra("author", article.getAuthor());
+
 //                Pair<View, String> pair = Pair.create((View)imageView, ViewCompat.getTransitionName(imageView));
 //                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
 //                        NewsActivity.this,
@@ -188,10 +188,11 @@ public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayou
 //                );
 //
 //                startActivity(intent, optionsCompat.toBundle());
-//            }
-//        });
-//
-//    }
+                startActivity(intent);
+            }
+        });
+
+    }
 
     // For options menu
     @Override
