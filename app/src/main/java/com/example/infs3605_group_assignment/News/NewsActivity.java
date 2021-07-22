@@ -38,7 +38,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class NewsActivity extends AppCompatActivity { //implements SwipeRefreshLayout.OnRefreshListener
 
     public static final String API_KEY = "d07ac6cb887948d08ba1f4b2947d51e0";
     private RecyclerView recyclerView;
@@ -46,79 +46,83 @@ public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayou
     private List<Article> articles = new ArrayList<>();
     private NewsAdapter adapter;
     private String TAG = NewsActivity.class.getSimpleName();
-    private TextView topHeadline;
-    private SwipeRefreshLayout swipeRefreshLayout;
-    private BottomNavigationView bottomNavigationView;
+//    private TextView topHeadline;
+//    private SwipeRefreshLayout swipeRefreshLayout;
+//    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
 
-        // Assign variables
-        bottomNavigationView = findViewById(R.id.bottom_navigation);
-        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
-        topHeadline = findViewById(R.id.top_head_lines);
+//        // Assign variables
+//        bottomNavigationView = findViewById(R.id.bottom_navigation);
+//        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+//        topHeadline = findViewById(R.id.top_head_lines);
         recyclerView = findViewById(R.id.recyclerView);
-
-        // ***NAVIGATION BAR
-
-        // Set current selected item
-        bottomNavigationView.setSelectedItemId(R.id.news);
-        // Set up select listener
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch (item.getItemId()) {
-                    case R.id.home:
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        overridePendingTransition(0, 0);
-                        return true;
-                    case R.id.news:
-                        return true;
-                    case R.id.post:
-                        startActivity(new Intent(getApplicationContext(), NewPostActivity.class));
-                        overridePendingTransition(0, 0);
-                        return true;
-                    case R.id.reward:
-                        startActivity(new Intent(getApplicationContext(), RewardActivity.class));
-                        overridePendingTransition(0, 0);
-                        return true;
-                    case R.id.profile:
-                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
-                        overridePendingTransition(0, 0);
-                        return true;
-                }
-
-                return false;
-            }
-        });
-
-        // NAVIGATION BAR***
-
+//
+//        // ***NAVIGATION BAR
+//
+//        // Set current selected item
+//        bottomNavigationView.setSelectedItemId(R.id.news);
+//        // Set up select listener
+//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//
+//                switch (item.getItemId()) {
+//                    case R.id.home:
+//                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+//                        overridePendingTransition(0, 0);
+//                        return true;
+//                    case R.id.news:
+//                        return true;
+//                    case R.id.post:
+//                        startActivity(new Intent(getApplicationContext(), NewPostActivity.class));
+//                        overridePendingTransition(0, 0);
+//                        return true;
+//                    case R.id.reward:
+//                        startActivity(new Intent(getApplicationContext(), RewardActivity.class));
+//                        overridePendingTransition(0, 0);
+//                        return true;
+//                    case R.id.profile:
+//                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+//                        overridePendingTransition(0, 0);
+//                        return true;
+//                }
+//
+//                return false;
+//            }
+//        });
+//
+//        // NAVIGATION BAR***
+//
         // Recyclerview set up
         layoutManager = new LinearLayoutManager(NewsActivity.this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setNestedScrollingEnabled(false);
 
-        // For swipe-top refresh
-        swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
-        onLoadingSwipeRefresh("");
+//        // For swipe-top refresh
+//        swipeRefreshLayout.setOnRefreshListener(this);
+//        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+//        onLoadingSwipeRefresh("");
+        LoadJson("");
     }
 
     // Retrieve news data via Json
     public void LoadJson(final String keyword) {
 
-        swipeRefreshLayout.setRefreshing(true);
+//        swipeRefreshLayout.setRefreshing(true);
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+
         String country = Utils.getCountry();
+        String language = Utils.getLanguage();
+
         Call<NewsModel> call;
 
         if (keyword.length() > 0) {
-            call = apiInterface.getNewsSearch(keyword, country, "publishedAt", API_KEY);
+            call = apiInterface.getNewsSearch(keyword, language, "publishedAt", API_KEY);
         } else {
             call = apiInterface.getNews(country, API_KEY);
         }
@@ -137,57 +141,57 @@ public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayou
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
 
-                    initListener();
+//                    initListener();
 
-                    topHeadline.setVisibility(View.VISIBLE);
-                    swipeRefreshLayout.setRefreshing(false);
-
+//                    topHeadline.setVisibility(View.VISIBLE);
+//                    swipeRefreshLayout.setRefreshing(false);
+//
                 } else {
-
-                    topHeadline.setVisibility(View.INVISIBLE);
-                    swipeRefreshLayout.setRefreshing(false);
+//
+//                    topHeadline.setVisibility(View.INVISIBLE);
+//                    swipeRefreshLayout.setRefreshing(false);
                     Toast.makeText(NewsActivity.this, "No Result!", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<NewsModel> call, Throwable t) {
-
-                topHeadline.setVisibility(View.INVISIBLE);
-                swipeRefreshLayout.setRefreshing(false);
+//
+//                topHeadline.setVisibility(View.INVISIBLE);
+//                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }
-
-    // Click listener for items in Recyclerview
-    private void initListener() {
-
-        adapter.setOnItemClickListener(new NewsAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                ImageView imageView = view.findViewById(R.id.img);
-                Intent intent = new Intent(NewsActivity.this, NewsDetailActivity.class);
-
-                Article article = articles.get(position);
-                // Send extras for detail
-                intent.putExtra("url", article.getUrl());
-                intent.putExtra("title", article.getTitle());
-                intent.putExtra("img", article.getUrlToImage());
-                intent.putExtra("date", article.getPublishedAt());
-                intent.putExtra("source", article.getSource().getName());
-                intent.putExtra("author", article.getAuthor());
-
-                Pair<View, String> pair = Pair.create((View)imageView, ViewCompat.getTransitionName(imageView));
-                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                        NewsActivity.this,
-                        pair
-                );
-
-                startActivity(intent, optionsCompat.toBundle());
-            }
-        });
-
-    }
+//
+//    // Click listener for items in Recyclerview
+//    private void initListener() {
+//
+//        adapter.setOnItemClickListener(new NewsAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position) {
+//                ImageView imageView = view.findViewById(R.id.img);
+//                Intent intent = new Intent(NewsActivity.this, NewsDetailActivity.class);
+//
+//                Article article = articles.get(position);
+//                // Send extras for detail
+//                intent.putExtra("url", article.getUrl());
+//                intent.putExtra("title", article.getTitle());
+//                intent.putExtra("img", article.getUrlToImage());
+//                intent.putExtra("date", article.getPublishedAt());
+//                intent.putExtra("source", article.getSource().getName());
+//                intent.putExtra("author", article.getAuthor());
+//
+//                Pair<View, String> pair = Pair.create((View)imageView, ViewCompat.getTransitionName(imageView));
+//                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+//                        NewsActivity.this,
+//                        pair
+//                );
+//
+//                startActivity(intent, optionsCompat.toBundle());
+//            }
+//        });
+//
+//    }
 
     // For options menu
     @Override
@@ -205,13 +209,15 @@ public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayou
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if (query.length() > 2) {
-                    onLoadingSwipeRefresh(query);
+//                    onLoadingSwipeRefresh(query);
+                    LoadJson(query);
                 }
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                LoadJson(newText);
                 return false;
             }
         });
@@ -220,24 +226,24 @@ public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         return true;
     }
-
-    // Below two methods are for swipe-top refresh
-
-    @Override
-    public void onRefresh() {
-        LoadJson("");
-    }
-
-    private void onLoadingSwipeRefresh(final String keyword) {
-
-        swipeRefreshLayout.post(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        LoadJson(keyword);
-                    }
-                }
-        );
-
-    }
+//
+//    // Below two methods are for swipe-top refresh
+//
+//    @Override
+//    public void onRefresh() {
+//        LoadJson("");
+//    }
+//
+//    private void onLoadingSwipeRefresh(final String keyword) {
+//
+//        swipeRefreshLayout.post(
+//                new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        LoadJson(keyword);
+//                    }
+//                }
+//        );
+//
+//    }
 }
