@@ -93,11 +93,11 @@ public class VideoAdapter extends RecyclerView.ViewHolder {
                 if (snapshot.child(postKey).hasChild(userId)) {
                     likesCount = (int) snapshot.child(postKey).getChildrenCount();
                     likeButton.setImageResource(R.drawable.ic_like);
-                    likesDisplay.setText(Integer.toString(likesCount) + likes);
+                    likesDisplay.setText(Integer.toString(likesCount) + " " + likes);
                 } else {
                     likesCount = (int) snapshot.child(postKey).getChildrenCount();
                     likeButton.setImageResource(R.drawable.ic_dislike);
-                    likesDisplay.setText(Integer.toString(likesCount) + likes);
+                    likesDisplay.setText(Integer.toString(likesCount) + " " + likes);
                 }
 
             }

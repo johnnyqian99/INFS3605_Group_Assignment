@@ -14,6 +14,9 @@ public class TextDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_detail);
 
+        // Remove action bar
+        getSupportActionBar().hide();
+
         getIncomingIntent();
     }
 

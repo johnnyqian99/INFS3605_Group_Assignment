@@ -73,7 +73,7 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Navigate to MainActivity
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+        backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MyVideos.this, MainActivity.class);

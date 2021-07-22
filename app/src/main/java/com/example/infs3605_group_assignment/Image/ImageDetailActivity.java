@@ -15,6 +15,9 @@ public class ImageDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_detail);
 
+        // Remove action bar
+        getSupportActionBar().hide();
+
         getIncomingIntent();
     }
 

@@ -21,7 +21,8 @@
         <activity
             android:name=".News.NewsActivity"
             android:label="Top Headlines" />
-        <activity android:name=".Video.MyVideos" />
+        <activity android:name=".Video.MyVideos"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".Image.MyImages"
             android:parentActivityName=".MainActivity" />
