@@ -46,57 +46,55 @@ public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayou
     private List<Article> articles = new ArrayList<>();
     private NewsAdapter adapter;
     private String TAG = NewsActivity.class.getSimpleName();
-//    private TextView topHeadline;
     private SwipeRefreshLayout swipeRefreshLayout;
-//    private BottomNavigationView bottomNavigationView;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
 
-//        // Assign variables
-//        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        // Assign variables
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
-//        topHeadline = findViewById(R.id.top_head_lines);
         recyclerView = findViewById(R.id.recyclerView);
-//
-//        // ***NAVIGATION BAR
-//
-//        // Set current selected item
-//        bottomNavigationView.setSelectedItemId(R.id.news);
-//        // Set up select listener
-//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//
-//                switch (item.getItemId()) {
-//                    case R.id.home:
-//                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-//                        overridePendingTransition(0, 0);
-//                        return true;
-//                    case R.id.news:
-//                        return true;
-//                    case R.id.post:
-//                        startActivity(new Intent(getApplicationContext(), NewPostActivity.class));
-//                        overridePendingTransition(0, 0);
-//                        return true;
-//                    case R.id.reward:
-//                        startActivity(new Intent(getApplicationContext(), RewardActivity.class));
-//                        overridePendingTransition(0, 0);
-//                        return true;
-//                    case R.id.profile:
-//                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
-//                        overridePendingTransition(0, 0);
-//                        return true;
-//                }
-//
-//                return false;
-//            }
-//        });
-//
-//        // NAVIGATION BAR***
-//
+
+        // ***NAVIGATION BAR
+
+        // Set current selected item
+        bottomNavigationView.setSelectedItemId(R.id.news);
+        // Set up select listener
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()) {
+                    case R.id.home:
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.news:
+                        return true;
+                    case R.id.post:
+                        startActivity(new Intent(getApplicationContext(), NewPostActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.reward:
+                        startActivity(new Intent(getApplicationContext(), RewardActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.profile:
+                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                }
+
+                return false;
+            }
+        });
+
+        // NAVIGATION BAR***
+
         // Recyclerview set up
         layoutManager = new LinearLayoutManager(NewsActivity.this);
         recyclerView.setLayoutManager(layoutManager);
@@ -143,12 +141,9 @@ public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayou
 
                     initListener();
 
-//                    topHeadline.setVisibility(View.VISIBLE);
                     swipeRefreshLayout.setRefreshing(false);
-//
+
                 } else {
-//
-//                    topHeadline.setVisibility(View.INVISIBLE);
                     swipeRefreshLayout.setRefreshing(false);
                     Toast.makeText(NewsActivity.this, "No Result!", Toast.LENGTH_SHORT).show();
                 }
@@ -156,8 +151,6 @@ public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayou
 
             @Override
             public void onFailure(Call<NewsModel> call, Throwable t) {
-//
-//                topHeadline.setVisibility(View.INVISIBLE);
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -224,8 +217,8 @@ public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         return true;
     }
-//
-//    // Below two methods are for swipe-top refresh
+
+    // Below two methods are for swipe-top refresh
 
     @Override
     public void onRefresh() {
