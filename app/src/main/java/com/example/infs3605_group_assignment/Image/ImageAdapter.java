@@ -98,10 +98,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
             menu.setHeaderTitle("Select Action");
-            MenuItem goDetail = menu.add(Menu.NONE, 1, 1, "View Details");
-            MenuItem delete = menu.add(Menu.NONE, 2, 2, "Delete");
+            MenuItem delete = menu.add(Menu.NONE, 1, 1, "Delete");
 
-            goDetail.setOnMenuItemClickListener(this);
             delete.setOnMenuItemClickListener(this);
         }
 
@@ -110,13 +108,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             if (mListener != null) {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
-                    switch (item.getItemId()) {
-                        case 1:
-                            mListener.onDetailClick(position);
-                            return true;
-                        case 2:
-                            mListener.onDeleteClick(position);
-                            return true;
+                    if (item.getItemId() == 1) {
+                        mListener.onDeleteClick(position);
+                        return true;
                     }
                 }
             }
@@ -127,9 +121,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     public interface OnItemClickListener {
         // Default click
         void onItemClick(int position);
-
-        // Navigate to detail screen
-        void onDetailClick(int position);
 
         // Delete item from firebase
         void onDeleteClick(int position);

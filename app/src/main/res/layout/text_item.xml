@@ -13,14 +13,15 @@
 
         <TextView
             android:id="@+id/tv_date"
-            android:layout_width="300dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Comment"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="@+id/tv_location2"
-            app:layout_constraintTop_toBottomOf="@+id/tv_location2" />
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:text="DATE"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_location2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_title2" />
 
         <TextView
             android:id="@+id/tv_title2"
@@ -51,14 +52,14 @@
 
         <TextView
             android:id="@+id/tv_notes2"
-            android:layout_width="300dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
-            android:text="Comment"
+            android:text="Notes"
             android:textColor="@android:color/black"
             android:textSize="14sp"
-            android:visibility="visible"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tv_location2"
             app:layout_constraintTop_toBottomOf="@+id/tv_location2" />
@@ -78,25 +79,26 @@
             android:id="@+id/like_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="60dp"
-            android:layout_marginRight="60dp"
-            android:layout_marginBottom="2dp"
-            android:src="@drawable/ic_dislike"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:background="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:src="@drawable/ic_dislike"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_notes2"
+            app:layout_constraintEnd_toStartOf="@+id/likes_textView"
+            app:layout_constraintTop_toTopOf="@+id/tv_notes2"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/likes_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             android:hint="likes"
             android:textColor="@android:color/black"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/like_btn"
-            app:layout_constraintStart_toEndOf="@+id/like_btn"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/like_btn" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

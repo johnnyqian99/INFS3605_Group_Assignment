@@ -135,14 +135,8 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
 
     }
 
-    // USE THIS IF YOU WANT TO DO SOMETHING WITH SINGLE CLICK
     @Override
     public void onItemClick(int position) {
-        Toast.makeText(this, "Normal click at position: " + position, Toast.LENGTH_SHORT).show(); // for testing
-    }
-
-    @Override
-    public void onDetailClick(int position) {
 //        Toast.makeText(this, "Detail click at position: " + position, Toast.LENGTH_SHORT).show(); // for testing
         // Send extras for detail
         Intent intent = new Intent(MyImages.this, ImageDetailActivity.class);
