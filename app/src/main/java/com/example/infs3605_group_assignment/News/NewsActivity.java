@@ -38,7 +38,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class NewsActivity extends AppCompatActivity { //implements SwipeRefreshLayout.OnRefreshListener
+public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     public static final String API_KEY = "d07ac6cb887948d08ba1f4b2947d51e0";
     private RecyclerView recyclerView;
@@ -47,7 +47,7 @@ public class NewsActivity extends AppCompatActivity { //implements SwipeRefreshL
     private NewsAdapter adapter;
     private String TAG = NewsActivity.class.getSimpleName();
 //    private TextView topHeadline;
-//    private SwipeRefreshLayout swipeRefreshLayout;
+    private SwipeRefreshLayout swipeRefreshLayout;
 //    private BottomNavigationView bottomNavigationView;
 
     @Override
@@ -57,7 +57,7 @@ public class NewsActivity extends AppCompatActivity { //implements SwipeRefreshL
 
 //        // Assign variables
 //        bottomNavigationView = findViewById(R.id.bottom_navigation);
-//        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
 //        topHeadline = findViewById(R.id.top_head_lines);
         recyclerView = findViewById(R.id.recyclerView);
 //
@@ -103,17 +103,17 @@ public class NewsActivity extends AppCompatActivity { //implements SwipeRefreshL
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setNestedScrollingEnabled(false);
 
-//        // For swipe-top refresh
-//        swipeRefreshLayout.setOnRefreshListener(this);
-//        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
-//        onLoadingSwipeRefresh("");
-        LoadJson("");
+        // For swipe-top refresh
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+
+        onLoadingSwipeRefresh("");
     }
 
     // Retrieve news data via Json
     public void LoadJson(final String keyword) {
 
-//        swipeRefreshLayout.setRefreshing(true);
+        swipeRefreshLayout.setRefreshing(true);
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
         String country = Utils.getCountry();
@@ -144,12 +144,12 @@ public class NewsActivity extends AppCompatActivity { //implements SwipeRefreshL
 //                    initListener();
 
 //                    topHeadline.setVisibility(View.VISIBLE);
-//                    swipeRefreshLayout.setRefreshing(false);
+                    swipeRefreshLayout.setRefreshing(false);
 //
                 } else {
 //
 //                    topHeadline.setVisibility(View.INVISIBLE);
-//                    swipeRefreshLayout.setRefreshing(false);
+                    swipeRefreshLayout.setRefreshing(false);
                     Toast.makeText(NewsActivity.this, "No Result!", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -158,7 +158,7 @@ public class NewsActivity extends AppCompatActivity { //implements SwipeRefreshL
             public void onFailure(Call<NewsModel> call, Throwable t) {
 //
 //                topHeadline.setVisibility(View.INVISIBLE);
-//                swipeRefreshLayout.setRefreshing(false);
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }
@@ -209,15 +209,13 @@ public class NewsActivity extends AppCompatActivity { //implements SwipeRefreshL
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if (query.length() > 2) {
-//                    onLoadingSwipeRefresh(query);
-                    LoadJson(query);
+                    onLoadingSwipeRefresh(query);
                 }
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                LoadJson(newText);
                 return false;
             }
         });
@@ -228,22 +226,22 @@ public class NewsActivity extends AppCompatActivity { //implements SwipeRefreshL
     }
 //
 //    // Below two methods are for swipe-top refresh
-//
-//    @Override
-//    public void onRefresh() {
-//        LoadJson("");
-//    }
-//
-//    private void onLoadingSwipeRefresh(final String keyword) {
-//
-//        swipeRefreshLayout.post(
-//                new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        LoadJson(keyword);
-//                    }
-//                }
-//        );
-//
-//    }
+
+    @Override
+    public void onRefresh() {
+        LoadJson("");
+    }
+
+    private void onLoadingSwipeRefresh(final String keyword) {
+
+        swipeRefreshLayout.post(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        LoadJson(keyword);
+                    }
+                }
+        );
+
+    }
 }
