@@ -30,7 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyImages extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class MyImages extends AppCompatActivity implements AdapterView.OnItemSelectedListener, ImageAdapter.OnItemClickListener {
 
     // Declare variables
     private ImageButton backBtn;
@@ -102,6 +102,7 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
 
                 mAdapter = new ImageAdapter(MyImages.this, mUploads);
                 mRecyclerView.setAdapter(mAdapter);
+                mAdapter.setOnItemClickListener(MyImages.this);
                 mProgressCircle.setVisibility(View.INVISIBLE);
             }
 
@@ -134,4 +135,27 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
 
     }
 
+    // USE THIS IF YOU WANT TO DO SOMETHING WITH SINGLE CLICK
+    @Override
+    public void onItemClick(int position) {
+        Toast.makeText(this, "Normal click at position: " + position, Toast.LENGTH_SHORT).show(); // for testing
+    }
+
+    @Override
+    public void onDetailClick(int position) {
+//        Toast.makeText(this, "Detail click at position: " + position, Toast.LENGTH_SHORT).show(); // for testing
+        // Send extras for detail
+        Intent intent = new Intent(MyImages.this, ImageDetailActivity.class);
+        intent.putExtra("image_url", mUploads.get(position).getmImageUrl());
+        intent.putExtra("image_title", mUploads.get(position).getmTitle());
+        intent.putExtra("image_location", mUploads.get(position).getmLocation());
+        intent.putExtra("image_notes", mUploads.get(position).getmNotes());
+        intent.putExtra("image_date", mUploads.get(position).getmDate());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onDeleteClick(int position) {
+//        Toast.makeText(this, "Delete click at position: " + position, Toast.LENGTH_SHORT).show(); // for testing
+    }
 }

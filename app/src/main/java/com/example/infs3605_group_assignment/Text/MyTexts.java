@@ -30,7 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSelectedListener, TextAdapter.OnItemClickListener {
 
     // Declare variables
     private ImageButton backBtn;
@@ -102,6 +102,7 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
 
                 mAdapter = new TextAdapter(MyTexts.this, mUploads);
                 mRecyclerView.setAdapter(mAdapter);
+                mAdapter.setOnItemClickListener(MyTexts.this);
                 progressCircle.setVisibility(View.INVISIBLE);
             }
 
@@ -134,4 +135,26 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
 
     }
 
+    // USE THIS IF YOU WANT TO DO SOMETHING WITH SINGLE CLICK
+    @Override
+    public void onItemClick(int position) {
+//        Toast.makeText(this, "Normal click at position: " + position, Toast.LENGTH_SHORT).show(); // for testing
+    }
+
+    @Override
+    public void onDetailClick(int position) {
+//        Toast.makeText(this, "Detail click at position: " + position, Toast.LENGTH_SHORT).show(); // for testing
+        // Send extras for detail
+        Intent intent = new Intent(MyTexts.this, TextDetailActivity.class);
+        intent.putExtra("text_title", mUploads.get(position).getmTitle());
+        intent.putExtra("text_location", mUploads.get(position).getmLocation());
+        intent.putExtra("text_notes", mUploads.get(position).getmNotes());
+        intent.putExtra("text_date", mUploads.get(position).getmDate());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onDeleteClick(int position) {
+//        Toast.makeText(this, "Delete click at position: " + position, Toast.LENGTH_SHORT).show(); // for testing
+    }
 }

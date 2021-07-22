@@ -1,8 +1,10 @@
 package com.example.infs3605_group_assignment.Text;
 
 import android.content.Context;
-import android.content.Intent;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -20,6 +22,7 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder
 
     private Context mContext;
     private List<TextUpload> mUploads;
+    private OnItemClickListener mListener;
 
     // Constructor
     public TextAdapter(Context context, List<TextUpload> uploads) {
@@ -43,20 +46,6 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder
         holder.mLocation.setText(uploadCurrent.getmLocation());
         holder.mNotes.setText(uploadCurrent.getmNotes());
         holder.mDate.setText(uploadCurrent.getmDate());
-
-        // Click listener for items in Recyclerview
-        holder.textLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Send extras for detail
-                Intent intent = new Intent(mContext, TextDetailActivity.class);
-                intent.putExtra("text_title", mUploads.get(position).getmTitle());
-                intent.putExtra("text_location", mUploads.get(position).getmLocation());
-                intent.putExtra("text_notes", mUploads.get(position).getmNotes());
-                intent.putExtra("text_date", mUploads.get(position).getmDate());
-                mContext.startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -65,14 +54,15 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder
     }
 
     // Display content into Cardview
-    public class TextViewHolder extends RecyclerView.ViewHolder {
+    public class TextViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
+            View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
 
         public TextView mTitle;
         public TextView mLocation;
         public TextView mNotes;
         public TextView mDate;
         public ImageView mImageView;
-        CardView textLayout;
+        CardView textLayout; // dont need this?
 
         public TextViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -82,8 +72,65 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder
             mNotes = itemView.findViewById(R.id.tv_notes2);
             mDate = itemView.findViewById(R.id.tv_date);
             mImageView = itemView.findViewById(R.id.iv_image);
-            textLayout = itemView.findViewById(R.id.text_layout);
+            textLayout = itemView.findViewById(R.id.text_layout); // dont need this?
+
+            itemView.setOnClickListener(this);
+            itemView.setOnCreateContextMenuListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            if (mListener != null) {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    mListener.onItemClick(position);
+                }
+            }
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            menu.setHeaderTitle("Select Action");
+            MenuItem goDetail = menu.add(Menu.NONE, 1, 1, "View Details");
+            MenuItem delete = menu.add(Menu.NONE, 2, 2, "Delete");
+
+            goDetail.setOnMenuItemClickListener(this);
+            delete.setOnMenuItemClickListener(this);
+        }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            if (mListener != null) {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    switch (item.getItemId()) {
+                        case 1:
+                            mListener.onDetailClick(position);
+                            return true;
+                        case 2:
+                            mListener.onDeleteClick(position);
+                            return true;
+                    }
+                }
+            }
+            return false;
+        }
+    }
+
+    public interface OnItemClickListener {
+        // Default click
+        void onItemClick(int position);
+
+        // Navigate to detail screen
+        void onDetailClick(int position);
+
+        // Delete item from firebase
+        void onDeleteClick(int position);
+    }
+
+    // Set activity as the listener for the interface above
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
     }
 
 }
