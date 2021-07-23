@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.INFS3605_Group_Assignment">
+        <activity android:name=".VideoDetailActivity"></activity>
         <activity android:name=".Text.TextDetailActivity" />
         <activity android:name=".Image.ImageDetailActivity" />
         <activity android:name=".ProfileActivity" />
@@ -21,8 +22,9 @@
         <activity
             android:name=".News.NewsActivity"
             android:label="Top Headlines" />
-        <activity android:name=".Video.MyVideos"
-            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".Video.MyVideos"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".Image.MyImages"
             android:parentActivityName=".MainActivity" />
@@ -32,6 +34,7 @@
         <activity android:name=".Text.TextPostActivity" />
         <activity android:name=".NewPostActivity" />
         <activity android:name=".SplashActivity">
+
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
 

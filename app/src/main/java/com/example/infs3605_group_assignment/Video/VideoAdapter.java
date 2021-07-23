@@ -36,6 +36,7 @@ import com.google.firebase.database.ValueEventListener;
 public class VideoAdapter extends RecyclerView.ViewHolder {
 
     // Declare variables
+    private VideoAdapter.ClickListener mClickListener;
     SimpleExoPlayer mExoplayer;
     PlayerView mPlayerView;
     ImageButton likeButton;
@@ -45,6 +46,23 @@ public class VideoAdapter extends RecyclerView.ViewHolder {
 
     public VideoAdapter(@NonNull View itemView) {
         super(itemView);
+
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mClickListener.onItemClick(v, getAdapterPosition());
+            }
+        });
+        itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                mClickListener.onItemLongClick(v, getAdapterPosition());
+                return false;
+            }
+        });
+
     }
 
     // For Videoview in Recyclerview
@@ -75,6 +93,17 @@ public class VideoAdapter extends RecyclerView.ViewHolder {
         } catch (Exception e) {
             Log.e("VideoAdapter", "exoplayer error" + e.toString());
         }
+    }
+
+    // Below two methods are for on item click
+
+    public interface ClickListener {
+        void onItemClick(View view, int position);
+        void onItemLongClick(View view, int position);
+    }
+
+    public void setOnClickListener(VideoAdapter.ClickListener clickListener) {
+        mClickListener = clickListener;
     }
 
     // For like button

@@ -1,10 +1,12 @@
 package com.example.infs3605_group_assignment.Video;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,12 +17,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.infs3605_group_assignment.Image.MyImages;
 import com.example.infs3605_group_assignment.MainActivity;
 import com.example.infs3605_group_assignment.NewPostActivity;
 import com.example.infs3605_group_assignment.R;
 import com.example.infs3605_group_assignment.Text.MyTexts;
+import com.example.infs3605_group_assignment.VideoDetailActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -30,6 +34,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -42,6 +47,7 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
     private RecyclerView mRecyclerView;
     private DatabaseReference databaseReference, likesReference;
     Boolean likeChecker = false;
+    String mTitle, mLocation, mNotes, mDate, mUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +122,34 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
                         holder.setExoplayer(getApplication(), model.getmTitle(), model.getmLocation(), model.getmNotes(),
                                 model.getmDate(), model.getmVideoUrl());
 
+                        // For onclick feature
+                        holder.setOnClickListener(new VideoAdapter.ClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+
+                                mTitle = getItem(position).getmTitle();
+                                mLocation = getItem(position).getmLocation();
+                                mNotes = getItem(position).getmNotes();
+                                mDate = getItem(position).getmDate();
+                                mUrl = getItem(position).getmVideoUrl();
+                                Intent intent = new Intent(MyVideos.this, VideoDetailActivity.class);
+                                intent.putExtra("video_title", mTitle);
+                                intent.putExtra("video_location", mLocation);
+                                intent.putExtra("video_notes", mNotes);
+                                intent.putExtra("video_date", mDate);
+                                intent.putExtra("video_url", mUrl);
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onItemLongClick(View view, int position) {
+
+                                mTitle = getItem(position).getmTitle();
+                                showDeleteDialog(mTitle);
+                            }
+                        });
+
+                        // For like feature
                         holder.setLikesButtonStatus(postKey);
                         holder.likeButton.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -180,6 +214,45 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    private void showDeleteDialog(String title) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MyVideos.this);
+        builder.setTitle("Delete");
+        builder.setMessage("Are you sure you want to delete this data?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Query query = databaseReference.orderByChild("mTitle").equalTo(title);
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                            dataSnapshot1.getRef().removeValue();
+                        }
+                        Toast.makeText(MyVideos.this, "Video Deleted", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        // DO WHATEVER YOU WANT
+                    }
+                });
+
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
 }
