@@ -113,8 +113,14 @@ public class VideoPostActivity extends AppCompatActivity {
         if (requestCode == PICK_VIDEO_REQUEST && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
 
-            videoUri = data.getData();
-            mVideoView.setVideoURI(videoUri);
+            // check if there is a file selected when posting
+            try {
+                videoUri = data.getData();
+                mVideoView.setVideoURI(videoUri);
+            } catch (Exception e) {
+                Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
 
