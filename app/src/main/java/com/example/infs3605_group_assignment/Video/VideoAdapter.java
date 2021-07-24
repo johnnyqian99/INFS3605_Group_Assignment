@@ -39,7 +39,7 @@ public class VideoAdapter extends RecyclerView.ViewHolder {
     private VideoAdapter.ClickListener mClickListener;
     SimpleExoPlayer mExoplayer;
     PlayerView mPlayerView;
-    ImageButton likeButton;
+    ImageButton likeButton, commentButton;
     TextView likesDisplay;
     int likesCount;
     DatabaseReference databaseReference;
@@ -110,6 +110,7 @@ public class VideoAdapter extends RecyclerView.ViewHolder {
     public void setLikesButtonStatus(final String postKey) {
         likeButton = itemView.findViewById(R.id.like_btn);
         likesDisplay = itemView.findViewById(R.id.likes_textView);
+        commentButton = itemView.findViewById(R.id.comment_activity_open);
         databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Likes");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userId = user.getUid();

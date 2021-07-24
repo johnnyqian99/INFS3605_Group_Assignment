@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.infs3605_group_assignment.CommentsActivity;
 import com.example.infs3605_group_assignment.Image.MyImages;
 import com.example.infs3605_group_assignment.MainActivity;
 import com.example.infs3605_group_assignment.NewPostActivity;
@@ -148,8 +149,19 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
                             }
                         });
 
-                        // For like feature
+                        // For like/comment feature
                         holder.setLikesButtonStatus(postKey);
+
+                        holder.commentButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                Intent intent = new Intent(MyVideos.this, CommentsActivity.class);
+                                intent.putExtra("postkey", postKey); // reference to a particular video
+                                startActivity(intent);
+                            }
+                        });
+
                         holder.likeButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

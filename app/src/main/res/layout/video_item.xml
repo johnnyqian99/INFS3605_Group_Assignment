@@ -101,6 +101,19 @@
             app:layout_constraintStart_toEndOf="@+id/tv_title2"
             app:layout_constraintTop_toTopOf="@+id/tv_title2" />
 
+        <ImageButton
+            android:id="@+id/comment_activity_open"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="50dp"
+            android:layout_marginRight="50dp"
+            android:background="@android:color/transparent"
+            android:padding="5dp"
+            android:src="@drawable/ic_comment"
+            app:layout_constraintBottom_toBottomOf="@+id/like_btn"
+            app:layout_constraintEnd_toStartOf="@+id/like_btn"
+            app:layout_constraintTop_toTopOf="@+id/like_btn" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>
