@@ -202,7 +202,7 @@ public class VideoPostActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     value = (long) snapshot.getValue();
-                    value = value + 15;
+                    value = value + 30;
                     snapshot.getRef().setValue(value);
                 }
 

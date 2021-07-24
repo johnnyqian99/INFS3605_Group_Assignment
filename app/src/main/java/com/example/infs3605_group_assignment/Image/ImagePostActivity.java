@@ -177,7 +177,7 @@ public class ImagePostActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     value = (long) snapshot.getValue();
-                    value = value + 15;
+                    value = value + 10;
                     snapshot.getRef().setValue(value);
                 }
 

@@ -9,6 +9,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -109,7 +110,7 @@ public class RewardsAdapter extends RecyclerView.Adapter<RewardsAdapter.MyViewHo
                 if(stars>cost){
                     myStarRef.getRef().setValue(stars - cost);
                 } else {
-//                    myStarRef.getRef().setValue(999);
+                    Toast.makeText(v.getContext(), "Not enough stars!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
