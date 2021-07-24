@@ -40,8 +40,8 @@ public class VideoAdapter extends RecyclerView.ViewHolder {
     SimpleExoPlayer mExoplayer;
     PlayerView mPlayerView;
     ImageButton likeButton, commentButton;
-    TextView likesDisplay;
-    int likesCount;
+    TextView likesDisplay, commentDisplay;
+    int likesCount, commentCount;
     DatabaseReference databaseReference;
 
     public VideoAdapter(@NonNull View itemView) {
