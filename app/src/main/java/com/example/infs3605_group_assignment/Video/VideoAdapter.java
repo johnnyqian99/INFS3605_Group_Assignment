@@ -39,10 +39,11 @@ public class VideoAdapter extends RecyclerView.ViewHolder {
     private VideoAdapter.ClickListener mClickListener;
     SimpleExoPlayer mExoplayer;
     PlayerView mPlayerView;
-    ImageButton likeButton, commentButton;
+    ImageButton likeButton, commentButton, favouriteButton;
     TextView likesDisplay, commentDisplay;
     int likesCount, commentCount;
-    DatabaseReference databaseReference;
+    DatabaseReference databaseReference, favouriteRef;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     public VideoAdapter(@NonNull View itemView) {
         super(itemView);
@@ -95,6 +96,31 @@ public class VideoAdapter extends RecyclerView.ViewHolder {
         }
     }
 
+    public void favouriteChecker(String postKey) {
+
+        favouriteButton = itemView.findViewById(R.id.favourite_item);
+        favouriteRef = database.getReference("Favourites/Video");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = user.getUid();
+
+        favouriteRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                if (snapshot.child(postKey).hasChild(uid)) {
+                    favouriteButton.setImageResource(R.drawable.ic_turned_in);
+                } else {
+                    favouriteButton.setImageResource(R.drawable.ic_turned_in_not);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     // Below two methods are for on item click
 
     public interface ClickListener {
@@ -111,7 +137,7 @@ public class VideoAdapter extends RecyclerView.ViewHolder {
         likeButton = itemView.findViewById(R.id.like_btn);
         likesDisplay = itemView.findViewById(R.id.likes_textView);
         commentButton = itemView.findViewById(R.id.comment_activity_open);
-        databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Likes");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Likes/Video");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userId = user.getUid();
         String likes = "likes";

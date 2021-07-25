@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/image_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
@@ -28,7 +29,7 @@
                 app:cardPreventCornerOverlap="false">
 
                 <ImageView
-                    android:id="@+id/iv_person"
+                    android:id="@+id/related_iv_que_item"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/ic_person"
@@ -43,7 +44,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_title2"
+                    android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="title"
@@ -63,7 +64,7 @@
                     android:textSize="15sp" />
 
                 <TextView
-                    android:id="@+id/tv_location2"
+                    android:id="@+id/tv_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="location"
@@ -77,12 +78,12 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_notes2"
+            android:id="@+id/tv_notes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="5dp"
-            android:paddingLeft="5dp"
             android:hint="notes"
+            android:paddingLeft="5dp"
             android:textColor="@android:color/black"
             android:textSize="15sp" />
 
@@ -94,68 +95,14 @@
                 android:id="@+id/exoplayer_video"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
+                android:src="@drawable/ic_image"
+                android:scaleType="centerCrop"
                 android:visibility="visible"
-                app:resize_mode="fill"
-                app:show_timeout="1000"
-                app:use_controller="true"
                 tools:ignore="MissingConstraints" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/like_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:background="@android:color/transparent"
-                android:padding="5dp"
-                android:src="@drawable/ic_dislike" />
-
-            <ImageButton
-                android:id="@+id/comment_activity_open"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:background="@android:color/transparent"
-                android:padding="5dp"
-                android:src="@drawable/ic_comment" />
-
-            <ImageButton
-                android:id="@+id/favourite_item"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:background="@android:color/transparent"
-                android:padding="5dp"
-                android:src="@drawable/ic_turned_in_not" />
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/likes_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="5dp"
-            android:paddingLeft="5dp"
-            android:text="Likes"
-            android:textColor="@android:color/black"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/tv_comment_post"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="5dp"
-            android:paddingLeft="5dp"
-            android:text="Comments"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="15sp" />
-
     </LinearLayout>
+
 
 </androidx.cardview.widget.CardView>
