@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
@@ -20,17 +22,20 @@ import com.example.infs3605_group_assignment.NewPostActivity;
 import com.example.infs3605_group_assignment.Video.MyVideos;
 import com.example.infs3605_group_assignment.R;
 import com.example.infs3605_group_assignment.Text.MyTexts;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyImages extends AppCompatActivity implements AdapterView.OnItemSelectedListener, ImageAdapter.OnItemClickListener {
+public class MyImages extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     // Declare variables
     private ImageButton backBtn;
@@ -39,8 +44,11 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
     private ProgressBar mProgressCircle;
     private RecyclerView mRecyclerView;
     private ImageAdapter mAdapter;
-    private DatabaseReference databaseReference;
+//    private DatabaseReference databaseReference;
     private List<ImageUpload> mUploads;
+    FirebaseRecyclerOptions<ImageUpload> options;
+    FirebaseRecyclerAdapter<ImageUpload, ImageAdapter> adapter;
+    DatabaseReference dataRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +56,9 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
         setContentView(R.layout.activity_my_images);
 
         // Remove action bar
-        getSupportActionBar().hide();
+//        getSupportActionBar().hide();
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Image");
+        dataRef = FirebaseDatabase.getInstance().getReference("Uploads/Image");
 
         // Assign variables
         backBtn = findViewById(R.id.back_btn);
@@ -91,31 +99,59 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
             }
         });
 
+        LoadData();
+
         // Load data into Recyclerview
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    ImageUpload imageUpload = postSnapshot.getValue(ImageUpload.class);
-                    mUploads.add(imageUpload);
-                }
-
-                mAdapter = new ImageAdapter(MyImages.this, mUploads);
-                mRecyclerView.setAdapter(mAdapter);
-                mAdapter.setOnItemClickListener(MyImages.this);
-                mProgressCircle.setVisibility(View.INVISIBLE);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(MyImages.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-                mProgressCircle.setVisibility(View.INVISIBLE);
-            }
-        });
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+//                    ImageUpload imageUpload = postSnapshot.getValue(ImageUpload.class);
+//                    mUploads.add(imageUpload);
+//                }
+//
+//                mAdapter = new ImageAdapter(MyImages.this, mUploads);
+//                mRecyclerView.setAdapter(mAdapter);
+//                mAdapter.setOnItemClickListener(MyImages.this);
+//                mProgressCircle.setVisibility(View.INVISIBLE);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Toast.makeText(MyImages.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//                mProgressCircle.setVisibility(View.INVISIBLE);
+//            }
+//        });
 
     }
 
-    // Below two methods are for item selected on spinner
+    private void LoadData() {
+
+        options = new FirebaseRecyclerOptions.Builder<ImageUpload>().setQuery(dataRef, ImageUpload.class).build();
+        adapter = new FirebaseRecyclerAdapter<ImageUpload, ImageAdapter>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull ImageAdapter holder, int position, @NonNull ImageUpload model) {
+
+                holder.title.setText(model.getmTitle());
+                holder.location.setText(model.getmLocation());
+                holder.notes.setText(model.getmNotes());
+                holder.date.setText(model.getmDate());
+                Picasso.get().load(model.getmImageUrl()).into(holder.imageView);
+            }
+
+            @NonNull
+            @Override
+            public ImageAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+                View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.image_item, parent, false);
+                return new ImageAdapter(v);
+            }
+        };
+        adapter.startListening();
+        mRecyclerView.setAdapter(adapter);
+    }
+
+    // Below two methods are for item selected on spinner --> GOOD
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -135,21 +171,23 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
 
     }
 
-    @Override
-    public void onItemClick(int position) {
-//        Toast.makeText(this, "Detail click at position: " + position, Toast.LENGTH_SHORT).show(); // for testing
-        // Send extras for detail
-        Intent intent = new Intent(MyImages.this, ImageDetailActivity.class);
-        intent.putExtra("image_url", mUploads.get(position).getmImageUrl());
-        intent.putExtra("image_title", mUploads.get(position).getmTitle());
-        intent.putExtra("image_location", mUploads.get(position).getmLocation());
-        intent.putExtra("image_notes", mUploads.get(position).getmNotes());
-        intent.putExtra("image_date", mUploads.get(position).getmDate());
-        startActivity(intent);
-    }
+    // GOOD
+//    @Override
+//    public void onItemClick(int position) {
+////        Toast.makeText(this, "Detail click at position: " + position, Toast.LENGTH_SHORT).show(); // for testing
+//        // Send extras for detail
+//        Intent intent = new Intent(MyImages.this, ImageDetailActivity.class);
+//        intent.putExtra("image_url", mUploads.get(position).getmImageUrl());
+//        intent.putExtra("image_title", mUploads.get(position).getmTitle());
+//        intent.putExtra("image_location", mUploads.get(position).getmLocation());
+//        intent.putExtra("image_notes", mUploads.get(position).getmNotes());
+//        intent.putExtra("image_date", mUploads.get(position).getmDate());
+//        startActivity(intent);
+//    }
 
-    @Override
-    public void onDeleteClick(int position) {
-//        Toast.makeText(this, "Delete click at position: " + position, Toast.LENGTH_SHORT).show(); // for testing
-    }
+    // CHANGE THIS
+//    @Override
+//    public void onDeleteClick(int position) {
+////        Toast.makeText(this, "Delete click at position: " + position, Toast.LENGTH_SHORT).show(); // for testing
+//    }
 }
