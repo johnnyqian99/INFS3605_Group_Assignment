@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -22,10 +23,12 @@ import android.widget.Toast;
 import com.example.infs3605_group_assignment.Comment.CommentsActivity;
 import com.example.infs3605_group_assignment.Image.ImageUpload;
 import com.example.infs3605_group_assignment.Image.MyImages;
+import com.example.infs3605_group_assignment.ImageFavourites;
 import com.example.infs3605_group_assignment.MainActivity;
 import com.example.infs3605_group_assignment.NewPostActivity;
 import com.example.infs3605_group_assignment.R;
 import com.example.infs3605_group_assignment.Text.MyTexts;
+import com.example.infs3605_group_assignment.VideoFavourites;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -41,6 +44,7 @@ import com.google.firebase.database.ValueEventListener;
 public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     // Declare variables
+    private Button favouritesListBtn;
     private ImageButton backBtn;
     private FloatingActionButton floatingActionButton;
     private ProgressBar progressCircle;
@@ -70,6 +74,7 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
         videoUpload = new VideoUpload();
 
         // Assign variables
+        favouritesListBtn = findViewById(R.id.video_favourites_list_button);
         backBtn = findViewById(R.id.back_btn);
         floatingActionButton = findViewById(R.id.floatingActionButton);
         progressCircle = findViewById(R.id.progress_circle);
@@ -86,6 +91,15 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
         mRecyclerView = findViewById(R.id.rv_video);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // favourites list
+        favouritesListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyVideos.this, VideoFavourites.class);
+                startActivity(intent);
+            }
+        });
 
         // Navigate to MainActivity
         backBtn.setOnClickListener(new View.OnClickListener() {
