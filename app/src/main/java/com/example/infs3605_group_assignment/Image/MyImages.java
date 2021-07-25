@@ -28,6 +28,8 @@ import com.example.infs3605_group_assignment.Video.VideoDetailActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -52,7 +54,8 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
     private List<ImageUpload> mUploads;
     FirebaseRecyclerOptions<ImageUpload> options;
     FirebaseRecyclerAdapter<ImageUpload, ImageAdapter> adapter;
-    DatabaseReference dataRef;
+    DatabaseReference dataRef, likesReference;
+    Boolean likeChecker = false;
     String mTitle, mLocation, mNotes, mDate, mUrl;
 
     @Override
@@ -64,6 +67,7 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
 //        getSupportActionBar().hide();
 
         dataRef = FirebaseDatabase.getInstance().getReference("Uploads/Image");
+        likesReference = FirebaseDatabase.getInstance().getReference("Uploads/LikesImage");
 
         // Assign variables
         backBtn = findViewById(R.id.back_btn);
@@ -137,6 +141,11 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
             @Override
             protected void onBindViewHolder(@NonNull ImageAdapter holder, int position, @NonNull ImageUpload model) {
 
+                // This will get the userID for like function
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                String currentUserId = user.getUid();
+                final String postKey = getRef(position).getKey();
+
                 holder.title.setText(model.getmTitle());
                 holder.location.setText(model.getmLocation());
                 holder.notes.setText(model.getmNotes());
@@ -166,6 +175,40 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
 
                         mTitle = getItem(position).getmTitle();
                         showDeleteDialog(mTitle);
+                    }
+                });
+
+                // For like/comment feature
+                holder.setLikesButtonStatus(postKey);
+
+                holder.likeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        likeChecker = true;
+
+                        likesReference.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                // Check if user already liked video or not
+                                if (likeChecker.equals(true)) {
+                                    if (snapshot.child(postKey).hasChild(currentUserId)) {
+                                        likesReference.child(postKey).child(currentUserId).removeValue();
+                                        likeChecker = false;
+                                    } else {
+                                        likesReference.child(postKey).child(currentUserId).setValue(true);
+                                        likeChecker = false;
+                                    }
+                                }
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                // Can show a Toast message
+                            }
+                        });
                     }
                 });
             }

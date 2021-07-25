@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.infs3605_group_assignment.R;
 import com.example.infs3605_group_assignment.Video.VideoAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -28,6 +36,10 @@ public class ImageAdapter extends RecyclerView.ViewHolder {
     TextView location;
     TextView notes;
     TextView date;
+    ImageButton likeButton;
+    TextView likesDisplay;
+    int likesCount;
+    DatabaseReference likesRef;
 
 
     public ImageAdapter(@NonNull View itemView) {
@@ -176,6 +188,39 @@ public class ImageAdapter extends RecyclerView.ViewHolder {
 
     public void setOnClickListener(ImageAdapter.ClickListener clickListener) {
         mClickListener = clickListener;
+    }
+
+    // For like button
+    public void setLikesButtonStatus(final String postKey) {
+        likeButton = itemView.findViewById(R.id.like_btn);
+        likesDisplay = itemView.findViewById(R.id.likes_textView);
+////        commentButton = itemView.findViewById(R.id.comment_activity_open);
+        likesRef = FirebaseDatabase.getInstance().getReference("Uploads/LikesImage");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userId = user.getUid();
+        String likes = "likes";
+
+        likesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                if (snapshot.child(postKey).hasChild(userId)) {
+                    likesCount = (int) snapshot.child(postKey).getChildrenCount();
+                    likeButton.setImageResource(R.drawable.ic_like);
+                    likesDisplay.setText(Integer.toString(likesCount) + " " + likes);
+                } else {
+                    likesCount = (int) snapshot.child(postKey).getChildrenCount();
+                    likeButton.setImageResource(R.drawable.ic_dislike);
+                    likesDisplay.setText(Integer.toString(likesCount) + " " + likes);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Can show a Toast message
+            }
+        });
     }
 
 }
