@@ -19,7 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.infs3605_group_assignment.CommentsActivity;
+import com.example.infs3605_group_assignment.Comment.CommentsActivity;
 import com.example.infs3605_group_assignment.Image.MyImages;
 import com.example.infs3605_group_assignment.MainActivity;
 import com.example.infs3605_group_assignment.NewPostActivity;

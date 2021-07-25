@@ -75,7 +75,7 @@ public class ImageAdapter extends RecyclerView.ViewHolder {
     public void favouriteChecker(String postKey) {
 
         favouriteButton = itemView.findViewById(R.id.favourite_item);
-        favouriteRef = database.getReference("Uploads/FavouritesImage");
+        favouriteRef = database.getReference("Favourites/Image");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = user.getUid();
 
@@ -223,7 +223,7 @@ public class ImageAdapter extends RecyclerView.ViewHolder {
         likeButton = itemView.findViewById(R.id.like_btn);
         likesDisplay = itemView.findViewById(R.id.likes_textView);
         commentButton = itemView.findViewById(R.id.comment_activity_open);
-        likesRef = FirebaseDatabase.getInstance().getReference("Uploads/LikesImage");
+        likesRef = FirebaseDatabase.getInstance().getReference("Likes/Image");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userId = user.getUid();
         String likes = "likes";

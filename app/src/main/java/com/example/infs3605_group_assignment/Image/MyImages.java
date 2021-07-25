@@ -20,7 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.infs3605_group_assignment.CommentsActivityImages;
+import com.example.infs3605_group_assignment.Comment.CommentsActivityImages;
 import com.example.infs3605_group_assignment.ImageFavourites;
 import com.example.infs3605_group_assignment.MainActivity;
 import com.example.infs3605_group_assignment.NewPostActivity;
@@ -75,9 +75,9 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
 //        getSupportActionBar().hide();
 
         dataRef = FirebaseDatabase.getInstance().getReference("Uploads/Image");
-        likesReference = FirebaseDatabase.getInstance().getReference("Uploads/LikesImage");
-        favouriteRef = FirebaseDatabase.getInstance().getReference("Uploads/FavouritesImage"); // checking if image is saved
-        favouriteListRef = FirebaseDatabase.getInstance().getReference("Uploads/FavouritesImageList").child(currentUserId); // reference for saving images in new child
+        likesReference = FirebaseDatabase.getInstance().getReference("Likes/Image");
+        favouriteRef = FirebaseDatabase.getInstance().getReference("Favourites/Image"); // checking if image is saved
+        favouriteListRef = FirebaseDatabase.getInstance().getReference("Favourites/ImageList").child(currentUserId); // reference for saving images in new child
         imageUpload = new ImageUpload();
 
         // Assign variables

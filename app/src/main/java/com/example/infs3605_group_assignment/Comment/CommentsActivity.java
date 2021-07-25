@@ -1,11 +1,10 @@
-package com.example.infs3605_group_assignment;
+package com.example.infs3605_group_assignment.Comment;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.infs3605_group_assignment.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,7 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 
-public class CommentsActivityImages extends AppCompatActivity {
+public class CommentsActivity extends AppCompatActivity {
 
     // Declare variables
     private RecyclerView recyclerView_comments;
@@ -44,9 +44,9 @@ public class CommentsActivityImages extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comments_images);
+        setContentView(R.layout.activity_comments);
 
-        post_key = getIntent().getExtras().getString("postkey2"); // retrieve the image reference
+        post_key = getIntent().getExtras().getString("postkey"); // retrieve the video reference
         comments = new Comments();
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -57,7 +57,7 @@ public class CommentsActivityImages extends AppCompatActivity {
 
         // This is where comments will be saved
         // This will be saved under child ("Uploads/Video") > postkey (video id) > then "Comments"
-        postref = FirebaseDatabase.getInstance().getReference().child("Uploads/Image").child(post_key).child("Comments");
+        postref = FirebaseDatabase.getInstance().getReference().child("Uploads/Video").child(post_key).child("Comments");
 
         recyclerView_comments = findViewById(R.id.recyclerView_comments);
         recyclerView_comments.setHasFixedSize(true);
@@ -76,15 +76,14 @@ public class CommentsActivityImages extends AppCompatActivity {
                 databaseReference.child(userId).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                        // Check if username exists --> with this if statement, it doesnt post of some reason
+                        // Check if username exists
 //                        if (snapshot.exists()) {
 //                            String username = snapshot.child("name").getValue().toString();
 
-                        String username = userId; // change this
-                        commentFeature(username);
+                            String username = userId; // change this
+                            commentFeature(username);
 
-                        editText_comment_input.setText("");
+                            editText_comment_input.setText("");
 //                        }
 
                     }
@@ -101,7 +100,7 @@ public class CommentsActivityImages extends AppCompatActivity {
 
                 String comment_post = editText_comment_input.getText().toString();
                 if (comment_post.isEmpty()) {
-                    Toast.makeText(CommentsActivityImages.this, "Please write a comment", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CommentsActivity.this, "Please write a comment", Toast.LENGTH_SHORT).show();
                 } else {
                     Calendar callForDate = Calendar.getInstance();
                     SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMMM-yyyy");
@@ -127,9 +126,9 @@ public class CommentsActivityImages extends AppCompatActivity {
                                 public void onComplete(@NonNull Task task) {
 
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(CommentsActivityImages.this, "Successful", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(CommentsActivity.this, "Successful", Toast.LENGTH_SHORT).show();
                                     } else {
-                                        Toast.makeText(CommentsActivityImages.this, "Failed", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(CommentsActivity.this, "Failed", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             })
@@ -142,7 +141,6 @@ public class CommentsActivityImages extends AppCompatActivity {
                 }
 
             }
-
         });
 
     }
@@ -153,8 +151,8 @@ public class CommentsActivityImages extends AppCompatActivity {
 
         FirebaseRecyclerOptions<Comments> options =
                 new FirebaseRecyclerOptions.Builder<Comments>()
-                        .setQuery(postref, Comments.class)
-                        .build();
+                .setQuery(postref, Comments.class)
+                .build();
 
         FirebaseRecyclerAdapter<Comments, CommentsAdapter> firebaseRecyclerAdapter =
                 new FirebaseRecyclerAdapter<Comments, CommentsAdapter>(options) {
@@ -169,7 +167,7 @@ public class CommentsActivityImages extends AppCompatActivity {
                     public CommentsAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
                         View view = LayoutInflater.from(parent.getContext())
-                                .inflate(R.layout.comment_item2, parent, false);
+                                .inflate(R.layout.comment_item, parent, false);
 
                         return new CommentsAdapter(view);
                     }

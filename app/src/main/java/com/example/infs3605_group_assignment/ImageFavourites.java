@@ -37,7 +37,7 @@ public class ImageFavourites extends AppCompatActivity {
         String currentUserId = user.getUid();
 
         // this may be wrong***
-        dataRef = FirebaseDatabase.getInstance().getReference().child("Uploads/FavouritesImageList").child(currentUserId);
+        dataRef = FirebaseDatabase.getInstance().getReference().child("Favourites/ImageList").child(currentUserId);
 
         recyclerView = findViewById(R.id.recyclerView_image_favourites);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
