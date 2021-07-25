@@ -15,12 +15,14 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.infs3605_group_assignment.R;
+import com.example.infs3605_group_assignment.Video.VideoAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class ImageAdapter extends RecyclerView.ViewHolder {
 
+    private ImageAdapter.ClickListener mClickListener;
     ImageView imageView;
     TextView title;
     TextView location;
@@ -36,6 +38,23 @@ public class ImageAdapter extends RecyclerView.ViewHolder {
         location = itemView.findViewById(R.id.tv_location2);
         notes = itemView.findViewById(R.id.tv_notes2);
         date = itemView.findViewById(R.id.tv_date);
+
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mClickListener.onItemClick(v, getAdapterPosition());
+            }
+        });
+
+        itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                mClickListener.onItemLongClick(v, getAdapterPosition());
+                return false;
+            }
+        });
     }
 
 //    private Context mContext;
@@ -147,5 +166,16 @@ public class ImageAdapter extends RecyclerView.ViewHolder {
 //    public void setOnItemClickListener(OnItemClickListener listener) {
 //        mListener = listener;
 //    }
+
+    // Below two methods are for on item click
+
+    public interface ClickListener {
+        void onItemClick(View view, int position);
+        void onItemLongClick(View view, int position);
+    }
+
+    public void setOnClickListener(ImageAdapter.ClickListener clickListener) {
+        mClickListener = clickListener;
+    }
 
 }

@@ -1,10 +1,12 @@
 package com.example.infs3605_group_assignment.Image;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,6 +31,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -49,6 +52,7 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
     FirebaseRecyclerOptions<ImageUpload> options;
     FirebaseRecyclerAdapter<ImageUpload, ImageAdapter> adapter;
     DatabaseReference dataRef;
+    String mTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +141,20 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
                 holder.notes.setText(model.getmNotes());
                 holder.date.setText(model.getmDate());
                 Picasso.get().load(model.getmImageUrl()).into(holder.imageView);
+
+                holder.setOnClickListener(new ImageAdapter.ClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        //todo
+                    }
+
+                    @Override
+                    public void onItemLongClick(View view, int position) {
+
+                        mTitle = getItem(position).getmTitle();
+                        showDeleteDialog(mTitle);
+                    }
+                });
             }
 
             @NonNull
@@ -169,6 +187,45 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    private void showDeleteDialog(String title) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MyImages.this);
+        builder.setTitle("Delete");
+        builder.setMessage("Are you sure you want to delete this data?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Query query = dataRef.orderByChild("mTitle").equalTo(title);
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                            dataSnapshot1.getRef().removeValue();
+                        }
+                        Toast.makeText(MyImages.this, "Video Deleted", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        // DO WHATEVER YOU WANT
+                    }
+                });
+
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     // GOOD
