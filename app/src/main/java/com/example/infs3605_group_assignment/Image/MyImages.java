@@ -24,6 +24,7 @@ import com.example.infs3605_group_assignment.NewPostActivity;
 import com.example.infs3605_group_assignment.Video.MyVideos;
 import com.example.infs3605_group_assignment.R;
 import com.example.infs3605_group_assignment.Text.MyTexts;
+import com.example.infs3605_group_assignment.Video.VideoDetailActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -52,7 +53,7 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
     FirebaseRecyclerOptions<ImageUpload> options;
     FirebaseRecyclerAdapter<ImageUpload, ImageAdapter> adapter;
     DatabaseReference dataRef;
-    String mTitle;
+    String mTitle, mLocation, mNotes, mDate, mUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,7 +146,19 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
                 holder.setOnClickListener(new ImageAdapter.ClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        //todo
+
+                        mTitle = getItem(position).getmTitle();
+                        mLocation = getItem(position).getmLocation();
+                        mNotes = getItem(position).getmNotes();
+                        mDate = getItem(position).getmDate();
+                        mUrl = getItem(position).getmImageUrl();
+                        Intent intent = new Intent(MyImages.this, ImageDetailActivity.class);
+                        intent.putExtra("image_title", mTitle);
+                        intent.putExtra("image_location", mLocation);
+                        intent.putExtra("image_notes", mNotes);
+                        intent.putExtra("image_date", mDate);
+                        intent.putExtra("image_url", mUrl);
+                        startActivity(intent);
                     }
 
                     @Override
