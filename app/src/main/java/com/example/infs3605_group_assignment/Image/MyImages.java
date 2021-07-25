@@ -167,6 +167,7 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
                 String location = getItem(position).getmLocation();
                 String notes = getItem(position).getmNotes();
                 String date = getItem(position).getmDate();
+                String imageUrl = getItem(position).getmImageUrl();
 
                 holder.favouriteChecker(postKey);
                 holder.favouriteButton.setOnClickListener(new View.OnClickListener() {
@@ -190,6 +191,7 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
                                         imageUpload.setmLocation(location);
                                         imageUpload.setmNotes(notes);
                                         imageUpload.setmDate(date);
+                                        imageUpload.setmImageUrl(imageUrl);
 
                                         String id = favouriteListRef.push().getKey();
                                         favouriteListRef.child(id).setValue(imageUpload);
