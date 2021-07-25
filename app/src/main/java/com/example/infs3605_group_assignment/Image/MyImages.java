@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.infs3605_group_assignment.CommentsActivityImages;
+import com.example.infs3605_group_assignment.ImageFavourites;
 import com.example.infs3605_group_assignment.MainActivity;
 import com.example.infs3605_group_assignment.NewPostActivity;
 import com.example.infs3605_group_assignment.Video.MyVideos;
@@ -80,6 +81,7 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
         imageUpload = new ImageUpload();
 
         // Assign variables
+        favouritesListBtn = findViewById(R.id.image_favourites_list_button);
         backBtn = findViewById(R.id.back_btn);
         floatingActionButton = findViewById(R.id.floatingActionButton);
         mSpinner = findViewById(R.id.spinner);
@@ -97,6 +99,14 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mUploads = new ArrayList<>();
+
+        favouritesListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyImages.this, ImageFavourites.class);
+                startActivity(intent);
+            }
+        });
 
         // Navigate to MainActivity
         backBtn.setOnClickListener(new View.OnClickListener() {
