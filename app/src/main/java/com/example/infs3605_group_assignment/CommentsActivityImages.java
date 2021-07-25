@@ -7,11 +7,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -35,7 +39,7 @@ public class CommentsActivityImages extends AppCompatActivity {
     private EditText editText_comment_input;
     DatabaseReference databaseReference, postref;
     private String post_key;
-//    Comments comments;
+    Comments comments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +47,7 @@ public class CommentsActivityImages extends AppCompatActivity {
         setContentView(R.layout.activity_comments_images);
 
         post_key = getIntent().getExtras().getString("postkey2"); // retrieve the image reference
-//        comments = new Comments();
+        comments = new Comments();
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userId = user.getUid();
@@ -141,5 +145,37 @@ public class CommentsActivityImages extends AppCompatActivity {
 
         });
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseRecyclerOptions<Comments> options =
+                new FirebaseRecyclerOptions.Builder<Comments>()
+                        .setQuery(postref, Comments.class)
+                        .build();
+
+        FirebaseRecyclerAdapter<Comments, CommentsAdapter> firebaseRecyclerAdapter =
+                new FirebaseRecyclerAdapter<Comments, CommentsAdapter>(options) {
+                    @Override
+                    protected void onBindViewHolder(@NonNull CommentsAdapter holder, int position, @NonNull Comments model) {
+
+                        holder.Comments(getApplication(), model.getComment(), model.getDate(), model.getTime(), model.getUsername());
+                    }
+
+                    @NonNull
+                    @Override
+                    public CommentsAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+                        View view = LayoutInflater.from(parent.getContext())
+                                .inflate(R.layout.comment_item2, parent, false);
+
+                        return new CommentsAdapter(view);
+                    }
+                };
+
+        firebaseRecyclerAdapter.startListening();
+        recyclerView_comments.setAdapter(firebaseRecyclerAdapter);
     }
 }
