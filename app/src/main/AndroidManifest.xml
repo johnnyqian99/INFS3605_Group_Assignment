@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.INFS3605_Group_Assignment">
-        <activity android:name=".CommentsActivityImages"></activity>
+        <activity android:name=".CommentsActivityImages" />
         <activity android:name=".CommentsActivity" />
         <activity
             android:name=".Video.VideoDetailActivity"
