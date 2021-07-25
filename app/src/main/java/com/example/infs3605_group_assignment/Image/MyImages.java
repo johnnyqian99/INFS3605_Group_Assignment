@@ -19,6 +19,8 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.infs3605_group_assignment.CommentsActivity;
+import com.example.infs3605_group_assignment.CommentsActivityImages;
 import com.example.infs3605_group_assignment.MainActivity;
 import com.example.infs3605_group_assignment.NewPostActivity;
 import com.example.infs3605_group_assignment.Video.MyVideos;
@@ -181,6 +183,16 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
                 // For like/comment feature
                 holder.setLikesButtonStatus(postKey);
 
+                holder.commentButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent intent = new Intent(MyImages.this, CommentsActivityImages.class);
+                        intent.putExtra("postkey2", postKey); // reference to a particular video
+                        startActivity(intent);
+                    }
+                });
+
                 holder.likeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -261,7 +273,7 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
                         for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
                             dataSnapshot1.getRef().removeValue();
                         }
-                        Toast.makeText(MyImages.this, "Video Deleted", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MyImages.this, "Image Deleted", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

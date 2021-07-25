@@ -117,7 +117,7 @@
                 android:src="@drawable/ic_dislike" />
 
             <ImageButton
-                android:id="@+id/commentButton_posts"
+                android:id="@+id/comment_activity_open"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
