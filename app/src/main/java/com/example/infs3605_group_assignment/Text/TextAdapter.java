@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +16,13 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.infs3605_group_assignment.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -24,6 +32,10 @@ public class TextAdapter extends RecyclerView.ViewHolder {
     TextView mLocation;
     TextView mNotes;
     TextView mDate;
+    ImageButton likeButton;
+    TextView likesDisplay;
+    int likesCount;
+    DatabaseReference likesRef;
 
     public TextAdapter(@NonNull View itemView) {
         super(itemView);
@@ -33,6 +45,39 @@ public class TextAdapter extends RecyclerView.ViewHolder {
         mNotes = itemView.findViewById(R.id.tv_notes2);
         mDate = itemView.findViewById(R.id.tv_date);
 
+    }
+
+    // For like button
+    public void setLikesButtonStatus(final String postKey) {
+        likeButton = itemView.findViewById(R.id.like_btn);
+        likesDisplay = itemView.findViewById(R.id.likes_textView);
+//        commentButton = itemView.findViewById(R.id.comment_activity_open);
+        likesRef = FirebaseDatabase.getInstance().getReference("Likes/Text");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userId = user.getUid();
+        String likes = "likes";
+
+        likesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                if (snapshot.child(postKey).hasChild(userId)) {
+                    likesCount = (int) snapshot.child(postKey).getChildrenCount();
+                    likeButton.setImageResource(R.drawable.ic_like);
+                    likesDisplay.setText(Integer.toString(likesCount) + " " + likes);
+                } else {
+                    likesCount = (int) snapshot.child(postKey).getChildrenCount();
+                    likeButton.setImageResource(R.drawable.ic_dislike);
+                    likesDisplay.setText(Integer.toString(likesCount) + " " + likes);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Can show a Toast message
+            }
+        });
     }
 
 //    private Context mContext;

@@ -25,6 +25,8 @@ import com.example.infs3605_group_assignment.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,7 +49,8 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
     private ProgressBar progressCircle;
     FirebaseRecyclerOptions<TextUpload> options;
     FirebaseRecyclerAdapter<TextUpload, TextAdapter> adapter;
-    DatabaseReference dataRef;
+    DatabaseReference dataRef, likesRef;
+    Boolean likeChecker = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,7 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
 
 //        databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Text");
         dataRef = FirebaseDatabase.getInstance().getReference("Uploads/Text");
+        likesRef = FirebaseDatabase.getInstance().getReference("Likes/Text");
 
         // Remove action bar
         getSupportActionBar().hide();
@@ -132,10 +136,49 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
             @Override
             protected void onBindViewHolder(@NonNull TextAdapter holder, int position, @NonNull TextUpload model) {
 
+                // This will get the userID for like function
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                String currentUserId = user.getUid();
+                final String postKey = getRef(position).getKey();
+
                 holder.mTitle.setText(model.getmTitle());
                 holder.mLocation.setText(model.getmLocation());
                 holder.mNotes.setText(model.getmNotes());
                 holder.mDate.setText(model.getmDate());
+
+                // For like/comment feature
+                holder.setLikesButtonStatus(postKey);
+
+                holder.likeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        likeChecker = true;
+
+                        likesRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                // Check if user already liked video or not
+                                if (likeChecker.equals(true)) {
+                                    if (snapshot.child(postKey).hasChild(currentUserId)) {
+                                        likesRef.child(postKey).child(currentUserId).removeValue();
+                                        likeChecker = false;
+                                    } else {
+                                        likesRef.child(postKey).child(currentUserId).setValue(true);
+                                        likeChecker = false;
+                                    }
+                                }
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                // Can show a Toast message
+                            }
+                        });
+                    }
+                });
             }
 
             @NonNull
