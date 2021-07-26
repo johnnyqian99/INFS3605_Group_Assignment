@@ -25,6 +25,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
+                android:layout_margin="10dp"
                 app:cardCornerRadius="20dp"
                 app:cardPreventCornerOverlap="false">
 
@@ -41,6 +42,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -82,8 +84,9 @@
             android:id="@+id/tv_notes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="5dp"
+            android:layout_margin="10dp"
             android:hint="notes"
+            android:paddingStart="5dp"
             android:paddingLeft="5dp"
             android:textColor="@android:color/black"
             android:textSize="15sp" />
@@ -96,10 +99,14 @@
                 android:id="@+id/exoplayer_video"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:src="@drawable/ic_image"
+                android:layout_margin="10dp"
                 android:scaleType="centerCrop"
+                android:src="@drawable/ic_image"
                 android:visibility="visible"
-                tools:ignore="MissingConstraints" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="10dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
