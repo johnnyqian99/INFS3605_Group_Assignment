@@ -1,5 +1,6 @@
 package com.example.infs3605_group_assignment.Text;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,8 +12,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.infs3605_group_assignment.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class TextPostActivity extends AppCompatActivity {
 
@@ -23,6 +29,7 @@ public class TextPostActivity extends AppCompatActivity {
     private EditText mDate;
     private Button mUpload;
     private DatabaseReference databaseReference;
+    long value;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +80,29 @@ public class TextPostActivity extends AppCompatActivity {
             // Take the unique ID and set its data to 'imageUpload'
             databaseReference.child(uploadId).setValue(textUpload);
 
+            //adds points
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            FirebaseUser user = auth.getCurrentUser();
+
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference(FirebaseAuth.getInstance().getUid()).child("Name");
+            DatabaseReference myStarRef = database.getReference(FirebaseAuth.getInstance().getUid()).child("stars");
+
+            myStarRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    value = (long) snapshot.getValue();
+                    value = value + 20;
+                    snapshot.getRef().setValue(value);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+            // changes screen
             Intent intent = new Intent(TextPostActivity.this, MyTexts.class);
             startActivity(intent);
 

@@ -20,8 +20,13 @@ import com.example.infs3605_group_assignment.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
@@ -44,6 +49,7 @@ public class ImagePostActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private StorageTask storageTask;
     private Uri mImageUri;
+    long value;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +165,27 @@ public class ImagePostActivity extends AppCompatActivity {
                             Toast.makeText(ImagePostActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
+            //adds points
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            FirebaseUser user = auth.getCurrentUser();
+
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference(FirebaseAuth.getInstance().getUid()).child("Name");
+            DatabaseReference myStarRef = database.getReference(FirebaseAuth.getInstance().getUid()).child("stars");
+
+            myStarRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    value = (long) snapshot.getValue();
+                    value = value + 10;
+                    snapshot.getRef().setValue(value);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         } else {
             Toast.makeText(this, "All Fields are required", Toast.LENGTH_SHORT).show();
         }
