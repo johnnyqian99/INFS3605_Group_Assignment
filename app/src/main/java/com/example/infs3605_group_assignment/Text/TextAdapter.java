@@ -34,10 +34,11 @@ public class TextAdapter extends RecyclerView.ViewHolder {
     TextView mLocation;
     TextView mNotes;
     TextView mDate;
-    ImageButton likeButton, commentButton;
+    ImageButton likeButton, commentButton, favouriteButton;
     TextView likesDisplay;
     int likesCount;
-    DatabaseReference likesRef;
+    DatabaseReference likesRef, favouriteRef;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     public TextAdapter(@NonNull View itemView) {
         super(itemView);
@@ -64,6 +65,31 @@ public class TextAdapter extends RecyclerView.ViewHolder {
             }
         });
 
+    }
+
+    public void favouriteChecker(String postKey) {
+
+        favouriteButton = itemView.findViewById(R.id.favourite_item);
+        favouriteRef = database.getReference("Favourites/Text");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = user.getUid();
+
+        favouriteRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                if (snapshot.child(postKey).hasChild(uid)) {
+                    favouriteButton.setImageResource(R.drawable.ic_turned_in);
+                } else {
+                    favouriteButton.setImageResource(R.drawable.ic_turned_in_not);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     // Below two methods are for on item click

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -23,9 +24,12 @@ import com.example.infs3605_group_assignment.Comment.CommentsActivityImages;
 import com.example.infs3605_group_assignment.Comment.CommentsActivityText;
 import com.example.infs3605_group_assignment.Image.ImageAdapter;
 import com.example.infs3605_group_assignment.Image.ImageDetailActivity;
+import com.example.infs3605_group_assignment.Image.ImageUpload;
 import com.example.infs3605_group_assignment.Image.MyImages;
+import com.example.infs3605_group_assignment.ImageFavourites;
 import com.example.infs3605_group_assignment.MainActivity;
 import com.example.infs3605_group_assignment.NewPostActivity;
+import com.example.infs3605_group_assignment.TextFavourites;
 import com.example.infs3605_group_assignment.Video.MyVideos;
 import com.example.infs3605_group_assignment.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -46,6 +50,7 @@ import java.util.List;
 public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     // Declare variables
+    private Button favouritesListBtn;
     private ImageButton backBtn;
     private FloatingActionButton floatingActionButton;
     private Spinner mSpinner;
@@ -56,23 +61,32 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
     private ProgressBar progressCircle;
     FirebaseRecyclerOptions<TextUpload> options;
     FirebaseRecyclerAdapter<TextUpload, TextAdapter> adapter;
-    DatabaseReference dataRef, likesRef;
-    Boolean likeChecker = false;
+    DatabaseReference dataRef, likesRef, favouriteRef, favouriteListRef;
+    Boolean likeChecker = false, favouriteChecker = false;
     String mTitle, mLocation, mNotes, mDate;
+
+    TextUpload textUpload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_texts);
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String currentUserId = user.getUid();
+
 //        databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Text");
         dataRef = FirebaseDatabase.getInstance().getReference("Uploads/Text");
         likesRef = FirebaseDatabase.getInstance().getReference("Likes/Text");
+        favouriteRef = FirebaseDatabase.getInstance().getReference("Favourites/Text"); // checking if image is saved
+        favouriteListRef = FirebaseDatabase.getInstance().getReference("Favourites/TextList").child(currentUserId); // reference for saving images in new child
+        textUpload = new TextUpload();
 
         // Remove action bar
         getSupportActionBar().hide();
 
         // Assign variables
+        favouritesListBtn = findViewById(R.id.text_favourites_list_button);
         backBtn = findViewById(R.id.back_btn);
         floatingActionButton = findViewById(R.id.floatingActionButton);
         progressCircle = findViewById(R.id.progress_circle);
@@ -100,6 +114,14 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 //        mUploads = new ArrayList<>();
+
+        favouritesListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyTexts.this, TextFavourites.class);
+                startActivity(intent);
+            }
+        });
 
         // Navigate to NewPostActivity
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -153,6 +175,50 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
                 holder.mLocation.setText(model.getmLocation());
                 holder.mNotes.setText(model.getmNotes());
                 holder.mDate.setText(model.getmDate());
+
+                // for favourites
+                String title = getItem(position).getmTitle();
+                String location = getItem(position).getmLocation();
+                String notes = getItem(position).getmNotes();
+                String date = getItem(position).getmDate();
+
+                holder.favouriteChecker(postKey);
+                holder.favouriteButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        favouriteChecker = true;
+
+                        favouriteRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                if (favouriteChecker.equals(true)) {
+                                    if (snapshot.child(postKey).hasChild(currentUserId)) {
+                                        favouriteRef.child(postKey).child(currentUserId).removeValue();
+                                        delete(title);
+                                        favouriteChecker = false;
+                                    } else {
+                                        favouriteRef.child(postKey).child(currentUserId).setValue(true);
+                                        textUpload.setmTitle(title);
+                                        textUpload.setmLocation(location);
+                                        textUpload.setmNotes(notes);
+                                        textUpload.setmDate(date);
+
+                                        String id = favouriteListRef.push().getKey();
+                                        favouriteListRef.child(id).setValue(textUpload);
+                                        favouriteChecker = false;
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                    }
+                });
 
                 holder.setOnClickListener(new TextAdapter.ClickListener() {
                     @Override
@@ -236,26 +302,26 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
         mRecyclerView.setAdapter(adapter);
     }
 
-//    void delete(String title) {
-//
-//        Query query = favouriteListRef.orderByChild("mTitle").equalTo(title);
-//        query.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//
-//                for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
-//                    dataSnapshot1.getRef().removeValue();
-//
-//                    Toast.makeText(MyImages.this, "Deleted", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
+    void delete(String title) {
+
+        Query query = favouriteListRef.orderByChild("mTitle").equalTo(title);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                    dataSnapshot1.getRef().removeValue();
+
+                    Toast.makeText(MyTexts.this, "Deleted", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
     // Below two methods are for item selected on spinner
 
