@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
@@ -20,6 +22,8 @@ import com.example.infs3605_group_assignment.MainActivity;
 import com.example.infs3605_group_assignment.NewPostActivity;
 import com.example.infs3605_group_assignment.Video.MyVideos;
 import com.example.infs3605_group_assignment.R;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,7 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSelectedListener, TextAdapter.OnItemClickListener {
+public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     // Declare variables
     private ImageButton backBtn;
@@ -41,13 +45,17 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
     private DatabaseReference databaseReference;
     private List<TextUpload> mUploads;
     private ProgressBar progressCircle;
+    FirebaseRecyclerOptions<TextUpload> options;
+    FirebaseRecyclerAdapter<TextUpload, TextAdapter> adapter;
+    DatabaseReference dataRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_texts);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Text");
+//        databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Text");
+        dataRef = FirebaseDatabase.getInstance().getReference("Uploads/Text");
 
         // Remove action bar
         getSupportActionBar().hide();
@@ -79,7 +87,7 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
         // Recyclerview
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mUploads = new ArrayList<>();
+//        mUploads = new ArrayList<>();
 
         // Navigate to NewPostActivity
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -91,28 +99,55 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
             }
         });
 
+        LoadData();
+
         // Load data into Recyclerview
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    TextUpload textUpload = postSnapshot.getValue(TextUpload.class);
-                    mUploads.add(textUpload);
-                }
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+//                    TextUpload textUpload = postSnapshot.getValue(TextUpload.class);
+//                    mUploads.add(textUpload);
+//                }
+//
+//                mAdapter = new TextAdapter(MyTexts.this, mUploads);
+//                mRecyclerView.setAdapter(mAdapter);
+//                mAdapter.setOnItemClickListener(MyTexts.this);
+//                progressCircle.setVisibility(View.INVISIBLE);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Toast.makeText(MyTexts.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+//                progressCircle.setVisibility(View.INVISIBLE);
+//            }
+//        });
 
-                mAdapter = new TextAdapter(MyTexts.this, mUploads);
-                mRecyclerView.setAdapter(mAdapter);
-                mAdapter.setOnItemClickListener(MyTexts.this);
-                progressCircle.setVisibility(View.INVISIBLE);
+    }
+
+    private void LoadData() {
+
+        options = new FirebaseRecyclerOptions.Builder<TextUpload>().setQuery(dataRef, TextUpload.class).build();
+        adapter = new FirebaseRecyclerAdapter<TextUpload, TextAdapter>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull TextAdapter holder, int position, @NonNull TextUpload model) {
+
+                holder.mTitle.setText(model.getmTitle());
+                holder.mLocation.setText(model.getmLocation());
+                holder.mNotes.setText(model.getmNotes());
+                holder.mDate.setText(model.getmDate());
             }
 
+            @NonNull
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(MyTexts.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-                progressCircle.setVisibility(View.INVISIBLE);
+            public TextAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.text_item, parent, false);
+                return new TextAdapter(v);
             }
-        });
+        };
 
+        adapter.startListening();
+        mRecyclerView.setAdapter(adapter);
     }
 
     // Below two methods are for item selected on spinner
@@ -135,20 +170,20 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
 
     }
 
-    @Override
-    public void onItemClick(int position) {
-//        Toast.makeText(this, "Detail click at position: " + position, Toast.LENGTH_SHORT).show(); // for testing
-        // Send extras for detail
-        Intent intent = new Intent(MyTexts.this, TextDetailActivity.class);
-        intent.putExtra("text_title", mUploads.get(position).getmTitle());
-        intent.putExtra("text_location", mUploads.get(position).getmLocation());
-        intent.putExtra("text_notes", mUploads.get(position).getmNotes());
-        intent.putExtra("text_date", mUploads.get(position).getmDate());
-        startActivity(intent);
-    }
+//    @Override
+//    public void onItemClick(int position) {
+////        Toast.makeText(this, "Detail click at position: " + position, Toast.LENGTH_SHORT).show(); // for testing
+//        // Send extras for detail
+//        Intent intent = new Intent(MyTexts.this, TextDetailActivity.class);
+//        intent.putExtra("text_title", mUploads.get(position).getmTitle());
+//        intent.putExtra("text_location", mUploads.get(position).getmLocation());
+//        intent.putExtra("text_notes", mUploads.get(position).getmNotes());
+//        intent.putExtra("text_date", mUploads.get(position).getmDate());
+//        startActivity(intent);
+//    }
 
-    @Override
-    public void onDeleteClick(int position) {
-//        Toast.makeText(this, "Delete click at position: " + position, Toast.LENGTH_SHORT).show(); // for testing
-    }
+//    @Override
+//    public void onDeleteClick(int position) {
+////        Toast.makeText(this, "Delete click at position: " + position, Toast.LENGTH_SHORT).show(); // for testing
+//    }
 }
