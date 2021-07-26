@@ -40,7 +40,6 @@
         <activity android:name=".Video.VideoPostActivity" />
         <activity android:name=".Image.ImagePostActivity" />
         <activity android:name=".Text.TextPostActivity" />
-        <activity android:name=".NewPostActivity" />
         <activity android:name=".SplashActivity">
 
             <!-- <intent-filter> -->

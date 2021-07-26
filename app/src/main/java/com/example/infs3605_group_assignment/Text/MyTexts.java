@@ -20,15 +20,9 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.infs3605_group_assignment.Comment.CommentsActivityImages;
 import com.example.infs3605_group_assignment.Comment.CommentsActivityText;
-import com.example.infs3605_group_assignment.Image.ImageAdapter;
-import com.example.infs3605_group_assignment.Image.ImageDetailActivity;
-import com.example.infs3605_group_assignment.Image.ImageUpload;
 import com.example.infs3605_group_assignment.Image.MyImages;
-import com.example.infs3605_group_assignment.ImageFavourites;
 import com.example.infs3605_group_assignment.MainActivity;
-import com.example.infs3605_group_assignment.NewPostActivity;
 import com.example.infs3605_group_assignment.TextFavourites;
 import com.example.infs3605_group_assignment.Video.MyVideos;
 import com.example.infs3605_group_assignment.R;
@@ -44,7 +38,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -127,7 +120,7 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyTexts.this, NewPostActivity.class);
+                Intent intent = new Intent(MyTexts.this, TextPostActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -294,6 +287,7 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
             @Override
             public TextAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.text_item, parent, false);
+                progressCircle.setVisibility(View.INVISIBLE);
                 return new TextAdapter(v);
             }
         };

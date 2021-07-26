@@ -21,11 +21,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.infs3605_group_assignment.Comment.CommentsActivity;
-import com.example.infs3605_group_assignment.Image.ImageUpload;
 import com.example.infs3605_group_assignment.Image.MyImages;
-import com.example.infs3605_group_assignment.ImageFavourites;
 import com.example.infs3605_group_assignment.MainActivity;
-import com.example.infs3605_group_assignment.NewPostActivity;
 import com.example.infs3605_group_assignment.R;
 import com.example.infs3605_group_assignment.Text.MyTexts;
 import com.example.infs3605_group_assignment.VideoFavourites;
@@ -115,7 +112,7 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyVideos.this, NewPostActivity.class);
+                Intent intent = new Intent(MyVideos.this, VideoPostActivity.class);
                 startActivity(intent);
                 finish();
             }

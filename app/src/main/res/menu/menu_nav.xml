@@ -12,11 +12,6 @@
         android:icon="@drawable/ic_book" />
 
     <item
-        android:id="@+id/post"
-        android:title="Post"
-        android:icon="@drawable/ic_post" />
-
-    <item
         android:id="@+id/reward"
         android:title="Reward"
         android:icon="@drawable/ic_star" />

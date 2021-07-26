@@ -23,7 +23,6 @@ import android.widget.Toast;
 import com.example.infs3605_group_assignment.Comment.CommentsActivityImages;
 import com.example.infs3605_group_assignment.ImageFavourites;
 import com.example.infs3605_group_assignment.MainActivity;
-import com.example.infs3605_group_assignment.NewPostActivity;
 import com.example.infs3605_group_assignment.Video.MyVideos;
 import com.example.infs3605_group_assignment.R;
 import com.example.infs3605_group_assignment.Text.MyTexts;
@@ -50,7 +49,7 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
     private ImageButton backBtn;
     private FloatingActionButton floatingActionButton;
     private Spinner mSpinner;
-    private ProgressBar mProgressCircle;
+    private ProgressBar progressCircle;
     private RecyclerView mRecyclerView;
     private ImageAdapter mAdapter;
 //    private DatabaseReference databaseReference;
@@ -86,7 +85,7 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
         floatingActionButton = findViewById(R.id.floatingActionButton);
         mSpinner = findViewById(R.id.spinner);
         mRecyclerView = findViewById(R.id.rv_image);
-        mProgressCircle = findViewById(R.id.progress_circle);
+        progressCircle = findViewById(R.id.progress_circle);
 
         // Spinner
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -122,7 +121,7 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyImages.this, NewPostActivity.class);
+                Intent intent = new Intent(MyImages.this, ImagePostActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -294,6 +293,7 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
             public ImageAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
                 View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.image_item, parent, false);
+                progressCircle.setVisibility(View.INVISIBLE);
                 return new ImageAdapter(v);
             }
         };
