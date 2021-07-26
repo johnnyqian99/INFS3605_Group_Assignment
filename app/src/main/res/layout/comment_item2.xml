@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="10sp"
-            android:hint="time"
+            android:hint="time:date"
             android:layout_margin="10dp"
             android:id="@+id/comment_time_date_item"/>
 
@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:hint="time"
+            android:hint="name:comment"
             android:textColor="@android:color/black"
             android:layout_margin="10dp"
             android:id="@+id/comment_username_item"/>

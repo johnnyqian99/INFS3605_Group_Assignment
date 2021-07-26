@@ -34,7 +34,7 @@ public class TextAdapter extends RecyclerView.ViewHolder {
     TextView mLocation;
     TextView mNotes;
     TextView mDate;
-    ImageButton likeButton;
+    ImageButton likeButton, commentButton;
     TextView likesDisplay;
     int likesCount;
     DatabaseReference likesRef;
@@ -81,7 +81,7 @@ public class TextAdapter extends RecyclerView.ViewHolder {
     public void setLikesButtonStatus(final String postKey) {
         likeButton = itemView.findViewById(R.id.like_btn);
         likesDisplay = itemView.findViewById(R.id.likes_textView);
-//        commentButton = itemView.findViewById(R.id.comment_activity_open);
+        commentButton = itemView.findViewById(R.id.comment_activity_open);
         likesRef = FirebaseDatabase.getInstance().getReference("Likes/Text");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userId = user.getUid();
