@@ -28,6 +28,9 @@ public class VideoFavourites extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_favourites);
 
+        // Remove action bar
+        getSupportActionBar().hide();
+
         // This will get the userID for like function
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String currentUserId = user.getUid();

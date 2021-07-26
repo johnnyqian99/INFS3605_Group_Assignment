@@ -46,11 +46,14 @@ public class CommentsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
 
+        // Remove action bar
+        getSupportActionBar().hide();
+
         post_key = getIntent().getExtras().getString("postkey"); // retrieve the video reference
         comments = new Comments();
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String userId = user.getUid();
+        String userId = user.getDisplayName();
 
         // WE NEED TO ASSIGN DATABASE REFERENCE HERE OR ELSE ERROR
         databaseReference = FirebaseDatabase.getInstance().getReference(); // --> change this
@@ -115,10 +118,10 @@ public class CommentsActivity extends AppCompatActivity {
                     // Create Hashmap for saving comment
                     HashMap commentMap = new HashMap();
                     commentMap.put("uid", userId);
-                    commentMap.put("comment", comment_post);
+                    commentMap.put("comment", " " + comment_post);
                     commentMap.put("date", saveCurrentDate);
                     commentMap.put("time", saveCurrentTime);
-                    commentMap.put("username", "Hello " + username);
+                    commentMap.put("username", username);
 
                     postref.child(randomKey).updateChildren(commentMap)
                             .addOnCompleteListener(new OnCompleteListener() {

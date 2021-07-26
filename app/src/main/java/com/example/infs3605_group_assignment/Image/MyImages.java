@@ -71,7 +71,7 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
         String currentUserId = user.getUid();
 
         // Remove action bar
-//        getSupportActionBar().hide();
+        getSupportActionBar().hide();
 
         dataRef = FirebaseDatabase.getInstance().getReference("Uploads/Image");
         likesReference = FirebaseDatabase.getInstance().getReference("Likes/Image");

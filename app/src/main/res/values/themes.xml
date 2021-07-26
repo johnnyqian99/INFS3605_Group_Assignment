@@ -15,8 +15,8 @@
 <!--    </style>-->
 
     <style name="Theme.INFS3605_Group_Assignment" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorTextSubtitle</item>
+        <item name="colorPrimaryDark">@color/colorTextSubtitle</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 

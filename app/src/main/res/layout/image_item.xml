@@ -25,6 +25,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
+                android:layout_margin="10dp"
                 app:cardCornerRadius="20dp"
                 app:cardPreventCornerOverlap="false">
 
@@ -34,6 +35,7 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/ic_person"
                     android:clickable="true"
+                    android:padding="10dp"
                     android:scaleType="centerCrop" />
 
             </androidx.cardview.widget.CardView>
@@ -41,6 +43,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -51,7 +54,8 @@
                     android:paddingStart="5dp"
                     android:paddingLeft="5dp"
                     android:textColor="@android:color/black"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_date"
@@ -60,8 +64,8 @@
                     android:hint="date"
                     android:paddingStart="5dp"
                     android:paddingLeft="5dp"
-                    android:textColor="@color/light_red"
-                    android:textSize="15sp" />
+                    android:textColor="@color/colorTextSubtitle"
+                    android:textSize="10sp" />
 
                 <TextView
                     android:id="@+id/tv_location2"
@@ -70,8 +74,9 @@
                     android:hint="location"
                     android:paddingStart="5dp"
                     android:paddingLeft="5dp"
-                    android:textColor="@color/light_red"
-                    android:textSize="15sp" />
+                    android:textColor="@color/colorTextSubtitle"
+                    android:textColorHighlight="@color/colorTextSubtitle"
+                    android:textSize="10sp" />
 
             </LinearLayout>
 
@@ -81,9 +86,13 @@
             android:id="@+id/tv_notes2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
             android:hint="notes"
             android:paddingStart="5dp"
-            android:paddingLeft="5dp"
             android:textColor="@android:color/black"
             android:textSize="15sp" />
 
@@ -95,9 +104,19 @@
                 android:id="@+id/iv_image"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_image"
                 android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="MissingConstraints" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -140,6 +159,7 @@
             android:id="@+id/likes_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:paddingStart="5dp"
             android:paddingLeft="5dp"
             android:text="Likes"
@@ -150,6 +170,11 @@
             android:id="@+id/tv_comment_post"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
             android:paddingStart="5dp"
             android:paddingLeft="5dp"
             android:text="Comments"

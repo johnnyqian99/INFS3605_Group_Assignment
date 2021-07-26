@@ -32,6 +32,9 @@ public class ImageFavourites extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_favourites);
 
+        // Remove action bar
+        getSupportActionBar().hide();
+
         // This will get the userID for like function
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String currentUserId = user.getUid();
