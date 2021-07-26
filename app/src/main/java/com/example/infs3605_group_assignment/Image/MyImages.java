@@ -14,19 +14,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.infs3605_group_assignment.CommentsActivity;
-import com.example.infs3605_group_assignment.CommentsActivityImages;
+import com.example.infs3605_group_assignment.Comment.CommentsActivityImages;
+import com.example.infs3605_group_assignment.ImageFavourites;
 import com.example.infs3605_group_assignment.MainActivity;
-import com.example.infs3605_group_assignment.NewPostActivity;
 import com.example.infs3605_group_assignment.Video.MyVideos;
 import com.example.infs3605_group_assignment.R;
 import com.example.infs3605_group_assignment.Text.MyTexts;
-import com.example.infs3605_group_assignment.Video.VideoDetailActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -46,37 +45,47 @@ import java.util.List;
 public class MyImages extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     // Declare variables
+    private Button favouritesListBtn;
     private ImageButton backBtn;
     private FloatingActionButton floatingActionButton;
     private Spinner mSpinner;
-    private ProgressBar mProgressCircle;
+    private ProgressBar progressCircle;
     private RecyclerView mRecyclerView;
     private ImageAdapter mAdapter;
 //    private DatabaseReference databaseReference;
     private List<ImageUpload> mUploads;
     FirebaseRecyclerOptions<ImageUpload> options;
     FirebaseRecyclerAdapter<ImageUpload, ImageAdapter> adapter;
-    DatabaseReference dataRef, likesReference;
-    Boolean likeChecker = false;
+    DatabaseReference dataRef, likesReference, favouriteRef, favouriteListRef;
+    Boolean likeChecker = false, favouriteChecker = false;
     String mTitle, mLocation, mNotes, mDate, mUrl;
+
+    ImageUpload imageUpload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_images);
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String currentUserId = user.getUid();
+
         // Remove action bar
 //        getSupportActionBar().hide();
 
         dataRef = FirebaseDatabase.getInstance().getReference("Uploads/Image");
-        likesReference = FirebaseDatabase.getInstance().getReference("Uploads/LikesImage");
+        likesReference = FirebaseDatabase.getInstance().getReference("Likes/Image");
+        favouriteRef = FirebaseDatabase.getInstance().getReference("Favourites/Image"); // checking if image is saved
+        favouriteListRef = FirebaseDatabase.getInstance().getReference("Favourites/ImageList").child(currentUserId); // reference for saving images in new child
+        imageUpload = new ImageUpload();
 
         // Assign variables
+        favouritesListBtn = findViewById(R.id.image_favourites_list_button);
         backBtn = findViewById(R.id.back_btn);
         floatingActionButton = findViewById(R.id.floatingActionButton);
         mSpinner = findViewById(R.id.spinner);
         mRecyclerView = findViewById(R.id.rv_image);
-        mProgressCircle = findViewById(R.id.progress_circle);
+        progressCircle = findViewById(R.id.progress_circle);
 
         // Spinner
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -89,6 +98,14 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mUploads = new ArrayList<>();
+
+        favouritesListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyImages.this, ImageFavourites.class);
+                startActivity(intent);
+            }
+        });
 
         // Navigate to MainActivity
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -104,7 +121,7 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyImages.this, NewPostActivity.class);
+                Intent intent = new Intent(MyImages.this, ImagePostActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -153,6 +170,52 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
                 holder.notes.setText(model.getmNotes());
                 holder.date.setText(model.getmDate());
                 Picasso.get().load(model.getmImageUrl()).into(holder.imageView);
+
+                // for favourites
+                String title = getItem(position).getmTitle();
+                String location = getItem(position).getmLocation();
+                String notes = getItem(position).getmNotes();
+                String date = getItem(position).getmDate();
+                String imageUrl = getItem(position).getmImageUrl();
+
+                holder.favouriteChecker(postKey);
+                holder.favouriteButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        favouriteChecker = true;
+
+                        favouriteRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                if (favouriteChecker.equals(true)) {
+                                    if (snapshot.child(postKey).hasChild(currentUserId)) {
+                                        favouriteRef.child(postKey).child(currentUserId).removeValue();
+                                        delete(title);
+                                        favouriteChecker = false;
+                                    } else {
+                                        favouriteRef.child(postKey).child(currentUserId).setValue(true);
+                                        imageUpload.setmTitle(title);
+                                        imageUpload.setmLocation(location);
+                                        imageUpload.setmNotes(notes);
+                                        imageUpload.setmDate(date);
+                                        imageUpload.setmImageUrl(imageUrl);
+
+                                        String id = favouriteListRef.push().getKey();
+                                        favouriteListRef.child(id).setValue(imageUpload);
+                                        favouriteChecker = false;
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                    }
+                });
 
                 holder.setOnClickListener(new ImageAdapter.ClickListener() {
                     @Override
@@ -230,11 +293,33 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
             public ImageAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
                 View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.image_item, parent, false);
+                progressCircle.setVisibility(View.INVISIBLE);
                 return new ImageAdapter(v);
             }
         };
         adapter.startListening();
         mRecyclerView.setAdapter(adapter);
+    }
+
+    void delete(String title) {
+
+        Query query = favouriteListRef.orderByChild("mTitle").equalTo(title);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                    dataSnapshot1.getRef().removeValue();
+
+                    Toast.makeText(MyImages.this, "Deleted", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     // Below two methods are for item selected on spinner --> GOOD

@@ -1,4 +1,4 @@
-package com.example.infs3605_group_assignment;
+package com.example.infs3605_group_assignment.Comment;
 
 import android.app.Application;
 import android.view.View;
@@ -6,6 +6,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.infs3605_group_assignment.R;
 
 public class CommentsAdapter extends RecyclerView.ViewHolder {
 

@@ -14,17 +14,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.infs3605_group_assignment.CommentsActivity;
+import com.example.infs3605_group_assignment.Comment.CommentsActivity;
 import com.example.infs3605_group_assignment.Image.MyImages;
 import com.example.infs3605_group_assignment.MainActivity;
-import com.example.infs3605_group_assignment.NewPostActivity;
 import com.example.infs3605_group_assignment.R;
 import com.example.infs3605_group_assignment.Text.MyTexts;
+import com.example.infs3605_group_assignment.VideoFavourites;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -40,14 +41,17 @@ import com.google.firebase.database.ValueEventListener;
 public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     // Declare variables
+    private Button favouritesListBtn;
     private ImageButton backBtn;
     private FloatingActionButton floatingActionButton;
     private ProgressBar progressCircle;
     private Spinner mSpinner;
     private RecyclerView mRecyclerView;
-    private DatabaseReference databaseReference, likesReference;
-    Boolean likeChecker = false;
+    private DatabaseReference databaseReference, likesReference, favouriteRef, favouriteListRef;
+    Boolean likeChecker = false, favouriteChecker = false;
     String mTitle, mLocation, mNotes, mDate, mUrl;
+
+    VideoUpload videoUpload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +61,17 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
         // Remove action bar
         getSupportActionBar().hide();
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String currentUserId = user.getUid();
+
         databaseReference = FirebaseDatabase.getInstance().getReference("Uploads/Video");
-        likesReference = FirebaseDatabase.getInstance().getReference("Uploads/Likes");
+        likesReference = FirebaseDatabase.getInstance().getReference("Likes/Video");
+        favouriteRef = FirebaseDatabase.getInstance().getReference("Favourites/Video"); // checking if video is saved
+        favouriteListRef = FirebaseDatabase.getInstance().getReference("Favourites/VideoList").child(currentUserId); // reference for saving images in new child
+        videoUpload = new VideoUpload();
 
         // Assign variables
+        favouritesListBtn = findViewById(R.id.video_favourites_list_button);
         backBtn = findViewById(R.id.back_btn);
         floatingActionButton = findViewById(R.id.floatingActionButton);
         progressCircle = findViewById(R.id.progress_circle);
@@ -78,6 +89,15 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        // favourites list
+        favouritesListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyVideos.this, VideoFavourites.class);
+                startActivity(intent);
+            }
+        });
+
         // Navigate to MainActivity
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +112,7 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyVideos.this, NewPostActivity.class);
+                Intent intent = new Intent(MyVideos.this, VideoPostActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -117,10 +137,57 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
                         // This will get the userID for like function
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                         String currentUserId = user.getUid();
+
                         final String postKey = getRef(position).getKey();
 
                         holder.setExoplayer(getApplication(), model.getmTitle(), model.getmLocation(), model.getmNotes(),
                                 model.getmDate(), model.getmVideoUrl());
+
+                        // for favourites
+                        String title = getItem(position).getmTitle();
+                        String location = getItem(position).getmLocation();
+                        String notes = getItem(position).getmNotes();
+                        String date = getItem(position).getmDate();
+                        String videoUrl = getItem(position).getmVideoUrl();
+
+                        holder.favouriteChecker(postKey);
+                        holder.favouriteButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                favouriteChecker = true;
+
+                                favouriteRef.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                        if (favouriteChecker.equals(true)) {
+                                            if (snapshot.child(postKey).hasChild(currentUserId)) {
+                                                favouriteRef.child(postKey).child(currentUserId).removeValue();
+                                                delete(title);
+                                                favouriteChecker = false;
+                                            } else {
+                                                favouriteRef.child(postKey).child(currentUserId).setValue(true);
+                                                videoUpload.setmTitle(title);
+                                                videoUpload.setmLocation(location);
+                                                videoUpload.setmNotes(notes);
+                                                videoUpload.setmDate(date);
+                                                videoUpload.setmVideoUrl(videoUrl);
+
+                                                String id = favouriteListRef.push().getKey();
+                                                favouriteListRef.child(id).setValue(videoUpload);
+                                                favouriteChecker = false;
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+                            }
+                        });
 
                         // For onclick feature
                         holder.setOnClickListener(new VideoAdapter.ClickListener() {
@@ -205,6 +272,27 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
 
         firebaseRecyclerAdapter.startListening();
         mRecyclerView.setAdapter(firebaseRecyclerAdapter);
+    }
+
+    void delete(String title) {
+
+        Query query = favouriteListRef.orderByChild("mTitle").equalTo(title);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                    dataSnapshot1.getRef().removeValue();
+
+                    Toast.makeText(MyVideos.this, "Deleted", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     // Below two methods are for item selected on spinner

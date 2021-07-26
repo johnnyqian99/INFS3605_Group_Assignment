@@ -21,11 +21,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.infs3605_group_assignment.MainActivity;
-import com.example.infs3605_group_assignment.NewPostActivity;
 import com.example.infs3605_group_assignment.ProfileActivity;
 import com.example.infs3605_group_assignment.R;
 import com.example.infs3605_group_assignment.RewardActivity;
@@ -74,10 +72,6 @@ public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayou
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.news:
-                        return true;
-                    case R.id.post:
-                        startActivity(new Intent(getApplicationContext(), NewPostActivity.class));
-                        overridePendingTransition(0, 0);
                         return true;
                     case R.id.reward:
                         startActivity(new Intent(getApplicationContext(), RewardActivity.class));

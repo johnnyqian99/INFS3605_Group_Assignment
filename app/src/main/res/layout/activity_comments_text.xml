@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Comment.CommentsActivity">
+    tools:context=".Comment.CommentsActivityText">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,8 @@
             android:textSize="20sp"
             android:hint="Enter comment"
             android:id="@+id/comment_et"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            android:inputType="textNoSuggestions"/>
 
         <Button
             android:layout_width="wrap_content"

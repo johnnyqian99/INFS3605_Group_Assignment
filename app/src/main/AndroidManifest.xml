@@ -11,8 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.INFS3605_Group_Assignment">
-        <activity android:name=".CommentsActivityImages"></activity>
-        <activity android:name=".CommentsActivity" />
+        <activity android:name=".TextFavourites"></activity>
+        <activity android:name=".Comment.CommentsActivityText" />
+        <activity android:name=".VideoFavourites" />
+        <activity android:name=".ImageFavourites" />
+        <activity android:name=".Comment.CommentsActivityImages" />
+        <activity android:name=".Comment.CommentsActivity" />
         <activity
             android:name=".Video.VideoDetailActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
@@ -36,7 +40,6 @@
         <activity android:name=".Video.VideoPostActivity" />
         <activity android:name=".Image.ImagePostActivity" />
         <activity android:name=".Text.TextPostActivity" />
-        <activity android:name=".NewPostActivity" />
         <activity android:name=".SplashActivity">
 
             <!-- <intent-filter> -->

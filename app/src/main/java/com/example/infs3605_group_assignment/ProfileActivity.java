@@ -43,10 +43,6 @@ public class ProfileActivity extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), NewsActivity.class));
                         overridePendingTransition(0, 0);
                         return true;
-                    case R.id.post:
-                        startActivity(new Intent(getApplicationContext(), NewPostActivity.class));
-                        overridePendingTransition(0, 0);
-                        return true;
                     case R.id.reward:
                         startActivity(new Intent(getApplicationContext(), RewardActivity.class));
                         overridePendingTransition(0, 0);

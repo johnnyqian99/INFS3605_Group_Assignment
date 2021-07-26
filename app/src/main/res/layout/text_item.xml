@@ -5,102 +5,142 @@
     android:id="@+id/text_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp">
+    android:layout_margin="5dp"
+    android:orientation="vertical"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="5dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_date"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:text="DATE"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/tv_location2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_title2" />
+            android:orientation="horizontal"
+            android:padding="3dp">
 
-        <TextView
-            android:id="@+id/tv_title2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="8dp"
-            android:text="Name"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/imageView7"
-            app:layout_constraintTop_toTopOf="@+id/imageView7" />
+            <androidx.cardview.widget.CardView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                app:cardCornerRadius="20dp"
+                app:cardPreventCornerOverlap="false">
 
-        <TextView
-            android:id="@+id/tv_location2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="5dp"
-            android:text="Location2"
-            android:textColor="#7A7A7A"
-            android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@+id/imageView7"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title2" />
+                <ImageView
+                    android:id="@+id/related_iv_que_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/ic_person"
+                    android:clickable="true"
+                    android:scaleType="centerCrop" />
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_title2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="title"
+                    android:paddingStart="5dp"
+                    android:paddingLeft="5dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="date"
+                    android:paddingStart="5dp"
+                    android:paddingLeft="5dp"
+                    android:textColor="@color/light_red"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tv_location2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="location"
+                    android:paddingStart="5dp"
+                    android:paddingLeft="5dp"
+                    android:textColor="@color/light_red"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_notes2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
-            android:text="Notes"
+            android:hint="notes"
+            android:paddingStart="5dp"
+            android:paddingLeft="5dp"
             android:textColor="@android:color/black"
-            android:textSize="14sp"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/tv_location2"
-            app:layout_constraintTop_toBottomOf="@+id/tv_location2" />
+            android:textSize="15sp" />
 
-        <ImageView
-            android:id="@+id/imageView7"
-            android:layout_width="45dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/profile_pic" />
-
-        <ImageButton
-            android:id="@+id/like_btn"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@android:color/white"
-            android:src="@drawable/ic_dislike"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_notes2"
-            app:layout_constraintEnd_toStartOf="@+id/likes_textView"
-            app:layout_constraintTop_toTopOf="@+id/tv_notes2"
-            app:layout_constraintVertical_bias="0.0" />
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/like_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@android:color/transparent"
+                android:padding="5dp"
+                android:src="@drawable/ic_dislike" />
+
+            <ImageButton
+                android:id="@+id/comment_activity_open"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@android:color/transparent"
+                android:padding="5dp"
+                android:src="@drawable/ic_comment" />
+
+            <ImageButton
+                android:id="@+id/favourite_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@android:color/transparent"
+                android:padding="5dp"
+                android:src="@drawable/ic_turned_in_not" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/likes_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:hint="likes"
+            android:paddingStart="5dp"
+            android:paddingLeft="5dp"
+            android:text="Likes"
             android:textColor="@android:color/black"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/like_btn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/like_btn" />
+            android:textSize="15sp" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_comment_post"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="5dp"
+            android:paddingLeft="5dp"
+            android:text="Comments"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="15sp" />
+
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>

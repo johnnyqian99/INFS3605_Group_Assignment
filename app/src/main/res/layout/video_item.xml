@@ -126,13 +126,13 @@
                 android:src="@drawable/ic_comment" />
 
             <ImageButton
-                android:id="@+id/moreButton_posts"
+                android:id="@+id/favourite_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:background="@android:color/transparent"
                 android:padding="5dp"
-                android:src="@drawable/ic_moreoptions" />
+                android:src="@drawable/ic_turned_in_not" />
 
         </LinearLayout>
 
