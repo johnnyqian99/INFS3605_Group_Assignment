@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.infs3605_group_assignment.Image.ImageAdapter;
 import com.example.infs3605_group_assignment.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,6 +29,7 @@ import java.util.List;
 
 public class TextAdapter extends RecyclerView.ViewHolder {
 
+    private TextAdapter.ClickListener mClickListener;
     TextView mTitle;
     TextView mLocation;
     TextView mNotes;
@@ -45,6 +47,34 @@ public class TextAdapter extends RecyclerView.ViewHolder {
         mNotes = itemView.findViewById(R.id.tv_notes2);
         mDate = itemView.findViewById(R.id.tv_date);
 
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mClickListener.onItemClick(v, getAdapterPosition());
+            }
+        });
+
+        itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                mClickListener.onItemLongClick(v, getAdapterPosition());
+                return false;
+            }
+        });
+
+    }
+
+    // Below two methods are for on item click
+
+    public interface ClickListener {
+        void onItemClick(View view, int position);
+        void onItemLongClick(View view, int position);
+    }
+
+    public void setOnClickListener(TextAdapter.ClickListener clickListener) {
+        mClickListener = clickListener;
     }
 
     // For like button

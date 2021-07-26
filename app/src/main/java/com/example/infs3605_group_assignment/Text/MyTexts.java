@@ -1,10 +1,12 @@
 package com.example.infs3605_group_assignment.Text;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,6 +19,8 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.infs3605_group_assignment.Image.ImageAdapter;
+import com.example.infs3605_group_assignment.Image.ImageDetailActivity;
 import com.example.infs3605_group_assignment.Image.MyImages;
 import com.example.infs3605_group_assignment.MainActivity;
 import com.example.infs3605_group_assignment.NewPostActivity;
@@ -31,6 +35,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -51,6 +56,7 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
     FirebaseRecyclerAdapter<TextUpload, TextAdapter> adapter;
     DatabaseReference dataRef, likesRef;
     Boolean likeChecker = false;
+    String mTitle, mLocation, mNotes, mDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,6 +152,30 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
                 holder.mNotes.setText(model.getmNotes());
                 holder.mDate.setText(model.getmDate());
 
+                holder.setOnClickListener(new TextAdapter.ClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+
+                        mTitle = getItem(position).getmTitle();
+                        mLocation = getItem(position).getmLocation();
+                        mNotes = getItem(position).getmNotes();
+                        mDate = getItem(position).getmDate();
+                        Intent intent = new Intent(MyTexts.this, TextDetailActivity.class);
+                        intent.putExtra("text_title", mTitle);
+                        intent.putExtra("text_location", mLocation);
+                        intent.putExtra("text_notes", mNotes);
+                        intent.putExtra("text_date", mDate);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onItemLongClick(View view, int position) {
+
+                        mTitle = getItem(position).getmTitle();
+                        showDeleteDialog(mTitle);
+                    }
+                });
+
                 // For like/comment feature
                 holder.setLikesButtonStatus(postKey);
 
@@ -179,6 +209,7 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
                         });
                     }
                 });
+
             }
 
             @NonNull
@@ -192,6 +223,27 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
         adapter.startListening();
         mRecyclerView.setAdapter(adapter);
     }
+
+//    void delete(String title) {
+//
+//        Query query = favouriteListRef.orderByChild("mTitle").equalTo(title);
+//        query.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//
+//                for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+//                    dataSnapshot1.getRef().removeValue();
+//
+//                    Toast.makeText(MyImages.this, "Deleted", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
 
     // Below two methods are for item selected on spinner
 
@@ -211,6 +263,45 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    private void showDeleteDialog(String title) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MyTexts.this);
+        builder.setTitle("Delete");
+        builder.setMessage("Are you sure you want to delete this data?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Query query = dataRef.orderByChild("mTitle").equalTo(title);
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                            dataSnapshot1.getRef().removeValue();
+                        }
+                        Toast.makeText(MyTexts.this, "Text Deleted", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        // DO WHATEVER YOU WANT
+                    }
+                });
+
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
 //    @Override
