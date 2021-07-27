@@ -33,7 +33,7 @@ public class RewardActivity extends AppCompatActivity implements RewardsAdapter.
     private RecyclerView recyclerView;
     private List<Rewards> rewardsList;
     private RewardsAdapter adapter;
-    private ImageButton backBtn;
+//    private ImageButton backBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +46,7 @@ public class RewardActivity extends AppCompatActivity implements RewardsAdapter.
         // Assign variables
         mStars = findViewById(R.id.stars);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        backBtn = findViewById(R.id.back_btn3);
+//        backBtn = findViewById(R.id.back_btn3);
 
         rewardsList = Rewards.getCategories();
 
@@ -107,14 +107,14 @@ public class RewardActivity extends AppCompatActivity implements RewardsAdapter.
         // NAVIGATION BAR***
 
         // Navigate to MainActivity
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RewardActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+//        backBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(RewardActivity.this, MainActivity.class);
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
     }
 
     private void setAdapter() {

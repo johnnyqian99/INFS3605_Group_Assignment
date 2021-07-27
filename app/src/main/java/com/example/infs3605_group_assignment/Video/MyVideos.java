@@ -287,7 +287,7 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
                 for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
                     dataSnapshot1.getRef().removeValue();
 
-                    Toast.makeText(MyVideos.this, "Deleted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyVideos.this, "Favourite removed", Toast.LENGTH_SHORT).show();
                 }
             }
 

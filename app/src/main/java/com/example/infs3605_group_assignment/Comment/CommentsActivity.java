@@ -144,7 +144,7 @@ public class CommentsActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task task) {
 
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(CommentsActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(CommentsActivity.this, "Commented added!", Toast.LENGTH_SHORT).show();
                                     } else {
                                         Toast.makeText(CommentsActivity.this, "Failed", Toast.LENGTH_SHORT).show();
                                     }
