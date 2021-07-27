@@ -59,6 +59,8 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
     DatabaseReference dataRef, likesReference, favouriteRef, favouriteListRef;
     Boolean likeChecker = false, favouriteChecker = false;
     String mTitle, mLocation, mNotes, mDate, mUrl;
+    long value;
+    long imageCounter = 0;
 
     ImageUpload imageUpload;
 
@@ -360,6 +362,44 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
                             dataSnapshot1.getRef().removeValue();
                         }
                         Toast.makeText(MyImages.this, "Image Deleted", Toast.LENGTH_SHORT).show();
+
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference myStarRef = database.getReference(FirebaseAuth.getInstance().getUid()).child("stars");
+                        DatabaseReference mImageCount = database.getReference(FirebaseAuth.getInstance().getUid()).child("imageCount");
+
+                        myStarRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                value = (long) snapshot.getValue();
+                                // number of posts cannot be negative
+                                if (value >= 20 ) {
+                                    value = value - 20;
+                                    snapshot.getRef().setValue(value);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+                        mImageCount.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                imageCounter = (long) snapshot.getValue();
+                                // number of posts cannot be negative
+                                if (imageCounter > 0) {
+                                    imageCounter = imageCounter - 1;
+                                    snapshot.getRef().setValue(imageCounter);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
                     }
 
                     @Override

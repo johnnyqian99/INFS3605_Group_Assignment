@@ -34,6 +34,7 @@ public class TextPostActivity extends AppCompatActivity {
     private Button mUpload;
     private DatabaseReference databaseReference;
     long value;
+    long textCounter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +98,7 @@ public class TextPostActivity extends AppCompatActivity {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef = database.getReference(FirebaseAuth.getInstance().getUid()).child("Name");
             DatabaseReference myStarRef = database.getReference(FirebaseAuth.getInstance().getUid()).child("stars");
+            DatabaseReference mTextCount = database.getReference(FirebaseAuth.getInstance().getUid()).child("textCount");
 
             myStarRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -104,6 +106,20 @@ public class TextPostActivity extends AppCompatActivity {
                     value = (long) snapshot.getValue();
                     value = value + 20;
                     snapshot.getRef().setValue(value);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+            mTextCount.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    textCounter = (long) snapshot.getValue();
+                    textCounter = textCounter + 1;
+                    snapshot.getRef().setValue(textCounter);
                 }
 
                 @Override

@@ -50,6 +50,8 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
     private DatabaseReference databaseReference, likesReference, favouriteRef, favouriteListRef;
     Boolean likeChecker = false, favouriteChecker = false;
     String mTitle, mLocation, mNotes, mDate, mUrl;
+    long value;
+    long videoCounter = 0;
 
     VideoUpload videoUpload;
 
@@ -333,6 +335,44 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
                             dataSnapshot1.getRef().removeValue();
                         }
                         Toast.makeText(MyVideos.this, "Video Deleted", Toast.LENGTH_SHORT).show();
+
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference myStarRef = database.getReference(FirebaseAuth.getInstance().getUid()).child("stars");
+                        DatabaseReference mTextCount = database.getReference(FirebaseAuth.getInstance().getUid()).child("videoCount");
+
+                        myStarRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                value = (long) snapshot.getValue();
+                                // number of posts cannot be negative
+                                if (value >= 20 ) {
+                                    value = value - 20;
+                                    snapshot.getRef().setValue(value);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+                        mTextCount.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                videoCounter = (long) snapshot.getValue();
+                                // number of posts cannot be negative
+                                if (videoCounter > 0) {
+                                    videoCounter = videoCounter - 1;
+                                    snapshot.getRef().setValue(videoCounter);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
                     }
 
                     @Override

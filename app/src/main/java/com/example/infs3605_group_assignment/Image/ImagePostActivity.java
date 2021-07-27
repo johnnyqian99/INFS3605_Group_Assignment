@@ -54,6 +54,7 @@ public class ImagePostActivity extends AppCompatActivity {
     private StorageTask storageTask;
     private Uri mImageUri;
     long value;
+    long imageCounter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,6 +182,7 @@ public class ImagePostActivity extends AppCompatActivity {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef = database.getReference(FirebaseAuth.getInstance().getUid()).child("Name");
             DatabaseReference myStarRef = database.getReference(FirebaseAuth.getInstance().getUid()).child("stars");
+            DatabaseReference mImageCount = database.getReference(FirebaseAuth.getInstance().getUid()).child("imageCount");
 
             myStarRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -195,6 +197,21 @@ public class ImagePostActivity extends AppCompatActivity {
 
                 }
             });
+
+            mImageCount.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    imageCounter = (long) snapshot.getValue();
+                    imageCounter = imageCounter + 1;
+                    snapshot.getRef().setValue(imageCounter);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
         } else {
             Toast.makeText(this, "All Fields are required", Toast.LENGTH_SHORT).show();
         }

@@ -56,6 +56,7 @@ public class VideoPostActivity extends AppCompatActivity {
     private Uri videoUri;
     MediaController mediaController;
     long value;
+    long videoCounter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -206,6 +207,7 @@ public class VideoPostActivity extends AppCompatActivity {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef = database.getReference(FirebaseAuth.getInstance().getUid()).child("Name");
             DatabaseReference myStarRef = database.getReference(FirebaseAuth.getInstance().getUid()).child("stars");
+            DatabaseReference mVideoCount = database.getReference(FirebaseAuth.getInstance().getUid()).child("videoCount");
 
             myStarRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -220,6 +222,21 @@ public class VideoPostActivity extends AppCompatActivity {
 
                 }
             });
+
+            mVideoCount.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    videoCounter = (long) snapshot.getValue();
+                    videoCounter = videoCounter + 1;
+                    snapshot.getRef().setValue(videoCounter);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
         } else {
             Toast.makeText(this, "All Fields are required", Toast.LENGTH_SHORT).show();
         }

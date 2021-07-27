@@ -16,13 +16,25 @@ import com.example.infs3605_group_assignment.Text.MyTexts;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity implements ValueEventListener {
 
     private BottomNavigationView bottomNavigationView;
     private ImageButton backBtn;
+    private TextView textCount;
+    private TextView imageCount;
+    private TextView videoCount;
+    private TextView mName;
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference mTextCount = database.getReference(FirebaseAuth.getInstance().getUid()).child("textCount");
+    DatabaseReference mImageCount = database.getReference(FirebaseAuth.getInstance().getUid()).child("imageCount");
+    DatabaseReference mVideoCount = database.getReference(FirebaseAuth.getInstance().getUid()).child("videoCount");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +47,15 @@ public class ProfileActivity extends AppCompatActivity {
         // Assign variables
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         backBtn = findViewById(R.id.back_btn8);
+        textCount = findViewById(R.id.text_post_count);
+        imageCount = findViewById(R.id.image_post_count);
+        videoCount = findViewById(R.id.video_post_count);
+        mName = findViewById(R.id.tv_name);
+
+        // set name
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        mName.setText(user.getDisplayName());
 
         // ***NAVIGATION BAR
 
@@ -77,5 +98,44 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         // NAVIGATION BAR***
+    }
+
+    @Override
+    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+        if (snapshot.getValue(Integer.class) != null) {
+            String key = snapshot.getKey();
+            if (key.equals("textCount")) {
+                int text = snapshot.getValue(Integer.class);
+
+                textCount.setText("" + text);
+            }
+
+            if (key.equals("imageCount")) {
+                int text = snapshot.getValue(Integer.class);
+
+                imageCount.setText("" + text);
+            }
+
+            if (key.equals("videoCount")) {
+                int text = snapshot.getValue(Integer.class);
+
+                videoCount.setText("" + text);
+            }
+        }
+    }
+
+    @Override
+    public void onCancelled(@NonNull DatabaseError error) {
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        mTextCount.addValueEventListener(this);
+        mImageCount.addValueEventListener(this);
+        mVideoCount.addValueEventListener(this);
     }
 }
