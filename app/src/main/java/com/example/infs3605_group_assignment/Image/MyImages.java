@@ -218,21 +218,22 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
                 });
 
                 holder.setOnClickListener(new ImageAdapter.ClickListener() {
+                    // this does nothing
                     @Override
                     public void onItemClick(View view, int position) {
 
-                        mTitle = getItem(position).getmTitle();
-                        mLocation = getItem(position).getmLocation();
-                        mNotes = getItem(position).getmNotes();
-                        mDate = getItem(position).getmDate();
-                        mUrl = getItem(position).getmImageUrl();
-                        Intent intent = new Intent(MyImages.this, ImageDetailActivity.class);
-                        intent.putExtra("image_title", mTitle);
-                        intent.putExtra("image_location", mLocation);
-                        intent.putExtra("image_notes", mNotes);
-                        intent.putExtra("image_date", mDate);
-                        intent.putExtra("image_url", mUrl);
-                        startActivity(intent);
+//                        mTitle = getItem(position).getmTitle();
+//                        mLocation = getItem(position).getmLocation();
+//                        mNotes = getItem(position).getmNotes();
+//                        mDate = getItem(position).getmDate();
+//                        mUrl = getItem(position).getmImageUrl();
+//                        Intent intent = new Intent(MyImages.this, ImageDetailActivity.class);
+//                        intent.putExtra("image_title", mTitle);
+//                        intent.putExtra("image_location", mLocation);
+//                        intent.putExtra("image_notes", mNotes);
+//                        intent.putExtra("image_date", mDate);
+//                        intent.putExtra("image_url", mUrl);
+//                        startActivity(intent);
                     }
 
                     @Override

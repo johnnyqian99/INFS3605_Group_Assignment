@@ -214,19 +214,20 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
                 });
 
                 holder.setOnClickListener(new TextAdapter.ClickListener() {
+                    // this does nothing
                     @Override
                     public void onItemClick(View view, int position) {
 
-                        mTitle = getItem(position).getmTitle();
-                        mLocation = getItem(position).getmLocation();
-                        mNotes = getItem(position).getmNotes();
-                        mDate = getItem(position).getmDate();
-                        Intent intent = new Intent(MyTexts.this, TextDetailActivity.class);
-                        intent.putExtra("text_title", mTitle);
-                        intent.putExtra("text_location", mLocation);
-                        intent.putExtra("text_notes", mNotes);
-                        intent.putExtra("text_date", mDate);
-                        startActivity(intent);
+//                        mTitle = getItem(position).getmTitle();
+//                        mLocation = getItem(position).getmLocation();
+//                        mNotes = getItem(position).getmNotes();
+//                        mDate = getItem(position).getmDate();
+//                        Intent intent = new Intent(MyTexts.this, TextDetailActivity.class);
+//                        intent.putExtra("text_title", mTitle);
+//                        intent.putExtra("text_location", mLocation);
+//                        intent.putExtra("text_notes", mNotes);
+//                        intent.putExtra("text_date", mDate);
+//                        startActivity(intent);
                     }
 
                     @Override

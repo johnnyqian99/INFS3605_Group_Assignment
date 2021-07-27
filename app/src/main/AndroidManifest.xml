@@ -29,11 +29,6 @@
         <activity
             android:name=".Comment.CommentsActivity"
             android:parentActivityName=".Video.MyVideos" />
-        <activity
-            android:name=".Video.VideoDetailActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
-        <activity android:name=".Text.TextDetailActivity" />
-        <activity android:name=".Image.ImageDetailActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".RewardActivity" />
         <activity
