@@ -11,6 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.INFS3605_Group_Assignment">
+        <activity android:name=".FAQActivity"></activity>
+        <activity android:name=".TermsAndConditions" />
         <activity
             android:name=".TextFavourites"
             android:parentActivityName=".Text.MyTexts" />
@@ -49,12 +51,12 @@
         <activity android:name=".Text.TextPostActivity" />
         <activity android:name=".SplashActivity">
 
-            <!--             <intent-filter> -->
-            <!--             <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
 
 
-            <!--             <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!--             </intent-filter> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">

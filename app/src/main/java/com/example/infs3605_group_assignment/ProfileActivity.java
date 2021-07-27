@@ -26,6 +26,8 @@ public class ProfileActivity extends AppCompatActivity implements ValueEventList
 
     private BottomNavigationView bottomNavigationView;
     private ImageButton backBtn;
+    private Button termsBtn;
+    private Button faqBtn;
     private TextView textCount;
     private TextView imageCount;
     private TextView videoCount;
@@ -47,6 +49,8 @@ public class ProfileActivity extends AppCompatActivity implements ValueEventList
         // Assign variables
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         backBtn = findViewById(R.id.back_btn8);
+        termsBtn = findViewById(R.id.terms_btn);
+        faqBtn = findViewById(R.id.faq_btn);
         textCount = findViewById(R.id.text_post_count);
         imageCount = findViewById(R.id.image_post_count);
         videoCount = findViewById(R.id.video_post_count);
@@ -56,6 +60,24 @@ public class ProfileActivity extends AppCompatActivity implements ValueEventList
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
         mName.setText(user.getDisplayName());
+
+        // set terms button
+        termsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this, TermsAndConditions.class);
+                startActivity(intent);
+            }
+        });
+
+        // set terms button
+        faqBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this, FAQActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // ***NAVIGATION BAR
 
