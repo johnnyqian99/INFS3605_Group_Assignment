@@ -55,13 +55,13 @@
         android:hint="What's on your mind?"
         android:inputType="text"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/et_date"
+        app:layout_constraintBottom_toTopOf="@+id/tv_date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_location" />
 
-    <EditText
-        android:id="@+id/et_date"
+    <TextView
+        android:id="@+id/tv_date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -71,7 +71,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="10dp"
         android:hint="Date"
-        android:inputType="date"
+        android:paddingLeft="5dp"
         android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_upload"
         app:layout_constraintEnd_toEndOf="parent"
@@ -91,6 +91,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_date" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_date" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

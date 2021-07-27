@@ -62,8 +62,8 @@
         android:inputType="text"
         android:textSize="14sp" />
 
-    <EditText
-        android:id="@+id/et_date"
+    <TextView
+        android:id="@+id/tv_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16sp"
@@ -72,7 +72,7 @@
         android:layout_marginRight="16sp"
         android:layout_marginBottom="16sp"
         android:hint="Date"
-        android:inputType="date"
+        android:paddingLeft="5dp"
         android:textSize="14sp" />
 
     <Button

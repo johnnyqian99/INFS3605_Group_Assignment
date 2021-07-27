@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.infs3605_group_assignment.R;
@@ -29,7 +30,7 @@ public class TextPostActivity extends AppCompatActivity {
     private EditText mTitle;
     private EditText mLocation;
     private EditText mNotes;
-    private EditText mDate;
+    private TextView mDate;
     private Button mUpload;
     private DatabaseReference databaseReference;
     long value;
@@ -48,7 +49,7 @@ public class TextPostActivity extends AppCompatActivity {
         mTitle = findViewById(R.id.et_title);
         mLocation = findViewById(R.id.et_location);
         mNotes = findViewById(R.id.et_notes);
-        mDate = findViewById(R.id.et_date);
+        mDate = findViewById(R.id.tv_date);
         mUpload = findViewById(R.id.btn_upload);
 
         mUpload.setOnClickListener(new View.OnClickListener() {

@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
@@ -44,7 +45,7 @@ public class VideoPostActivity extends AppCompatActivity {
     private EditText mTitle;
     private EditText mLocation;
     private EditText mNotes;
-    private EditText mDate;
+    private TextView mDate;
     private Button mChooseFile;
     private Button mUpload;
     private ProgressBar mProgressBar;
@@ -72,7 +73,7 @@ public class VideoPostActivity extends AppCompatActivity {
         mTitle = findViewById(R.id.et_title);
         mLocation = findViewById(R.id.et_location);
         mNotes = findViewById(R.id.et_notes);
-        mDate = findViewById(R.id.et_date);
+        mDate = findViewById(R.id.tv_date);
         mChooseFile = findViewById(R.id.btn_choose_file);
         mUpload = findViewById(R.id.btn_upload);
         mProgressBar = findViewById(R.id.progress_bar);
