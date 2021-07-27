@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.example.infs3605_group_assignment.Image.ImageUpload;
 import com.example.infs3605_group_assignment.Text.TextUpload;
@@ -27,6 +29,7 @@ public class TextFavourites extends AppCompatActivity {
     FirebaseRecyclerOptions<TextUpload> options;
     FirebaseRecyclerAdapter<TextUpload, TextFavouritesAdapter> adapter;
     DatabaseReference dataRef;
+    private ImageButton mBackBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,9 @@ public class TextFavourites extends AppCompatActivity {
 
         // Remove action bar
         getSupportActionBar().hide();
+
+        //Assign variables
+        mBackBtn = findViewById(R.id.back_btn4);
 
         // This will get the userID for like function
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -48,6 +54,16 @@ public class TextFavourites extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
 
         LoadData();
+
+        // Navigate to MainActivity
+        mBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TextFavourites.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void LoadData() {

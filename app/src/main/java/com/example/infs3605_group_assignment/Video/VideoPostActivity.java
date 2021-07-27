@@ -29,9 +29,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class VideoPostActivity extends AppCompatActivity {
 
@@ -101,6 +104,11 @@ public class VideoPostActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //Set up autodate
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
+        String autodate = date.format(new Date());
+        mDate.setText(autodate);
     }
 
     // Opens file to select an image

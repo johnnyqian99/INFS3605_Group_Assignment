@@ -33,6 +33,9 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class ImagePostActivity extends AppCompatActivity {
 
     // Declare variables
@@ -90,6 +93,11 @@ public class ImagePostActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //Set up autodate
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
+        String autodate = date.format(new Date());
+        mDate.setText(autodate);
 
     }
 

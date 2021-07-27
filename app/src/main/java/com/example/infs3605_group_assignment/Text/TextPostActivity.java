@@ -20,6 +20,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class TextPostActivity extends AppCompatActivity {
 
     // Declare variables
@@ -54,6 +57,12 @@ public class TextPostActivity extends AppCompatActivity {
                 uploadFile();
             }
         });
+
+        //Set up autodate
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
+        String autodate = date.format(new Date());
+        mDate.setText(autodate);
+
     }
 
     // Upload file into firebase database and storage

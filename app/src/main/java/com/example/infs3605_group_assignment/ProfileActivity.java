@@ -6,13 +6,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.infs3605_group_assignment.News.NewsActivity;
+import com.example.infs3605_group_assignment.Text.MyTexts;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class ProfileActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
+    private ImageButton backBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +34,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         // Assign variables
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+        backBtn = findViewById(R.id.back_btn8);
 
         // ***NAVIGATION BAR
 
@@ -52,6 +63,16 @@ public class ProfileActivity extends AppCompatActivity {
                 }
 
                 return false;
+            }
+        });
+
+        // Navigate to MainActivity
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 

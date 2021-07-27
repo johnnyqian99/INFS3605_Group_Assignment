@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.example.infs3605_group_assignment.Image.ImageAdapter;
 import com.example.infs3605_group_assignment.Image.ImageUpload;
@@ -26,6 +28,7 @@ public class ImageFavourites extends AppCompatActivity {
     FirebaseRecyclerOptions<ImageUpload> options;
     FirebaseRecyclerAdapter<ImageUpload, ImageFavouritesAdapter> adapter;
     DatabaseReference dataRef;
+    private ImageButton mBackBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,9 @@ public class ImageFavourites extends AppCompatActivity {
 
         // Remove action bar
         getSupportActionBar().hide();
+
+        //Assign variables
+        mBackBtn = findViewById(R.id.back_btn2);
 
         // This will get the userID for like function
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -47,6 +53,17 @@ public class ImageFavourites extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
 
         LoadData();
+
+        // Navigate to MainActivity
+        mBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ImageFavourites.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
     }
 
     private void LoadData() {

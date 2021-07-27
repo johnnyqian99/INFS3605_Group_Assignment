@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.example.infs3605_group_assignment.Video.VideoUpload;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -22,6 +24,7 @@ public class VideoFavourites extends AppCompatActivity {
 
     DatabaseReference databaseReference;
     RecyclerView recyclerView;
+    private ImageButton mBackBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,9 @@ public class VideoFavourites extends AppCompatActivity {
 
         // Remove action bar
         getSupportActionBar().hide();
+
+        //Assign variables
+        mBackBtn = findViewById(R.id.back_btn5);
 
         // This will get the userID for like function
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -40,6 +46,16 @@ public class VideoFavourites extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView_video_favourites);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Navigate to MainActivity
+        mBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(VideoFavourites.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
     }
 

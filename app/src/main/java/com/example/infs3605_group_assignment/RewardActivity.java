@@ -10,9 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.infs3605_group_assignment.News.NewsActivity;
+import com.example.infs3605_group_assignment.Text.MyTexts;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -30,6 +33,7 @@ public class RewardActivity extends AppCompatActivity implements RewardsAdapter.
     private RecyclerView recyclerView;
     private List<Rewards> rewardsList;
     private RewardsAdapter adapter;
+    private ImageButton backBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,7 @@ public class RewardActivity extends AppCompatActivity implements RewardsAdapter.
         // Assign variables
         mStars = findViewById(R.id.stars);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+        backBtn = findViewById(R.id.back_btn3);
 
         rewardsList = Rewards.getCategories();
 
@@ -100,6 +105,16 @@ public class RewardActivity extends AppCompatActivity implements RewardsAdapter.
             }
         });
         // NAVIGATION BAR***
+
+        // Navigate to MainActivity
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RewardActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void setAdapter() {
