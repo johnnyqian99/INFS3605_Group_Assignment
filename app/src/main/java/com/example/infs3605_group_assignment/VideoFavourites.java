@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.example.infs3605_group_assignment.Video.MyVideos;
 import com.example.infs3605_group_assignment.Video.VideoUpload;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -35,7 +36,7 @@ public class VideoFavourites extends AppCompatActivity {
         getSupportActionBar().hide();
 
         //Assign variables
-        mBackBtn = findViewById(R.id.back_btn5);
+        mBackBtn = findViewById(R.id.back_btn);
 
         // This will get the userID for like function
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -51,7 +52,7 @@ public class VideoFavourites extends AppCompatActivity {
         mBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(VideoFavourites.this, MainActivity.class);
+                Intent intent = new Intent(VideoFavourites.this, MyVideos.class);
                 startActivity(intent);
                 finish();
             }

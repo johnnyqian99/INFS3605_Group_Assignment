@@ -5,15 +5,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.infs3605_group_assignment.R;
+import com.example.infs3605_group_assignment.Text.MyTexts;
+import com.example.infs3605_group_assignment.Video.MyVideos;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,6 +40,7 @@ public class CommentsActivity extends AppCompatActivity {
     // Declare variables
     private RecyclerView recyclerView_comments;
     private Button post_comments;
+    private ImageButton mBackBtn;
     private EditText editText_comment_input;
     DatabaseReference databaseReference, postref;
     private String post_key;
@@ -69,8 +74,18 @@ public class CommentsActivity extends AppCompatActivity {
         linearLayoutManager.setStackFromEnd(true);
         recyclerView_comments.setLayoutManager(linearLayoutManager);
 
+        mBackBtn = findViewById(R.id.back_btn);
         post_comments = findViewById(R.id.comment_btn_post);
         editText_comment_input = findViewById(R.id.comment_et);
+
+        mBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CommentsActivity.this, MyVideos.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         post_comments.setOnClickListener(new View.OnClickListener() {
             @Override

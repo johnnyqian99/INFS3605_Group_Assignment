@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.example.infs3605_group_assignment.Image.ImageUpload;
+import com.example.infs3605_group_assignment.Text.MyTexts;
 import com.example.infs3605_group_assignment.Text.TextUpload;
 import com.example.infs3605_group_assignment.Video.VideoUpload;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -40,7 +41,7 @@ public class TextFavourites extends AppCompatActivity {
         getSupportActionBar().hide();
 
         //Assign variables
-        mBackBtn = findViewById(R.id.back_btn4);
+        mBackBtn = findViewById(R.id.back_btn);
 
         // This will get the userID for like function
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -55,11 +56,10 @@ public class TextFavourites extends AppCompatActivity {
 
         LoadData();
 
-        // Navigate to MainActivity
         mBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TextFavourites.this, MainActivity.class);
+                Intent intent = new Intent(TextFavourites.this, MyTexts.class);
                 startActivity(intent);
                 finish();
             }

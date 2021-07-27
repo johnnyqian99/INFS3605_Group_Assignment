@@ -11,12 +11,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.INFS3605_Group_Assignment">
-        <activity android:name=".TextFavourites"></activity>
-        <activity android:name=".Comment.CommentsActivityText" />
-        <activity android:name=".VideoFavourites" />
-        <activity android:name=".ImageFavourites" />
-        <activity android:name=".Comment.CommentsActivityImages" />
-        <activity android:name=".Comment.CommentsActivity" />
+        <activity
+            android:name=".TextFavourites"
+            android:parentActivityName=".Text.MyTexts" />
+        <activity
+            android:name=".Comment.CommentsActivityText"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".VideoFavourites"
+            android:parentActivityName=".Video.MyVideos" />
+        <activity
+            android:name=".ImageFavourites"
+            android:parentActivityName=".Image.MyImages" />
+        <activity
+            android:name=".Comment.CommentsActivityImages"
+            android:parentActivityName=".Image.MyImages" />
+        <activity
+            android:name=".Comment.CommentsActivity"
+            android:parentActivityName=".Video.MyVideos" />
         <activity
             android:name=".Video.VideoDetailActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
@@ -42,12 +54,12 @@
         <activity android:name=".Text.TextPostActivity" />
         <activity android:name=".SplashActivity">
 
-<!--             <intent-filter> -->
-<!--             <action android:name="android.intent.action.MAIN" /> -->
+            <!--             <intent-filter> -->
+            <!--             <action android:name="android.intent.action.MAIN" /> -->
 
 
-<!--             <category android:name="android.intent.category.LAUNCHER" /> -->
-<!--             </intent-filter> -->
+            <!--             <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!--             </intent-filter> -->
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
