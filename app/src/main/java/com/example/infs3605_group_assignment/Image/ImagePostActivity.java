@@ -1,9 +1,11 @@
 package com.example.infs3605_group_assignment.Image;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,12 +14,15 @@ import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.infs3605_group_assignment.R;
+import com.example.infs3605_group_assignment.Text.MyTexts;
+import com.example.infs3605_group_assignment.Text.TextPostActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -44,6 +49,7 @@ public class ImagePostActivity extends AppCompatActivity {
     private ImageView mImageView;
     private Button mButtonChooseImage;
     private Button mButtonUpload;
+    private ImageButton backBtn;
     private EditText mTitle;
     private EditText mLocation;
     private EditText mNotes;
@@ -76,6 +82,14 @@ public class ImagePostActivity extends AppCompatActivity {
         mNotes = findViewById(R.id.et_notes);
         mDate = findViewById(R.id.tv_date);
         mProgressBar = findViewById(R.id.progress_bar);
+        backBtn = findViewById(R.id.back_btn);
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popUpWindow();
+            }
+        });
 
         mButtonChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +115,31 @@ public class ImagePostActivity extends AppCompatActivity {
         String autodate = date.format(new Date());
         mDate.setText(autodate);
 
+    }
+
+    private void popUpWindow() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ImagePostActivity.this);
+        builder.setTitle("Unsaved changes");
+        builder.setMessage("Are you sure you want to exit?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Intent intent = new Intent(ImagePostActivity.this, MyImages.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     // Opens file to select an image

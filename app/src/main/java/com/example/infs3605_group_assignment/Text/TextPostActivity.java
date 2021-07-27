@@ -1,17 +1,22 @@
 package com.example.infs3605_group_assignment.Text;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.infs3605_group_assignment.MainActivity;
 import com.example.infs3605_group_assignment.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -19,6 +24,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
@@ -32,6 +38,7 @@ public class TextPostActivity extends AppCompatActivity {
     private EditText mNotes;
     private TextView mDate;
     private Button mUpload;
+    private ImageButton backBtn;
     private DatabaseReference databaseReference;
     long value;
     long textCounter = 0;
@@ -52,6 +59,14 @@ public class TextPostActivity extends AppCompatActivity {
         mNotes = findViewById(R.id.et_notes);
         mDate = findViewById(R.id.tv_date);
         mUpload = findViewById(R.id.btn_upload);
+        backBtn = findViewById(R.id.back_btn);
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popUpWindow();
+            }
+        });
 
         mUpload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +80,31 @@ public class TextPostActivity extends AppCompatActivity {
         String autodate = date.format(new Date());
         mDate.setText(autodate);
 
+    }
+
+    private void popUpWindow() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(TextPostActivity.this);
+        builder.setTitle("Unsaved changes");
+        builder.setMessage("Are you sure you want to exit?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Intent intent = new Intent(TextPostActivity.this, MyTexts.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     // Upload file into firebase database and storage

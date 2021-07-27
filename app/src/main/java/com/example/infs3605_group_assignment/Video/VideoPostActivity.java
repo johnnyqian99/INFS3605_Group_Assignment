@@ -2,9 +2,11 @@ package com.example.infs3605_group_assignment.Video;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -20,6 +23,8 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.example.infs3605_group_assignment.R;
+import com.example.infs3605_group_assignment.Text.MyTexts;
+import com.example.infs3605_group_assignment.Text.TextPostActivity;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -48,6 +53,7 @@ public class VideoPostActivity extends AppCompatActivity {
     private TextView mDate;
     private Button mChooseFile;
     private Button mUpload;
+    private ImageButton backBtn;
     private ProgressBar mProgressBar;
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
@@ -78,6 +84,7 @@ public class VideoPostActivity extends AppCompatActivity {
         mChooseFile = findViewById(R.id.btn_choose_file);
         mUpload = findViewById(R.id.btn_upload);
         mProgressBar = findViewById(R.id.progress_bar);
+        backBtn = findViewById(R.id.back_btn);
 
         mediaController = new MediaController(this);
         mVideoView.setMediaController(mediaController);
@@ -85,6 +92,13 @@ public class VideoPostActivity extends AppCompatActivity {
         mVideoView.start();
 
         videoUpload = new VideoUpload();
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popUpWindow();
+            }
+        });
 
         // Open file to choose media from
         mChooseFile.setOnClickListener(new View.OnClickListener() {
@@ -111,6 +125,31 @@ public class VideoPostActivity extends AppCompatActivity {
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
         String autodate = date.format(new Date());
         mDate.setText(autodate);
+    }
+
+    private void popUpWindow() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(VideoPostActivity.this);
+        builder.setTitle("Unsaved changes");
+        builder.setMessage("Are you sure you want to exit?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Intent intent = new Intent(VideoPostActivity.this, MyVideos.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     // Opens file to select an image
