@@ -3,6 +3,7 @@ package com.example.infs3605_group_assignment;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -28,6 +29,7 @@ public class ProfileActivity extends AppCompatActivity implements ValueEventList
 //    private ImageButton backBtn;
     private Button termsBtn;
     private Button faqBtn;
+    private Button mapBtn;
     private TextView textCount;
     private TextView imageCount;
     private TextView videoCount;
@@ -55,6 +57,7 @@ public class ProfileActivity extends AppCompatActivity implements ValueEventList
         imageCount = findViewById(R.id.image_post_count);
         videoCount = findViewById(R.id.video_post_count);
         mName = findViewById(R.id.tv_name);
+        mapBtn = findViewById(R.id.bMap);
 
         // set name
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -109,15 +112,15 @@ public class ProfileActivity extends AppCompatActivity implements ValueEventList
             }
         });
 
-        // Navigate to MainActivity
-//        backBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
-//                startActivity(intent);
-//                finish();
-//            }
-//        });
+         //Map Button
+        mapBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this, MapActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         // NAVIGATION BAR***
     }
