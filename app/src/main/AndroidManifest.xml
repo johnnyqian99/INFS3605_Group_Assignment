@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,11 +13,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.INFS3605_Group_Assignment">
+        <activity android:name=".PermissionsActivity"></activity>
 
-        <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="@string/map_api"></meta-data>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/map_api" />
 
-        <activity android:name=".MapActivity"></activity>
+        <activity android:name=".MapActivity" />
         <activity android:name=".TextFavourites" />
         <activity android:name=".Comment.CommentsActivityText" />
         <activity android:name=".VideoFavourites" />
