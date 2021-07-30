@@ -23,8 +23,6 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.example.infs3605_group_assignment.R;
-import com.example.infs3605_group_assignment.Text.MyTexts;
-import com.example.infs3605_group_assignment.Text.TextPostActivity;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -84,7 +82,7 @@ public class VideoPostActivity extends AppCompatActivity {
         mChooseFile = findViewById(R.id.btn_choose_file);
         mUpload = findViewById(R.id.btn_upload);
         mProgressBar = findViewById(R.id.progress_bar);
-        backBtn = findViewById(R.id.back_btn);
+        backBtn = findViewById(R.id.back_btn11);
 
         mediaController = new MediaController(this);
         mVideoView.setMediaController(mediaController);

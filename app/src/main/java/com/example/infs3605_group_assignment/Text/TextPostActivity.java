@@ -12,11 +12,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.infs3605_group_assignment.MainActivity;
 import com.example.infs3605_group_assignment.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,7 +22,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
@@ -59,7 +56,7 @@ public class TextPostActivity extends AppCompatActivity {
         mNotes = findViewById(R.id.et_notes);
         mDate = findViewById(R.id.tv_date);
         mUpload = findViewById(R.id.btn_upload);
-        backBtn = findViewById(R.id.back_btn);
+        backBtn = findViewById(R.id.back_btn11);
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override

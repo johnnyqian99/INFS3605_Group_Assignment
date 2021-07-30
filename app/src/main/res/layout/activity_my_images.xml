@@ -7,7 +7,7 @@
     tools:context=".Image.MyImages">
 
     <ImageButton
-        android:id="@+id/back_btn"
+        android:id="@+id/back_btn11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -30,7 +30,7 @@
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/back_btn" />
+        app:layout_constraintTop_toBottomOf="@+id/back_btn11" />
 
     <ImageView
         android:id="@+id/imageView8"

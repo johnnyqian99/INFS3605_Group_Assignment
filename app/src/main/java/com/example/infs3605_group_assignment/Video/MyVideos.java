@@ -74,7 +74,7 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
 
         // Assign variables
         favouritesListBtn = findViewById(R.id.video_favourites_list_button);
-        backBtn = findViewById(R.id.back_btn);
+        backBtn = findViewById(R.id.back_btn11);
         floatingActionButton = findViewById(R.id.floatingActionButton);
         progressCircle = findViewById(R.id.progress_circle);
         mSpinner = findViewById(R.id.spinner);

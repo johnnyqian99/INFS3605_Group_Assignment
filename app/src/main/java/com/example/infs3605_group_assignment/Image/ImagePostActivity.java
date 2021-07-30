@@ -21,8 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.infs3605_group_assignment.R;
-import com.example.infs3605_group_assignment.Text.MyTexts;
-import com.example.infs3605_group_assignment.Text.TextPostActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -82,7 +80,7 @@ public class ImagePostActivity extends AppCompatActivity {
         mNotes = findViewById(R.id.et_notes);
         mDate = findViewById(R.id.tv_date);
         mProgressBar = findViewById(R.id.progress_bar);
-        backBtn = findViewById(R.id.back_btn);
+        backBtn = findViewById(R.id.back_btn11);
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override

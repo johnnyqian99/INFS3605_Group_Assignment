@@ -1,5 +1,33 @@
 <resources>
     <string name="app_name">INFS3605_Group_Assignment</string>
+    <string name="faq1">
+        <b>What is the Gather App?</b>
+        <br /> Gather provides a place to record and organise climate change related findings, interacts with other citizen scientists,
+        and keep up to date about climate change in Australia. It encourages the participation of citizen scientists
+        including, but not limited to, First Nations people, hikers, and ecologists.
+        Through cataloguing these first-hand experiences of Australia’s climate,
+        Gather hopes to create an extensive database of the impacts of climate change
+        </string>
+
+    <string name="faq2">
+        <b>How do I contact Gather or send feedback?</b>
+        You can contact us at help@gather.com
+    </string>
+
+    <string name="faq3">
+        <b>How do my donations help?</b>
+        Your donations help support the work of various charities that we have identified that support climate change action.<br />
+    </string>
+
+    <string name="faq4">
+        <b>Can I use photos and videos that are posted on Gather?</b>
+        Gather does not own the photos or videos that our users post here, they belong to the people who upload them. By default, all photos and videos to Gather are released under a Create Commons Attribution Non Commercial License.
+        </string>
+
+    <string name="faq5">
+        <b>What technologies and data sources does this project use?</b>
+        Gather is build using Java, and Firebase Realtime database.
+        </string>
 
     <string-array name="textActivityTypes">
         <item>Select Post</item>

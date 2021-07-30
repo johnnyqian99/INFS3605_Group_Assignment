@@ -83,7 +83,7 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
 
         // Assign variables
         favouritesListBtn = findViewById(R.id.image_favourites_list_button);
-        backBtn = findViewById(R.id.back_btn);
+        backBtn = findViewById(R.id.back_btn11);
         floatingActionButton = findViewById(R.id.floatingActionButton);
         mSpinner = findViewById(R.id.spinner);
         mRecyclerView = findViewById(R.id.rv_image);

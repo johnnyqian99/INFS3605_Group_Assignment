@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import com.example.infs3605_group_assignment.Image.MyImages;
 import com.example.infs3605_group_assignment.R;
-import com.example.infs3605_group_assignment.Text.MyTexts;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -74,7 +73,7 @@ public class CommentsActivityImages extends AppCompatActivity {
         linearLayoutManager.setStackFromEnd(true);
         recyclerView_comments.setLayoutManager(linearLayoutManager);
 
-        mBackBtn = findViewById(R.id.back_btn);
+        mBackBtn = findViewById(R.id.back_btn11);
         post_comments = findViewById(R.id.comment_btn_post);
         editText_comment_input = findViewById(R.id.comment_et);
 

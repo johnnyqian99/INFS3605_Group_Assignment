@@ -36,7 +36,7 @@ public class VideoFavourites extends AppCompatActivity {
         getSupportActionBar().hide();
 
         //Assign variables
-        mBackBtn = findViewById(R.id.back_btn);
+        mBackBtn = findViewById(R.id.back_btn11);
 
         // This will get the userID for like function
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

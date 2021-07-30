@@ -82,7 +82,7 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
 
         // Assign variables
         favouritesListBtn = findViewById(R.id.text_favourites_list_button);
-        backBtn = findViewById(R.id.back_btn);
+        backBtn = findViewById(R.id.back_btn11);
         floatingActionButton = findViewById(R.id.floatingActionButton);
         progressCircle = findViewById(R.id.progress_circle);
         mSpinner = findViewById(R.id.spinner);

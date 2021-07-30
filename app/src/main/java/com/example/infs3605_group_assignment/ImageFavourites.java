@@ -12,10 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import com.example.infs3605_group_assignment.Image.ImageAdapter;
 import com.example.infs3605_group_assignment.Image.ImageUpload;
 import com.example.infs3605_group_assignment.Image.MyImages;
-import com.example.infs3605_group_assignment.Text.MyTexts;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,7 +39,7 @@ public class ImageFavourites extends AppCompatActivity {
         getSupportActionBar().hide();
 
         //Assign variables
-        mBackBtn = findViewById(R.id.back_btn);
+        mBackBtn = findViewById(R.id.back_btn11);
 
         // This will get the userID for like function
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
