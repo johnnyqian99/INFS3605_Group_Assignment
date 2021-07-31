@@ -13,7 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.INFS3605_Group_Assignment">
-        <activity android:name=".PermissionsActivity"></activity>
+        <activity android:name=".FourthInfoActivity"></activity>
+        <activity android:name=".ThirdInfoActivity" />
+        <activity android:name=".SecondInfoActivity" />
+        <activity android:name=".FirstInfoActivity" />
+        <activity android:name=".PermissionsActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

@@ -45,12 +45,12 @@ public class MainActivity extends AppCompatActivity {
 
         // Assign variables
         mWelcome = findViewById(R.id.main_title);
-        mProfile = findViewById(R.id.btn_profile);
+//        mProfile = findViewById(R.id.btn_profile);
         mOpinion = findViewById(R.id.btn_opinion);
         mPhoto = findViewById(R.id.btn_photos);
         mVideo = findViewById(R.id.btn_videos);
-        mNews = findViewById(R.id.btn_news);
-        mDonate = findViewById(R.id.btn_donate);
+//        mNews = findViewById(R.id.btn_news);
+//        mDonate = findViewById(R.id.btn_donate);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         // Set up the profile Token

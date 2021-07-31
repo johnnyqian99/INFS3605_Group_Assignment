@@ -22,7 +22,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private Runnable mLaunchApp = new Runnable() {
         public void run() {
-            Intent i = new Intent(SplashActivity.this, LoginActivity.class);
+            Intent i = new Intent(SplashActivity.this, FirstInfoActivity.class);
             startActivity(i);
         }
     };
