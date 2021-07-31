@@ -17,6 +17,11 @@
         android:title="Donate" />
 
     <item
+        android:id="@+id/map"
+        android:icon="@drawable/ic_map"
+        android:title="Map" />
+
+    <item
         android:id="@+id/profile"
         android:title="Profile"
         android:icon="@drawable/ic_person" />

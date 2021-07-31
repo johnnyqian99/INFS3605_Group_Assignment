@@ -8,14 +8,17 @@ import androidx.fragment.app.FragmentActivity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.infs3605_group_assignment.News.NewsActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -30,11 +33,13 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private SupportMapFragment mSupportMapFragment;
+    private BottomNavigationView bottomNavigationView;
     private FusedLocationProviderClient mFusedLocation;
     private View mMapView;
     private Location mLocation;
@@ -54,6 +59,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         mSupportMapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mSupportMapFragment.getMapAsync(this);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         //Initialise map view
         mMapView = mSupportMapFragment.getView();
@@ -61,6 +67,40 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         //Initialise Fused Location Client
         mFusedLocation = LocationServices.getFusedLocationProviderClient(MapActivity.this);
 
+        // ***NAVIGATION BAR
+
+        // Set current selected item
+        bottomNavigationView.setSelectedItemId(R.id.map);
+        // Set up select listener
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()) {
+                    case R.id.home:
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.news:
+                        startActivity(new Intent(getApplicationContext(), NewsActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.reward:
+                        startActivity(new Intent(getApplicationContext(), RewardActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.map:
+                        return true;
+                    case R.id.profile:
+                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                }
+
+                return false;
+            }
+        });
+        // NAVIGATION BAR***
     }
 
 

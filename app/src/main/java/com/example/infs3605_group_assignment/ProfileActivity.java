@@ -29,7 +29,6 @@ public class ProfileActivity extends AppCompatActivity implements ValueEventList
 //    private ImageButton backBtn;
     private Button termsBtn;
     private Button faqBtn;
-    private Button mapBtn;
     private TextView textCount;
     private TextView imageCount;
     private TextView videoCount;
@@ -57,7 +56,6 @@ public class ProfileActivity extends AppCompatActivity implements ValueEventList
         imageCount = findViewById(R.id.image_post_count);
         videoCount = findViewById(R.id.video_post_count);
         mName = findViewById(R.id.tv_name);
-        mapBtn = findViewById(R.id.bMap);
 
         // set name
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -104,21 +102,15 @@ public class ProfileActivity extends AppCompatActivity implements ValueEventList
                         startActivity(new Intent(getApplicationContext(), RewardActivity.class));
                         overridePendingTransition(0, 0);
                         return true;
+                    case R.id.map:
+                        startActivity(new Intent(getApplicationContext(), PermissionsActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
                     case R.id.profile:
                         return true;
                 }
 
                 return false;
-            }
-        });
-
-         //Call map activity
-        mapBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ProfileActivity.this, PermissionsActivity.class);
-                startActivity(intent);
-                finish();
             }
         });
 

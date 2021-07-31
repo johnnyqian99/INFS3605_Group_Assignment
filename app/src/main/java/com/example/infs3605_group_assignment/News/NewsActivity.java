@@ -24,6 +24,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.infs3605_group_assignment.MainActivity;
+import com.example.infs3605_group_assignment.MapActivity;
+import com.example.infs3605_group_assignment.PermissionsActivity;
 import com.example.infs3605_group_assignment.ProfileActivity;
 import com.example.infs3605_group_assignment.R;
 import com.example.infs3605_group_assignment.RewardActivity;
@@ -75,6 +77,10 @@ public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayou
                         return true;
                     case R.id.reward:
                         startActivity(new Intent(getApplicationContext(), RewardActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.map:
+                        startActivity(new Intent(getApplicationContext(), PermissionsActivity.class));
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.profile:

@@ -95,6 +95,10 @@ public class RewardActivity extends AppCompatActivity implements RewardsAdapter.
                         return true;
                     case R.id.reward:
                         return true;
+                    case R.id.map:
+                        startActivity(new Intent(getApplicationContext(), PermissionsActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
                     case R.id.profile:
                         startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                         overridePendingTransition(0, 0);

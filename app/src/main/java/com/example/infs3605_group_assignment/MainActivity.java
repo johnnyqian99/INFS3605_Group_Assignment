@@ -27,12 +27,9 @@ public class MainActivity extends AppCompatActivity {
 
     // Declare variables
     private TextView mWelcome;
-    private ImageButton mProfile;
     private ImageButton mOpinion;
     private ImageButton mPhoto;
     private ImageButton mVideo;
-    private ImageButton mNews;
-    private ImageButton mDonate;
     private BottomNavigationView bottomNavigationView;
 
     @Override
@@ -45,12 +42,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Assign variables
         mWelcome = findViewById(R.id.main_title);
-        mProfile = findViewById(R.id.btn_profile);
         mOpinion = findViewById(R.id.btn_opinion);
         mPhoto = findViewById(R.id.btn_photos);
         mVideo = findViewById(R.id.btn_videos);
-        mNews = findViewById(R.id.btn_news);
-        mDonate = findViewById(R.id.btn_donate);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         // Set up the profile Token
@@ -144,6 +138,10 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), RewardActivity.class));
                         overridePendingTransition(0, 0);
                         return true;
+                    case R.id.map:
+                        startActivity(new Intent(getApplicationContext(), PermissionsActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
                     case R.id.profile:
                         startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                         overridePendingTransition(0, 0);
@@ -155,15 +153,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // NAVIGATION BAR***
-
-        // Navigate to ProfileActivity
-        mProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-                startActivity(intent);
-            }
-        });
 
         // Navigate to MyTexts
         mOpinion.setOnClickListener(new View.OnClickListener() {
@@ -192,22 +181,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Navigate to NewsActivity
-        mNews.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, NewsActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        // Navigate to RewardActivity
-        mDonate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, RewardActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 }
