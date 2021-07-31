@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.infs3605_group_assignment.PostFinishActivity;
 import com.example.infs3605_group_assignment.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -202,8 +203,10 @@ public class ImagePostActivity extends AppCompatActivity {
                             String uploadId = databaseReference.push().getKey();
                             databaseReference.child(uploadId).setValue(imageUpload);
 
-                            Intent intent = new Intent(ImagePostActivity.this, MyImages.class);
+                            Intent intent = new Intent(ImagePostActivity.this, PostFinishActivity.class);
+                            intent.putExtra("points", "10");
                             startActivity(intent);
+                            finish();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

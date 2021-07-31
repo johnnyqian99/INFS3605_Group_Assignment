@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.infs3605_group_assignment.PostFinishActivity;
 import com.example.infs3605_group_assignment.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -141,7 +142,7 @@ public class TextPostActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     value = (long) snapshot.getValue();
-                    value = value + 20;
+                    value = value + 5;
                     snapshot.getRef().setValue(value);
                 }
 
@@ -166,8 +167,10 @@ public class TextPostActivity extends AppCompatActivity {
             });
 
             // changes screen
-            Intent intent = new Intent(TextPostActivity.this, MyTexts.class);
+            Intent intent = new Intent(TextPostActivity.this, PostFinishActivity.class);
+            intent.putExtra("points", "5");
             startActivity(intent);
+            finish();
 
         } else {
             Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();

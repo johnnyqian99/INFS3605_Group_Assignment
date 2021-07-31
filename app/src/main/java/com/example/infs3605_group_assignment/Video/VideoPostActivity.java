@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.example.infs3605_group_assignment.PostFinishActivity;
 import com.example.infs3605_group_assignment.R;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -228,7 +229,8 @@ public class VideoPostActivity extends AppCompatActivity {
                                 String i = databaseReference.push().getKey();
                                 databaseReference.child(i).setValue(videoUpload);
 
-                                Intent intent = new Intent(VideoPostActivity.this, MyVideos.class);
+                                Intent intent = new Intent(VideoPostActivity.this, PostFinishActivity.class);
+                                intent.putExtra("points", "20");
                                 startActivity(intent);
 
                             } else {
@@ -250,7 +252,7 @@ public class VideoPostActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     value = (long) snapshot.getValue();
-                    value = value + 30;
+                    value = value + 20;
                     snapshot.getRef().setValue(value);
                 }
 

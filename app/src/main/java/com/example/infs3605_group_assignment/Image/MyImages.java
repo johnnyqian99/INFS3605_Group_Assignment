@@ -372,8 +372,8 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 value = (long) snapshot.getValue();
                                 // number of posts cannot be negative
-                                if (value >= 20 ) {
-                                    value = value - 20;
+                                if (value >= 10 ) {
+                                    value = value - 10;
                                     snapshot.getRef().setValue(value);
                                 }
                             }

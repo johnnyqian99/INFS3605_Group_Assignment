@@ -367,8 +367,8 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 value = (long) snapshot.getValue();
                                 // number of posts cannot be negative
-                                if (value >= 20 ) {
-                                    value = value - 20;
+                                if (value >= 5 ) {
+                                    value = value - 5;
                                     snapshot.getRef().setValue(value);
                                 }
                             }
