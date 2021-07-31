@@ -22,9 +22,9 @@
       android:id="@+id/textView19"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginTop="150dp"
+      android:layout_marginTop="120dp"
       android:gravity="center"
-      android:text="Thanks for helping us make a\n difference in the world. Here are \nsome points in return for your troubles."
+      android:text="Thanks for helping us make a\n difference in the world. Here are \nsome stars in return for your troubles."
       android:textColor="@color/black"
       app:layout_constraintEnd_toEndOf="@+id/imageView18"
       app:layout_constraintHorizontal_bias="0.0"
@@ -37,29 +37,30 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="50dp"
       android:text="Points"
+      android:textColor="#000000"
+      android:textSize="36sp"
       app:layout_constraintEnd_toEndOf="@+id/imageView18"
       app:layout_constraintStart_toStartOf="@+id/imageView18"
-      app:layout_constraintTop_toBottomOf="@+id/textView19"
-      android:textSize="30sp"/>
+      app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
   <TextView
       android:id="@+id/textView21"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="50dp"
+      android:layout_marginTop="32dp"
       android:gravity="center"
+      android:text="You can redeem stars to get\n prizes from the Rewards section.\n Click the 'Finish' button to return\n to the Home Screen."
       android:textColor="@color/black"
-      android:text="You can redeem points to get\n prizes from the Rewards section.\n Click the 'Finish' button to return\n to the Home Screen."
       app:layout_constraintEnd_toEndOf="@+id/imageView18"
       app:layout_constraintStart_toStartOf="@+id/imageView18"
       app:layout_constraintTop_toBottomOf="@+id/tv_points" />
 
   <Button
       android:id="@+id/finish_btn"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="20dp"
-      android:text="Finish"
+      android:layout_width="208dp"
+      android:layout_height="39dp"
+      android:layout_marginTop="32dp"
+      android:text="Thanks"
       app:layout_constraintEnd_toEndOf="@+id/imageView18"
       app:layout_constraintStart_toStartOf="@+id/imageView18"
       app:layout_constraintTop_toBottomOf="@+id/textView21" />

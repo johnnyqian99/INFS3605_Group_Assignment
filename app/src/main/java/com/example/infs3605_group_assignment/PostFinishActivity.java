@@ -24,13 +24,16 @@ public class PostFinishActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_finish);
 
+        // Remove action bar
+        getSupportActionBar().hide();
+
         // Assign variables
         mPoints = findViewById(R.id.tv_points);
         mFinish = findViewById(R.id.finish_btn);
 
 //        post_key = getIntent().getExtras().getString("postkey"); // retrieve the video reference
         points = getIntent().getExtras().getString("points");
-        mPoints.setText("+" + points + "pts");
+        mPoints.setText("+" + points + " stars");
 
         mFinish.setOnClickListener(new View.OnClickListener() {
             @Override
