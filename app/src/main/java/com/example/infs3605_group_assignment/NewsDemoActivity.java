@@ -11,7 +11,7 @@ import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class NewsDemoActivity extends AppCompatActivity {
+public class  NewsDemoActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     String titleArray[], descArray[];
