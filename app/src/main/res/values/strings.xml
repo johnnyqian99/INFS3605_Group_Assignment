@@ -47,4 +47,22 @@
         <item>Image</item>
     </string-array>
 
+    <string-array name="newsTitles">
+        <item>Title 1</item>
+        <item>Title 2</item>
+        <item>Title 3</item>
+        <item>Title 4</item>
+        <item>Title 5</item>
+        <item>Title 6</item>
+    </string-array>
+
+    <string-array name="newsDesc">
+        <item>Description 1</item>
+        <item>Description 2</item>
+        <item>Description 3</item>
+        <item>Description 4</item>
+        <item>Description 5</item>
+        <item>Description 6</item>
+    </string-array>
+
 </resources>

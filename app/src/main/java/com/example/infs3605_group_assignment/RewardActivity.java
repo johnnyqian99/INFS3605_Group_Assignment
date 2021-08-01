@@ -78,30 +78,30 @@ public class RewardActivity extends AppCompatActivity implements RewardsAdapter.
         // ***NAVIGATION BAR
 
         // Set current selected item
-        bottomNavigationView.setSelectedItemId(R.id.reward);
+        bottomNavigationView.setSelectedItemId(R.id.donate);
         // Set up select listener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 switch (item.getItemId()) {
-                    case R.id.home:
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    case R.id.map:
+                        startActivity(new Intent(getApplicationContext(), PermissionsActivity.class));
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.news:
-                        startActivity(new Intent(getApplicationContext(), NewsActivity.class));
+                        startActivity(new Intent(getApplicationContext(), NewsDemoActivity.class));
                         overridePendingTransition(0, 0);
                         return true;
-                    case R.id.reward:
-                        return true;
-                    case R.id.map:
-                        startActivity(new Intent(getApplicationContext(), PermissionsActivity.class));
+                    case R.id.post:
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.profile:
                         startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                         overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.donate:
                         return true;
                 }
 
