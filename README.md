@@ -9,8 +9,8 @@ Make a Pixel 4XL on system release R
 
 ## **Accounts**
 Default accounts that can be accessed in order to view some features of the application without having to manually input data yourself. 
-All passwords are pass1234
+All passwords are pass1234 unless stated otherwise.
 
 1. alexbrowne@gmail.com
 2. tessterr@gmail.com
-
+3. qianjohnny871@gmail.com (Password: "johnnyq1")
