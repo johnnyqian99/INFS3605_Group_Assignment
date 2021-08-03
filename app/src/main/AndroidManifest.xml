@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.infs3605_group_assignment" >
+    package="com.example.infs3605_group_assignment">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -12,9 +12,9 @@
         android:label="INFS3605 Assignment"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.INFS3605_Group_Assignment" >
-        <activity android:name=".PostFinishActivity" >
-        </activity>
+        android:theme="@style/Theme.INFS3605_Group_Assignment">
+        <activity android:name=".NewsDemoActivity" />
+        <activity android:name=".PostFinishActivity" />
         <activity android:name=".FourthInfoActivity" />
         <activity android:name=".ThirdInfoActivity" />
         <activity android:name=".SecondInfoActivity" />
@@ -52,15 +52,17 @@
         <activity android:name=".Video.VideoPostActivity" />
         <activity android:name=".Image.ImagePostActivity" />
         <activity android:name=".Text.TextPostActivity" />
-        <activity android:name=".SplashActivity" >
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+        <activity android:name=".SplashActivity">
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity" >
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

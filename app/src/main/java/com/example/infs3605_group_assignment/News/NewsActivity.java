@@ -61,37 +61,37 @@ public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         // ***NAVIGATION BAR
 
-        // Set current selected item
-        bottomNavigationView.setSelectedItemId(R.id.news);
-        // Set up select listener
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch (item.getItemId()) {
-                    case R.id.home:
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        overridePendingTransition(0, 0);
-                        return true;
-                    case R.id.news:
-                        return true;
-                    case R.id.reward:
-                        startActivity(new Intent(getApplicationContext(), RewardActivity.class));
-                        overridePendingTransition(0, 0);
-                        return true;
-                    case R.id.map:
-                        startActivity(new Intent(getApplicationContext(), PermissionsActivity.class));
-                        overridePendingTransition(0, 0);
-                        return true;
-                    case R.id.profile:
-                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
-                        overridePendingTransition(0, 0);
-                        return true;
-                }
-
-                return false;
-            }
-        });
+//        // Set current selected item
+//        bottomNavigationView.setSelectedItemId(R.id.news);
+//        // Set up select listener
+//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//
+//                switch (item.getItemId()) {
+//                    case R.id.home:
+//                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+//                        overridePendingTransition(0, 0);
+//                        return true;
+//                    case R.id.news:
+//                        return true;
+//                    case R.id.reward:
+//                        startActivity(new Intent(getApplicationContext(), RewardActivity.class));
+//                        overridePendingTransition(0, 0);
+//                        return true;
+//                    case R.id.map:
+//                        startActivity(new Intent(getApplicationContext(), PermissionsActivity.class));
+//                        overridePendingTransition(0, 0);
+//                        return true;
+//                    case R.id.profile:
+//                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+//                        overridePendingTransition(0, 0);
+//                        return true;
+//                }
+//
+//                return false;
+//            }
+//        });
 
         // NAVIGATION BAR***
 

@@ -99,23 +99,23 @@ public class ProfileActivity extends AppCompatActivity implements ValueEventList
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 switch (item.getItemId()) {
-                    case R.id.home:
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        overridePendingTransition(0, 0);
-                        return true;
-                    case R.id.news:
-                        startActivity(new Intent(getApplicationContext(), NewsActivity.class));
-                        overridePendingTransition(0, 0);
-                        return true;
-                    case R.id.reward:
-                        startActivity(new Intent(getApplicationContext(), RewardActivity.class));
-                        overridePendingTransition(0, 0);
-                        return true;
                     case R.id.map:
                         startActivity(new Intent(getApplicationContext(), PermissionsActivity.class));
                         overridePendingTransition(0, 0);
                         return true;
+                    case R.id.news:
+                        startActivity(new Intent(getApplicationContext(), NewsDemoActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.post:
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
                     case R.id.profile:
+                        return true;
+                    case R.id.donate:
+                        startActivity(new Intent(getApplicationContext(), RewardActivity.class));
+                        overridePendingTransition(0, 0);
                         return true;
                 }
 

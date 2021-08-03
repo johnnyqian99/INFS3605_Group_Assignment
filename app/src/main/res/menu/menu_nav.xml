@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/home"
-        android:title="Home"
-        android:icon="@drawable/ic_home" />
+        android:id="@+id/map"
+        android:icon="@drawable/ic_map"
+        android:title="Map" />
 
     <item
         android:id="@+id/news"
@@ -12,18 +12,18 @@
         android:icon="@drawable/ic_book" />
 
     <item
-        android:id="@+id/reward"
-        android:icon="@drawable/ic_star"
-        android:title="Donate" />
-
-    <item
-        android:id="@+id/map"
-        android:icon="@drawable/ic_map"
-        android:title="Map" />
+        android:id="@+id/post"
+        android:title="Post"
+        android:icon="@drawable/ic_post" />
 
     <item
         android:id="@+id/profile"
         android:title="Profile"
         android:icon="@drawable/ic_person" />
+
+    <item
+        android:id="@+id/donate"
+        android:icon="@drawable/ic_star"
+        android:title="Donate" />
 
 </menu>

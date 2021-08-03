@@ -47,4 +47,22 @@
         <item>Image</item>
     </string-array>
 
+    <string-array name="newsTitles">
+        <item>An observation made on New Climate driver</item>
+        <item>New limits placed on creation</item>
+        <item>Update 3.0</item>
+        <item>Changing new policies</item>
+        <item>Update 2.0</item>
+        <item>Update 1.0</item>
+    </string-array>
+
+    <string-array name="newsDesc">
+        <item>For some time now, Gather has included the following data points to identify causes linked to the bushfires in South Australia...</item>
+        <item>Starting next week, we need your help to identify opinions on the South Australian Bush fire and what we could have changed...</item>
+        <item>A new update to fix upload glitches...</item>
+        <item>Thanks for everyones posts! Recent data has been used by the Australian Government in their budget for industries lacking Climate Support</item>
+        <item>You can now post videos and photos...</item>
+        <item>A new update to fix upload glitches...</item>
+    </string-array>
+
 </resources>
