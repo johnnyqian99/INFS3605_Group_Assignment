@@ -4,13 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.infs3605_group_assignment.News.NewsActivity;
+import com.example.infs3605_group_assignment.Text.MyTexts;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +33,7 @@ public class RewardActivity extends AppCompatActivity implements RewardsAdapter.
     private RecyclerView recyclerView;
     private List<Rewards> rewardsList;
     private RewardsAdapter adapter;
+//    private ImageButton backBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,7 @@ public class RewardActivity extends AppCompatActivity implements RewardsAdapter.
         // Assign variables
         mStars = findViewById(R.id.stars);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+//        backBtn = findViewById(R.id.back_btn3);
 
         rewardsList = Rewards.getCategories();
 
@@ -102,10 +109,21 @@ public class RewardActivity extends AppCompatActivity implements RewardsAdapter.
             }
         });
         // NAVIGATION BAR***
+
+        // Navigate to MainActivity
+//        backBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(RewardActivity.this, MainActivity.class);
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
     }
 
     private void setAdapter() {
         adapter = new RewardsAdapter(rewardsList, this);
+        //RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2,GridLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -115,5 +133,9 @@ public class RewardActivity extends AppCompatActivity implements RewardsAdapter.
     @Override
     public void onNoteClick(int position) {
         rewardsList.get(position);
+//        Intent intent = new Intent(HomePageActivity.this, ModeSelectActivity.class);
+//        intent.putExtra("Category",categoryList.get(position).getCategory());
+//        intent.putExtra("Description", categoryList.get(position).getDescription());
+//        startActivity(intent);
     }
 }
