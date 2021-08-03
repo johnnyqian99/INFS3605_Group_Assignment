@@ -49,7 +49,7 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
     private RecyclerView mRecyclerView;
     private DatabaseReference databaseReference, likesReference, favouriteRef, favouriteListRef;
     Boolean likeChecker = false, favouriteChecker = false;
-    String mTitle, mLocation, mNotes, mDate, mUrl;
+    String mTitle;
     long value;
     long videoCounter = 0;
 
@@ -193,22 +193,8 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
 
                         // For onclick feature
                         holder.setOnClickListener(new VideoAdapter.ClickListener() {
-                            // this does nothing
                             @Override
                             public void onItemClick(View view, int position) {
-
-//                                mTitle = getItem(position).getmTitle();
-//                                mLocation = getItem(position).getmLocation();
-//                                mNotes = getItem(position).getmNotes();
-//                                mDate = getItem(position).getmDate();
-//                                mUrl = getItem(position).getmVideoUrl();
-//                                Intent intent = new Intent(MyVideos.this, VideoDetailActivity.class);
-//                                intent.putExtra("video_title", mTitle);
-//                                intent.putExtra("video_location", mLocation);
-//                                intent.putExtra("video_notes", mNotes);
-//                                intent.putExtra("video_date", mDate);
-//                                intent.putExtra("video_url", mUrl);
-//                                startActivity(intent);
                             }
 
                             @Override
@@ -257,7 +243,6 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
 
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError error) {
-                                        // Can show a Toast message
                                     }
                                 });
                             }
@@ -370,14 +355,12 @@ public class MyVideos extends AppCompatActivity implements AdapterView.OnItemSel
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
-
                             }
                         });
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        // DO WHATEVER YOU WANT
                     }
                 });
 

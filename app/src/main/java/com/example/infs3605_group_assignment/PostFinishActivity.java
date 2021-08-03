@@ -31,7 +31,6 @@ public class PostFinishActivity extends AppCompatActivity {
         mPoints = findViewById(R.id.tv_points);
         mFinish = findViewById(R.id.finish_btn);
 
-//        post_key = getIntent().getExtras().getString("postkey"); // retrieve the video reference
         points = getIntent().getExtras().getString("points");
         mPoints.setText("+" + points + " stars");
 

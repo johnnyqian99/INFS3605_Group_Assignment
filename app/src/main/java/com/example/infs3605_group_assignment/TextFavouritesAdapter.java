@@ -1,7 +1,6 @@
 package com.example.infs3605_group_assignment;
 
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;

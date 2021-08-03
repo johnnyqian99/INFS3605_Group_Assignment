@@ -1,5 +1,6 @@
 package com.example.infs3605_group_assignment;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -11,10 +12,12 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -30,11 +33,14 @@ import com.karumi.dexter.listener.single.PermissionListener;
 public class PermissionsActivity extends AppCompatActivity {
 
     private Button mGrant;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_permissions);
+
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         if (ContextCompat.checkSelfPermission
                 (PermissionsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -91,5 +97,41 @@ public class PermissionsActivity extends AppCompatActivity {
                         .check();
             }
         });
+
+        // ***NAVIGATION BAR
+
+        // Set current selected item
+        bottomNavigationView.setSelectedItemId(R.id.map);
+        // Set up select listener
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()) {
+                    case R.id.map:
+                        return true;
+                    case R.id.news:
+                        startActivity(new Intent(getApplicationContext(), NewsDemoActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.post:
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.profile:
+                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                    case R.id.donate:
+                        startActivity(new Intent(getApplicationContext(), RewardActivity.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                }
+
+                return false;
+            }
+        });
+
+        // NAVIGATION BAR***
     }
 }

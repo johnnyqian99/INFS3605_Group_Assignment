@@ -48,15 +48,12 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
     private FloatingActionButton floatingActionButton;
     private Spinner mSpinner;
     private RecyclerView mRecyclerView;
-    private TextAdapter mAdapter;
-    private DatabaseReference databaseReference;
-    private List<TextUpload> mUploads;
     private ProgressBar progressCircle;
     FirebaseRecyclerOptions<TextUpload> options;
     FirebaseRecyclerAdapter<TextUpload, TextAdapter> adapter;
     DatabaseReference dataRef, likesRef, favouriteRef, favouriteListRef;
     Boolean likeChecker = false, favouriteChecker = false;
-    String mTitle, mLocation, mNotes, mDate;
+    String mTitle;
     long value;
     long textCounter = 0;
 
@@ -108,7 +105,6 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
         // Recyclerview
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        mUploads = new ArrayList<>();
 
         favouritesListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,29 +125,6 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
         });
 
         LoadData();
-
-        // Load data into Recyclerview
-//        databaseReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-//                    TextUpload textUpload = postSnapshot.getValue(TextUpload.class);
-//                    mUploads.add(textUpload);
-//                }
-//
-//                mAdapter = new TextAdapter(MyTexts.this, mUploads);
-//                mRecyclerView.setAdapter(mAdapter);
-//                mAdapter.setOnItemClickListener(MyTexts.this);
-//                progressCircle.setVisibility(View.INVISIBLE);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Toast.makeText(MyTexts.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-//                progressCircle.setVisibility(View.INVISIBLE);
-//            }
-//        });
-
     }
 
     private void LoadData() {
@@ -209,27 +182,14 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
-
                             }
                         });
                     }
                 });
 
                 holder.setOnClickListener(new TextAdapter.ClickListener() {
-                    // this does nothing
                     @Override
                     public void onItemClick(View view, int position) {
-
-//                        mTitle = getItem(position).getmTitle();
-//                        mLocation = getItem(position).getmLocation();
-//                        mNotes = getItem(position).getmNotes();
-//                        mDate = getItem(position).getmDate();
-//                        Intent intent = new Intent(MyTexts.this, TextDetailActivity.class);
-//                        intent.putExtra("text_title", mTitle);
-//                        intent.putExtra("text_location", mLocation);
-//                        intent.putExtra("text_notes", mNotes);
-//                        intent.putExtra("text_date", mDate);
-//                        startActivity(intent);
                     }
 
                     @Override
@@ -278,7 +238,6 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
-                                // Can show a Toast message
                             }
                         });
                     }
@@ -399,7 +358,6 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        // DO WHATEVER YOU WANT
                     }
                 });
 
@@ -417,20 +375,4 @@ public class MyTexts extends AppCompatActivity implements AdapterView.OnItemSele
         alertDialog.show();
     }
 
-//    @Override
-//    public void onItemClick(int position) {
-////        Toast.makeText(this, "Detail click at position: " + position, Toast.LENGTH_SHORT).show(); // for testing
-//        // Send extras for detail
-//        Intent intent = new Intent(MyTexts.this, TextDetailActivity.class);
-//        intent.putExtra("text_title", mUploads.get(position).getmTitle());
-//        intent.putExtra("text_location", mUploads.get(position).getmLocation());
-//        intent.putExtra("text_notes", mUploads.get(position).getmNotes());
-//        intent.putExtra("text_date", mUploads.get(position).getmDate());
-//        startActivity(intent);
-//    }
-
-//    @Override
-//    public void onDeleteClick(int position) {
-////        Toast.makeText(this, "Delete click at position: " + position, Toast.LENGTH_SHORT).show(); // for testing
-//    }
 }

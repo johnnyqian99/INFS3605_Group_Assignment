@@ -11,7 +11,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.infs3605_group_assignment.Image.MyImages;
-import com.example.infs3605_group_assignment.News.NewsActivity;
 import com.example.infs3605_group_assignment.Text.MyTexts;
 import com.example.infs3605_group_assignment.Video.MyVideos;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
