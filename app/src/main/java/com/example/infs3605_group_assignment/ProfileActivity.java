@@ -26,7 +26,6 @@ import com.google.firebase.database.ValueEventListener;
 public class ProfileActivity extends AppCompatActivity implements ValueEventListener {
 
     private BottomNavigationView bottomNavigationView;
-//    private ImageButton backBtn;
     private Button termsBtn;
     private Button faqBtn;
     private TextView textCount;
@@ -49,7 +48,6 @@ public class ProfileActivity extends AppCompatActivity implements ValueEventList
 
         // Assign variables
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-//        backBtn = findViewById(R.id.back_btn8);
         termsBtn = findViewById(R.id.terms_btn);
         faqBtn = findViewById(R.id.faq_btn);
         textCount = findViewById(R.id.text_post_count);

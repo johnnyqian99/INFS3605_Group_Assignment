@@ -40,7 +40,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MyImages extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -51,14 +50,11 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
     private Spinner mSpinner;
     private ProgressBar progressCircle;
     private RecyclerView mRecyclerView;
-    private ImageAdapter mAdapter;
-//    private DatabaseReference databaseReference;
-    private List<ImageUpload> mUploads;
     FirebaseRecyclerOptions<ImageUpload> options;
     FirebaseRecyclerAdapter<ImageUpload, ImageAdapter> adapter;
     DatabaseReference dataRef, likesReference, favouriteRef, favouriteListRef;
     Boolean likeChecker = false, favouriteChecker = false;
-    String mTitle, mLocation, mNotes, mDate, mUrl;
+    String mTitle;
     long value;
     long imageCounter = 0;
 
@@ -99,7 +95,6 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
         // Recyclerview
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mUploads = new ArrayList<>();
 
         favouritesListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,29 +125,6 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
         });
 
         LoadData();
-
-        // Load data into Recyclerview
-//        databaseReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-//                    ImageUpload imageUpload = postSnapshot.getValue(ImageUpload.class);
-//                    mUploads.add(imageUpload);
-//                }
-//
-//                mAdapter = new ImageAdapter(MyImages.this, mUploads);
-//                mRecyclerView.setAdapter(mAdapter);
-//                mAdapter.setOnItemClickListener(MyImages.this);
-//                mProgressCircle.setVisibility(View.INVISIBLE);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Toast.makeText(MyImages.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-//                mProgressCircle.setVisibility(View.INVISIBLE);
-//            }
-//        });
-
     }
 
     private void LoadData() {
@@ -220,22 +192,8 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
                 });
 
                 holder.setOnClickListener(new ImageAdapter.ClickListener() {
-                    // this does nothing
                     @Override
                     public void onItemClick(View view, int position) {
-
-//                        mTitle = getItem(position).getmTitle();
-//                        mLocation = getItem(position).getmLocation();
-//                        mNotes = getItem(position).getmNotes();
-//                        mDate = getItem(position).getmDate();
-//                        mUrl = getItem(position).getmImageUrl();
-//                        Intent intent = new Intent(MyImages.this, ImageDetailActivity.class);
-//                        intent.putExtra("image_title", mTitle);
-//                        intent.putExtra("image_location", mLocation);
-//                        intent.putExtra("image_notes", mNotes);
-//                        intent.putExtra("image_date", mDate);
-//                        intent.putExtra("image_url", mUrl);
-//                        startActivity(intent);
                     }
 
                     @Override
@@ -404,7 +362,6 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        // DO WHATEVER YOU WANT
                     }
                 });
 
@@ -422,23 +379,4 @@ public class MyImages extends AppCompatActivity implements AdapterView.OnItemSel
         alertDialog.show();
     }
 
-    // GOOD
-//    @Override
-//    public void onItemClick(int position) {
-////        Toast.makeText(this, "Detail click at position: " + position, Toast.LENGTH_SHORT).show(); // for testing
-//        // Send extras for detail
-//        Intent intent = new Intent(MyImages.this, ImageDetailActivity.class);
-//        intent.putExtra("image_url", mUploads.get(position).getmImageUrl());
-//        intent.putExtra("image_title", mUploads.get(position).getmTitle());
-//        intent.putExtra("image_location", mUploads.get(position).getmLocation());
-//        intent.putExtra("image_notes", mUploads.get(position).getmNotes());
-//        intent.putExtra("image_date", mUploads.get(position).getmDate());
-//        startActivity(intent);
-//    }
-
-    // CHANGE THIS
-//    @Override
-//    public void onDeleteClick(int position) {
-////        Toast.makeText(this, "Delete click at position: " + position, Toast.LENGTH_SHORT).show(); // for testing
-//    }
 }

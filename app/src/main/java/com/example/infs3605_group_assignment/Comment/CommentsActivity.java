@@ -59,8 +59,7 @@ public class CommentsActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userId = user.getDisplayName();
 
-        // WE NEED TO ASSIGN DATABASE REFERENCE HERE OR ELSE ERROR
-        databaseReference = FirebaseDatabase.getInstance().getReference(); // --> change this
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         // This is where comments will be saved
         // This will be saved under child ("Uploads/Video") > postkey (video id) > then "Comments"
@@ -93,21 +92,14 @@ public class CommentsActivity extends AppCompatActivity {
                 databaseReference.child(userId).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        // Check if username exists
-//                        if (snapshot.exists()) {
-//                            String username = snapshot.child("name").getValue().toString();
-
-                            String username = userId; // change this
-                            commentFeature(username);
-
-                            editText_comment_input.setText("");
-//                        }
+                        String username = userId;
+                        commentFeature(username);
+                        editText_comment_input.setText("");
 
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
                     }
                 });
 
@@ -116,6 +108,7 @@ public class CommentsActivity extends AppCompatActivity {
             private void commentFeature(String username) {
 
                 String comment_post = editText_comment_input.getText().toString();
+
                 if (comment_post.isEmpty()) {
                     Toast.makeText(CommentsActivity.this, "Please write a comment", Toast.LENGTH_SHORT).show();
                 } else {
@@ -143,7 +136,7 @@ public class CommentsActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task task) {
 
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(CommentsActivity.this, "Commented added!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(CommentsActivity.this, "Comment added!", Toast.LENGTH_SHORT).show();
                                     } else {
                                         Toast.makeText(CommentsActivity.this, "Failed", Toast.LENGTH_SHORT).show();
                                     }

@@ -24,7 +24,6 @@ public class CommentsAdapter extends RecyclerView.ViewHolder {
 
         textView1.setText(date + "-" + time);
         textView2.setText(username + ":" + comment);
-
     }
 
 }

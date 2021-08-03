@@ -59,8 +59,7 @@ public class CommentsActivityImages extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userId = user.getDisplayName();
 
-        // WE NEED TO ASSIGN DATABASE REFERENCE HERE OR ELSE ERROR
-        databaseReference = FirebaseDatabase.getInstance().getReference(); // --> change this
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         // This is where comments will be saved
         // This will be saved under child ("Uploads/Video") > postkey (video id) > then "Comments"
@@ -93,22 +92,14 @@ public class CommentsActivityImages extends AppCompatActivity {
                 databaseReference.child(userId).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                        // Check if username exists --> with this if statement, it doesnt post of some reason
-//                        if (snapshot.exists()) {
-//                            String username = snapshot.child("name").getValue().toString();
-
-                        String username = userId; // change this
+                        String username = userId;
                         commentFeature(username);
-
                         editText_comment_input.setText("");
-//                        }
 
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
                     }
                 });
 
@@ -144,7 +135,7 @@ public class CommentsActivityImages extends AppCompatActivity {
                                 public void onComplete(@NonNull Task task) {
 
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(CommentsActivityImages.this, "Commented added!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(CommentsActivityImages.this, "Comment added!", Toast.LENGTH_SHORT).show();
                                     } else {
                                         Toast.makeText(CommentsActivityImages.this, "Failed", Toast.LENGTH_SHORT).show();
                                     }
