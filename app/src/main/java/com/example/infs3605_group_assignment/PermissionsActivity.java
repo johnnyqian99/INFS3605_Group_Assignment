@@ -40,6 +40,9 @@ public class PermissionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_permissions);
 
+        // Remove action bar
+        getSupportActionBar().hide();
+
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         if (ContextCompat.checkSelfPermission

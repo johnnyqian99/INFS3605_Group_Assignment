@@ -16,6 +16,9 @@ public class TermsAndConditions extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_terms_and_conditions);
 
+        // Remove action bar
+        getSupportActionBar().hide();
+
         backBtn = findViewById(R.id.back_btn11);
 
         //Navigate to ProfileActivity

@@ -16,12 +16,12 @@
 
         <ImageView
             android:id="@+id/imageView3"
-            android:layout_width="400dp"
+            android:layout_width="match_parent"
             android:layout_height="191dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="2dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/header5" />
 
         <ImageButton
@@ -41,16 +41,22 @@
     <VideoView
         android:id="@+id/video_view"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_margin="16sp" />
+        android:layout_height="160dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btn_choose_file"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:layout_marginBottom="16sp"
-        android:text="Choose file" />
+        android:text="Choose file"
+        android:textSize="10sp" />
 
     <EditText
         android:id="@+id/et_title"
@@ -63,7 +69,7 @@
         android:layout_marginBottom="16sp"
         android:hint="Governing thought..."
         android:inputType="text"
-        android:textSize="14sp" />
+        android:textSize="12sp" />
 
     <EditText
         android:id="@+id/et_location"
@@ -76,7 +82,7 @@
         android:layout_marginBottom="16sp"
         android:hint="Location"
         android:inputType="text"
-        android:textSize="14sp" />
+        android:textSize="12sp" />
 
     <EditText
         android:id="@+id/et_notes"
@@ -89,7 +95,7 @@
         android:layout_marginBottom="16sp"
         android:hint="What's on your mind?"
         android:inputType="text"
-        android:textSize="14sp" />
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/tv_date"
@@ -102,25 +108,25 @@
         android:layout_marginBottom="16sp"
         android:hint="Date"
         android:paddingLeft="5dp"
-        android:textSize="14sp" />
+        android:textSize="12sp" />
 
     <Button
         android:id="@+id/btn_upload"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="36dp"
         android:layout_marginStart="16sp"
         android:layout_marginLeft="16sp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="16sp"
         android:layout_marginRight="16sp"
-        android:text="Upload" />
+        android:text="Upload"
+        android:textSize="12sp" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
         android:indeterminate="true"
         android:indeterminateTint="@android:color/holo_orange_dark"
         android:visibility="invisible" />

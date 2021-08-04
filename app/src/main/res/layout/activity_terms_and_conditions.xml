@@ -44,45 +44,53 @@
         app:layout_constraintTop_toBottomOf="@+id/back_btn11" />
 
     <TextView
-        android:id="@+id/textView14"
-        android:layout_width="0dp"
+        android:id="@+id/textView22"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="9dp"
-        android:layout_marginLeft="9dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="9dp"
-        android:layout_marginRight="9dp"
-        android:layout_marginBottom="598dp"
-        android:text=
-"COLLECTION OF YOUR INFORMATION \n
-We may collect information about you in a variety of ways. The information we may collect via the Application depends on the content and materials you use, and includes:\n
-\n
-PERSONAL DATA \n
-Demographic and other personally identifiable information (such as your name and email address) that you voluntarily give to us when choosing to participate in various activities related to the Application, commenting, liking posts, and sending feedback. Pleased be advised that the data you share about yourself via profile or comments is public.
-\n
-\n
-MOBILE DEVICE ACCESS \n
-We may request access or permission to certain features from your mobile device, including your mobile device’s photo gallery and camera. If you wish to change our access or permissions, you may do so in your device’s settings.
-\n
-\n
-USE OF YOUR INFORMATION \n
-Having accurate information about you permits us to provide you with a smooth, efficient, and customised experience. Specifically, we may use information collected about you via the Application to:
-1)	Compile anonymous statistical data and analysis for use internally or with third parties through Firebase Realtime Database
-2)	Share with climate change researchers and government agencies about the environment in Australia
-3)	Increase the efficiency and operation of the Application.
-\n
-\n
-OPTIONS REGARDING YOUR INFORMATION \n
-You may at any time review or change the information in your account or terminate your account by:
+        android:text="A) COLLECTION OF YOUR INFORMATION\nWe may collect information about you in a variety of ways.\nThe information we may collect via the Application\ndepends on the content and materials you use, and\nincludes:"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
+    <TextView
+        android:id="@+id/textView23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="4dp"
+        android:text="i) PERSONAL DATA\nDemographic and other personally identifiable\ninformation (such as your name and email address)\nthat you voluntarily give to us when choosing to\nparticipate in various activities related to the\nApplication, commenting, liking posts, and sending\nfeedback. Pleased be advised that the data you share\nabout yourself via profile or comments is public."
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/textView22"
+        app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
-"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:layout_constraintVertical_bias="0.0" />
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ii) MOBILE DEVICE ACCESS\nWe may request access or permission to certain\nfeatures from your mobile device, including your mobile\ndevice’s photo gallery and camera. If you wish to\nchange our access or permissions, you may do so in\nyour device’s settings."
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/textView23"
+        app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
+    <TextView
+        android:id="@+id/textView27"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="B) USE OF YOUR INFORMATION\nHaving accurate information about you permits us to\nprovide you with a smooth, efficient, and customised\nexperience. Specifically, we may use information\ncollected about you via the Application to:\n1)	Compile anonymous statistical data and analysis for\nuse internally or with third parties through Firebase\nRealtime Database\n2) Share with climate change researchers and government agencies about the environment in Australia\n3) Increase the efficiency and operation of the Application."
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/textView22"
+        app:layout_constraintTop_toBottomOf="@+id/textView24" />
+
+    <TextView
+        android:id="@+id/textView26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="C) OPTIONS REGARDING YOUR INFORMATION\n1) Logging into your phone settings and updating your permissions\n2) Contacting us at help@gather.com"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/textView27"
+        app:layout_constraintTop_toBottomOf="@+id/textView27" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

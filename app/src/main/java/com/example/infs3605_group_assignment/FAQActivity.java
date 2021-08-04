@@ -17,6 +17,9 @@ public class FAQActivity extends AppCompatActivity {
 
         backBtn = findViewById(R.id.back_btn10);
 
+        // Remove action bar
+        getSupportActionBar().hide();
+
         //Navigate to ProfileActivity
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
